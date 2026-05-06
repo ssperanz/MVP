@@ -1,0 +1,5 @@
+export enum OrderType {
+  SELL = 'SELL',
+  TRANSFER = 'TRANSFER',
+  REPLENISHMENT = 'REPLENISHMENT',
+}
