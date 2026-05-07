@@ -100,19 +100,6 @@ export class Product extends AggregateRoot {
     return this.maxThres;
   }
 
-  private add(qtyToAdd: Quantity): Quantity {
-    this.availableQty = this.availableQty.increaseBy(qtyToAdd);
-    return this.availableQty;
-  }
-
-  private subtract(qtyToSub: Quantity): Quantity {
-    if (qtyToSub.isGreaterThan(this.availableQty)) {
-      throw new Error('Not enough available quantity to subtract');
-    }
-    this.availableQty = this.availableQty.decreaseBy(qtyToSub);
-    return this.availableQty;
-  }
-
   reserve(qtyToReserve: Quantity): Quantity {
     if (qtyToReserve.isGreaterThan(this.availableQty)) {
       throw new Error('Not enough available quantity to reserve');
