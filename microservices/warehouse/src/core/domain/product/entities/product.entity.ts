@@ -39,20 +39,20 @@ export class Product extends AggregateRoot {
     const product = new Product(pid, name, price, qty, new Quantity(0), minThres, maxThres);
     product.apply(
       new ProductCreatedEvent(
-        pid.id,
+        pid,
         name,
-        price.getAmount(),
-        qty.getValue,
-        0,
-        minThres.getValue,
-        maxThres.getValue,
+        price,
+        qty,
+        new Quantity(0),
+        minThres,
+        maxThres,
       ),
     );
     return product;
   }
 
   delete(): void {
-    this.apply(new ProductRemovedEvent(this.productId.id));
+    this.apply(new ProductRemovedEvent(this.productId));
   }
 
   getId(): ProductId { return this.productId; }
@@ -66,37 +66,37 @@ export class Product extends AggregateRoot {
 
   updateName(newName: string): string {
     this.name = newName;
-    this.apply(new ProductNameUpdatedEvent(this.productId.id, newName));
+    this.apply(new ProductNameUpdatedEvent(this.productId, newName));
     return this.name;
   }
 
   updateUnitPrice(newUnitPrice: Money): Money {
     this.unitPrice = newUnitPrice;
-    this.apply(new ProductPriceUpdatedEvent(this.productId.id, newUnitPrice.getAmount()));
+    this.apply(new ProductPriceUpdatedEvent(this.productId, newUnitPrice));
     return this.unitPrice;
   }
 
   updateAvailableQty(newAvail: Quantity): Quantity {
     this.availableQty = newAvail;
-    this.apply(new ProductAvailableQtyUpdatedEvent(this.productId.id, newAvail.getValue));
+    this.apply(new ProductAvailableQtyUpdatedEvent(this.productId, newAvail));
     return this.availableQty;
   }
 
   updateReservedQty(newReserved: Quantity): Quantity {
     this.reservedQty = newReserved;
-    this.apply(new ProductReservedQtyUpdatedEvent(this.productId.id, newReserved.getValue));
+    this.apply(new ProductReservedQtyUpdatedEvent(this.productId, newReserved));
     return this.reservedQty;
   }
 
   updateMinThres(newMinThres: Quantity): Quantity {
     this.minThres = newMinThres;
-    this.apply(new ProductMinThresUpdatedEvent(this.productId.id, newMinThres.getValue));
+    this.apply(new ProductMinThresUpdatedEvent(this.productId, newMinThres));
     return this.minThres;
   }
 
   updateMaxThres(newMaxThres: Quantity): Quantity {
     this.maxThres = newMaxThres;
-    this.apply(new ProductMaxThresUpdatedEvent(this.productId.id, newMaxThres.getValue));
+    this.apply(new ProductMaxThresUpdatedEvent(this.productId, newMaxThres));
     return this.maxThres;
   }
 
@@ -106,7 +106,7 @@ export class Product extends AggregateRoot {
     }
     this.availableQty = this.availableQty.decreaseBy(qtyToReserve);
     this.reservedQty = this.reservedQty.increaseBy(qtyToReserve);
-    this.apply(new ProductReservedEvent(this.productId.id, qtyToReserve.getValue));
+    this.apply(new ProductReservedEvent(this.productId, qtyToReserve));
     return this.reservedQty;
   }
 
@@ -116,7 +116,7 @@ export class Product extends AggregateRoot {
     }
     this.reservedQty = this.reservedQty.decreaseBy(qtyToRelease);
     this.availableQty = this.availableQty.increaseBy(qtyToRelease);
-    this.apply(new ProductReleasedEvent(this.productId.id, qtyToRelease.getValue));
+    this.apply(new ProductReleasedEvent(this.productId, qtyToRelease));
     return this.availableQty;
   }
 
@@ -125,13 +125,13 @@ export class Product extends AggregateRoot {
       throw new Error('Not enough reserved quantity to dispatch');
     }
     this.reservedQty = this.reservedQty.decreaseBy(qtyToDispatch);
-    this.apply(new ProductDispatchedEvent(this.productId.id, qtyToDispatch.getValue));
+    this.apply(new ProductDispatchedEvent(this.productId, qtyToDispatch));
     return this.reservedQty;
   }
 
   receive(qtyToReceive: Quantity): Quantity {
     this.availableQty = this.availableQty.increaseBy(qtyToReceive);
-    this.apply(new ProductReceivedEvent(this.productId.id, qtyToReceive.getValue));
+    this.apply(new ProductReceivedEvent(this.productId, qtyToReceive));
     return this.availableQty;
   }
 }

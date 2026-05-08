@@ -1,9 +1,11 @@
+import { ProductId } from 'src/shared/domain/value-objects/product-id.vo.js';
 import { ProductEvent } from '../../../../shared/domain/events/product-event.base.js';
+import { Quantity } from 'src/shared/domain/value-objects/quantity.vo.js';
 
 export class ProductReservedEvent extends ProductEvent {
   constructor(
-    public readonly productId: string,
-    public readonly qtyReserved: number,
+    public readonly productId: ProductId,
+    public readonly qtyReserved: Quantity,
   ) {
     super(productId);
   }

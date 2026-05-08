@@ -1,6 +1,6 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { OrderId } from '../../../../shared/domain/value-objects/order-id.vo.js';
-import { Item } from '../../../../shared/domain/value-objects/item.vo.js';
+import { ProductItem } from '../../../../shared/domain/value-objects/product-item.vo.js';
 import { ReservationItem } from '../../../../shared/domain/value-objects/reservation-item.vo.js';
 import { ReservationState } from '../../../../shared/domain/enums/reservation-state.enum.js';
 import { ReservationItemState } from '../../../../shared/domain/enums/reservation-item-state.enum.js';
@@ -33,7 +33,7 @@ export class Reservation extends AggregateRoot {
     this.state = newState;
   }
 
-  static create(items: Item[]): Reservation {
+  static create(items: ProductItem[]): Reservation {
     const reservationItems = items.map(
       (item) => new ReservationItem(item.getId(), item.getQty(), ReservationItemState.INITIALIZED),
     );
@@ -43,7 +43,7 @@ export class Reservation extends AggregateRoot {
     return reservation;
   }
 
-  reserve(items: Item[]): ReservationItem[] {
+  reserve(items: ProductItem[]): ReservationItem[] {
     this.updateState(ReservationState.PROCESSING);
     for (const item of items) {
       const reservationItem = this.reservedItems.find(
@@ -53,6 +53,7 @@ export class Reservation extends AggregateRoot {
         reservationItem.updateItemState(ReservationItemState.RESERVED);
       }
     }
+    this.updateState(ReservationState.UPDATED);
     this.apply(new ReservationUpdatedEvent(this.orderId, this.state, this.reservedItems));
     return this.reservedItems;
   }

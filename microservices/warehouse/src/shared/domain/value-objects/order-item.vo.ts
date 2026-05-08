@@ -1,9 +1,9 @@
 import { ProductId } from './product-id.vo.js';
 import { Quantity } from './quantity.vo.js';
 import { Money } from './money.vo.js';
-import { Item } from './item.vo.js';
+import { ProductItem } from './product-item.vo.js';
 
-export class OrderItem extends Item {
+export class OrderItem extends ProductItem {
   private readonly orderItemPrice: Money;
   private readonly orderItemTotalValue: Money;
 

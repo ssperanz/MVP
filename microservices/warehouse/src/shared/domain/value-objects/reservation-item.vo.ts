@@ -1,9 +1,9 @@
 import { ProductId } from './product-id.vo.js';
 import { Quantity } from './quantity.vo.js';
-import { Item } from './item.vo.js';
+import { ProductItem } from './product-item.vo.js';
 import { ReservationItemState } from '../enums/reservation-item-state.enum.js';
 
-export class ReservationItem extends Item {
+export class ReservationItem extends ProductItem {
   private itemState: ReservationItemState;
 
   constructor(

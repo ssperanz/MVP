@@ -1,7 +1,7 @@
 import { ProductId } from './product-id.vo.js';
 import { Quantity } from './quantity.vo.js';
 
-export class Item {
+export class ProductItem {
   constructor(
     private readonly itemId: ProductId,
     private readonly itemQty: Quantity,
