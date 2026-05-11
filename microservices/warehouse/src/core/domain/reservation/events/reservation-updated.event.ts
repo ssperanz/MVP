@@ -6,9 +6,8 @@ import { ReservationItem } from 'src/shared/domain/value-objects/reservation-ite
 export class ReservationUpdatedEvent extends ReservationEvent {
   constructor(
     public readonly reservationId: OrderId,
-    public readonly reservationState: ReservationState,
     public readonly reservationItems: Array<ReservationItem>,
   ) {
-    super(reservationId, reservationState);
+    super(reservationId, ReservationState.UPDATED);
   }
 }

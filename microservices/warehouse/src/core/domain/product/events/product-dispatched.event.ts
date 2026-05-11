@@ -4,6 +4,7 @@ import { Quantity } from 'src/shared/domain/value-objects/quantity.vo.js';
 
 export class ProductDispatchedEvent extends ProductEvent {
   constructor(
+    public readonly orderId: string,
     public readonly productId: ProductId,
     public readonly qtyDispatched: Quantity,
   ) {
