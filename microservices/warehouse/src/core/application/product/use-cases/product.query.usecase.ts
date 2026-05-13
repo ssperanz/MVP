@@ -3,6 +3,6 @@ import { ProductIdDto } from "../dto/product-id.dto";
 import { ProductDto } from "../dto/product.dto";
 
 export interface ProductQueryUseCase {
-  getProductById(productId: ProductIdDto): Promise<ProductDto>;
+  getProductById(productId: ProductIdDto): Promise<ProductDto | null>;
   listProducts(): Promise<InventoryDto>;
 }

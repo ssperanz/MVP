@@ -12,7 +12,7 @@ export class ProductQueryFacade implements ProductQueryUseCase {
     private readonly queryBus: QueryBus,
   ) {}
 
-  async getProductById(dto: ProductIdDto): Promise<ProductDto> {
+  async getProductById(dto: ProductIdDto): Promise<ProductDto | null> {
     return this.queryBus.execute(new GetProductQuery(dto.productId));
   }
 
