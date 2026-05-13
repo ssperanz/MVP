@@ -6,7 +6,7 @@ import { OrderId } from 'src/shared/domain/value-objects/order-id.vo';
 export class OrderValidationFailedEvent extends OrderApplicationEvent {
   constructor(
     public readonly orderId: OrderId,
-    public readonly orderState: OrderState,
+    public readonly sourceWh: number,
     public readonly insufficientItems: Array<{ productId: string; qty: number }>,
   ) {
     super(orderId);
