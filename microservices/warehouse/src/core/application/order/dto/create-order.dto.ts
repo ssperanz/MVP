@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { IsString, IsArray, IsOptional, IsNumber, ValidateNested } from 'class-validator';
+import { IsString, IsArray, IsOptional, IsNumber, ValidateNested, ValidateIf } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class OrderItemDto {
@@ -41,13 +41,15 @@ export class CreateOrderDto {
   departure?: number;
 
   @IsOptional()
+  @ValidateIf(o => !o.destinationAddress)
+  @IsNumber()
+  destinationWh?: number;
+  
+  @IsOptional()
+  @ValidateIf(o => !o.destinationWh)
   @ValidateNested()
   @Type(() => AddressDto)
   destinationAddress?: AddressDto;
-
-  @IsOptional()
-  @IsNumber()
-  destinationWh?: number;
 
   @IsOptional()
   @IsString()

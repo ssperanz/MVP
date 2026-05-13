@@ -6,7 +6,7 @@ export class CreateOrderCommand extends Command<void> {
     public readonly items: Array<{ productId: string; qty: number }>,
     public readonly departure: number | null,
     public readonly destination: { streetName: string; civicNumber: number; city: string; cap: string; country: string } | number,
-    public readonly orderReference?: string,
+    public readonly orderReference: string | null,
   ) {
     super();
   }
