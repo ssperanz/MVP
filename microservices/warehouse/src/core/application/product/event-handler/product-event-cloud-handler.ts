@@ -41,42 +41,42 @@ export class ProductEventCloudHandler extends AbstractProductEventHandler implem
   }
 
   override async onNameUpdated(event: ProductNameUpdatedEvent): Promise<void> {
-    await this.publisher.publishProductUpdated(event);
+    await this.publisher.publishProducNameUpdate(event);
   }
 
   override async onPriceUpdated(event: ProductPriceUpdatedEvent): Promise<void> {
-    await this.publisher.publishProductUpdated(event);
+    await this.publisher.publishProductPriceUpdate(event);
   }
 
   override async onAvailableQtyUpdated(event: ProductAvailableQtyUpdatedEvent): Promise<void> {
-    await this.publisher.publishProductUpdated(event);
+    await this.publisher.publishProductAvailableQtyUpdate(event);
   }
 
   override async onReservedQtyUpdated(event: ProductReservedQtyUpdatedEvent): Promise<void> {
-    await this.publisher.publishProductUpdated(event);
+    await this.publisher.publishProductReservedQtyUpdate(event);
   }
 
   override async onMinThresUpdated(event: ProductMinThresUpdatedEvent): Promise<void> {
-    await this.publisher.publishProductUpdated(event);
+    await this.publisher.publishProductMinThresUpdate(event);
   }
 
   override async onMaxThresUpdated(event: ProductMaxThresUpdatedEvent): Promise<void> {
-    await this.publisher.publishProductUpdated(event);
+    await this.publisher.publishProductMaxThresUpdate(event);
   }
 
   override async onProductReserved(event: ProductReservedEvent): Promise<void> {
-    await this.publisher.publishProductUpdated(event);
+    await this.publisher.publishProductReserved(event);
   }
 
   override async onProductReleased(event: ProductReleasedEvent): Promise<void> {
-    await this.publisher.publishProductUpdated(event);
+    await this.publisher.publishProductReleased(event);
   }
 
   override async onProductDispatched(event: ProductDispatchedEvent): Promise<void> {
-    await this.publisher.publishProductUpdated(event);
+    await this.publisher.publishProductDispatched(event);
   }
 
   override async onProductReceived(event: ProductReceivedEvent): Promise<void> {
-    await this.publisher.publishProductUpdated(event);
+    await this.publisher.publishProductReceived(event);
   }
 }

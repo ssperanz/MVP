@@ -7,8 +7,9 @@ import { DeliverOrderCommand } from './use-cases/command/deliver-order.command';
 import { OrderDispatchedDto } from './dto/order-dispatched.dto';
 import { UpdateOrderStateDto } from './dto/update-order-state.dto';
 import { UpdateOrderStateCommand } from './use-cases/command/update-order-state.command';
+import { Injectable } from '@nestjs/common';
 
-
+@Injectable()
 export class OrderService {
   constructor(
     private readonly commandBus: CommandBus,

@@ -14,6 +14,7 @@ import { ProductReservedEvent } from '../events/product-reserved.event.js';
 import { ProductReleasedEvent } from '../events/product-released.event.js';
 import { ProductDispatchedEvent } from '../events/product-dispatched.event.js';
 import { ProductReceivedEvent } from '../events/product-received.event.js';
+import { OrderId } from 'src/shared/domain/value-objects/order-id.vo.js';
 
 export class Product extends AggregateRoot {
   constructor(
@@ -100,38 +101,38 @@ export class Product extends AggregateRoot {
     return this.maxThres;
   }
 
-  reserve(qtyToReserve: Quantity): Quantity {
+  reserve(orderId: OrderId, qtyToReserve: Quantity): Quantity {
     if (qtyToReserve.isGreaterThan(this.availableQty)) {
       throw new Error('Not enough available quantity to reserve');
     }
     this.availableQty = this.availableQty.decreaseBy(qtyToReserve);
     this.reservedQty = this.reservedQty.increaseBy(qtyToReserve);
-    this.apply(new ProductReservedEvent(this.productId, qtyToReserve));
+    this.apply(new ProductReservedEvent(orderId, this.productId, qtyToReserve));
     return this.reservedQty;
   }
 
-  release(qtyToRelease: Quantity): Quantity {
+  release(orderId: OrderId, qtyToRelease: Quantity): Quantity {
     if (qtyToRelease.isGreaterThan(this.reservedQty)) {
       throw new Error('Not enough reserved quantity to release');
     }
     this.reservedQty = this.reservedQty.decreaseBy(qtyToRelease);
     this.availableQty = this.availableQty.increaseBy(qtyToRelease);
-    this.apply(new ProductReleasedEvent(this.productId, qtyToRelease));
+    this.apply(new ProductReleasedEvent(orderId, this.productId, qtyToRelease));
     return this.availableQty;
   }
 
-  dispatch(qtyToDispatch: Quantity): Quantity {
+  dispatch(orderId: OrderId, qtyToDispatch: Quantity): Quantity {
     if (qtyToDispatch.isGreaterThan(this.reservedQty)) {
       throw new Error('Not enough reserved quantity to dispatch');
     }
     this.reservedQty = this.reservedQty.decreaseBy(qtyToDispatch);
-    this.apply(new ProductDispatchedEvent(this.productId, qtyToDispatch));
+    this.apply(new ProductDispatchedEvent(orderId, this.productId, qtyToDispatch));
     return this.reservedQty;
   }
 
-  receive(qtyToReceive: Quantity): Quantity {
+  receive(orderId: OrderId, qtyToReceive: Quantity): Quantity {
     this.availableQty = this.availableQty.increaseBy(qtyToReceive);
-    this.apply(new ProductReceivedEvent(this.productId, qtyToReceive));
+    this.apply(new ProductReceivedEvent(orderId, this.productId, qtyToReceive));
     return this.availableQty;
   }
 }

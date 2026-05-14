@@ -1,7 +1,5 @@
-import { OrderEvent } from "src/shared/domain/events/order-event.base";
+import { OrderEventPublisher } from "./order-event.publisher";
 
 export const IOrderEventDestinationWhPublisherToken = Symbol('IOrderEventDestinationWhPublisher');
 
-export interface OrderEventDestinationWhPublisher {
-  publish(payload: any): Promise<void>;
-}
+export interface OrderEventDestinationWhPublisher extends OrderEventPublisher {}
