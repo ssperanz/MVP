@@ -19,7 +19,7 @@ import { OrderApplicationEvent } from 'src/shared/application/events/order-appli
   OrderDispatchedEvent, OrderDispatchFailedEvent,
   OrderDeliveredEvent, OrderCanceledEvent,
 )
-export class UpdateOrderStateHandler implements IEventHandler<any> {
+export class UpdateOrderStateHandler implements IEventHandler<OrderEvent | OrderApplicationEvent> {
   constructor(
     @Inject('IOrderRepository') private readonly orderRepository: OrderRepository,
   ) {}
