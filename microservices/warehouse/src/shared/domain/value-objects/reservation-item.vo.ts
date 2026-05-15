@@ -22,4 +22,14 @@ export class ReservationItem extends ProductItem {
   updateItemState(newState: ReservationItemState): void {
     this.itemState = newState;
   }
+
+  reserve(reservedQty: Quantity): void {
+    this.itemQty.increaseBy(reservedQty);
+    this.updateItemState(ReservationItemState.RESERVED);
+  }
+
+  release(): void {
+    this.itemQty.decreaseBy(this.itemQty);
+    this.updateItemState(ReservationItemState.RELEASED);
+  }
 }

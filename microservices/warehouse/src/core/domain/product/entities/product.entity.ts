@@ -103,12 +103,19 @@ export class Product extends AggregateRoot {
 
   reserve(orderId: OrderId, qtyToReserve: Quantity): Quantity {
     if (qtyToReserve.isGreaterThan(this.availableQty)) {
-      throw new Error('Not enough available quantity to reserve');
+      console.log('Not enough available quantity to reserve');
+      const availableToReserve = this.availableQty;
+      this.availableQty = this.availableQty.decreaseBy(availableToReserve);
+      this.reservedQty = this.reservedQty.increaseBy(availableToReserve);
+      this.apply(new ProductReservedEvent(orderId, this.productId, availableToReserve));
+      return availableToReserve;
     }
-    this.availableQty = this.availableQty.decreaseBy(qtyToReserve);
-    this.reservedQty = this.reservedQty.increaseBy(qtyToReserve);
-    this.apply(new ProductReservedEvent(orderId, this.productId, qtyToReserve));
-    return this.reservedQty;
+    else {
+      this.availableQty = this.availableQty.decreaseBy(qtyToReserve);
+      this.reservedQty = this.reservedQty.increaseBy(qtyToReserve);
+      this.apply(new ProductReservedEvent(orderId, this.productId, qtyToReserve));
+      return qtyToReserve;
+    }
   }
 
   release(orderId: OrderId, qtyToRelease: Quantity): Quantity {

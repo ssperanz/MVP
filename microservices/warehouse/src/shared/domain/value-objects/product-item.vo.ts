@@ -3,8 +3,8 @@ import { Quantity } from './quantity.vo.js';
 
 export class ProductItem {
   constructor(
-    private readonly itemId: ProductId,
-    private readonly itemQty: Quantity,
+    protected readonly itemId: ProductId,
+    protected readonly itemQty: Quantity,
   ) {}
 
   getId(): ProductId {
@@ -13,5 +13,13 @@ export class ProductItem {
 
   getQty(): Quantity {
     return this.itemQty;
+  }
+
+  increaseBy(qty: Quantity): void {
+    this.itemQty.increaseBy(qty);
+  }
+
+  decreaseBy(qty: Quantity): void {
+    this.itemQty.decreaseBy(qty);
   }
 }

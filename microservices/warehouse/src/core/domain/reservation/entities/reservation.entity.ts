@@ -8,6 +8,7 @@ import { ReservationCreatedEvent } from '../events/reservation-created.event.js'
 import { ReservationUpdatedEvent } from '../events/reservation-updated.event.js';
 import { ReservationCompletedEvent } from '../events/reservation-completed.event.js';
 import { ReservationCanceledEvent } from '../events/reservation-canceled.event.js';
+import { ProductId } from 'src/shared/domain/value-objects/product-id.vo.js';
 
 export class Reservation extends AggregateRoot {
   private orderId: OrderId;
@@ -33,55 +34,42 @@ export class Reservation extends AggregateRoot {
     this.state = newState;
   }
 
-  static create(items: ProductItem[]): Reservation {
+  static create(orderId: OrderId, items: ProductItem[]): Reservation {
     const reservationItems = items.map(
       (item) => new ReservationItem(item.getId(), item.getQty(), ReservationItemState.INITIALIZED),
     );
-    const orderId = new OrderId(crypto.randomUUID());
     const reservation = new Reservation(orderId, reservationItems);
     this.apply(new ReservationCreatedEvent(orderId, reservationItems));
     return reservation;
   }
 
   reserve(items: ProductItem[]): ReservationItem[] {
-    this.updateState(ReservationState.PROCESSING);
     for (const item of items) {
       const reservationItem = this.reservedItems.find(
         (ri) => ri.getId().id === item.getId().id,
       );
       if (reservationItem) {
-        reservationItem.updateItemState(ReservationItemState.RESERVED);
+        reservationItem.reserve(item.getQty());
       }
     }
     this.updateState(ReservationState.UPDATED);
-    this.apply(new ReservationUpdatedEvent(this.orderId, this.state, this.reservedItems));
+    this.apply(new ReservationUpdatedEvent(this.orderId, this.reservedItems));
     return this.reservedItems;
   }
 
-  release(productIds: string[]): void {
-    this.updateState(ReservationState.RELEASING);
-    for (const pid of productIds) {
-      const reservationItem = this.reservedItems.find(
-        (ri) => ri.getId().id === pid,
-      );
-      if (reservationItem) {
-        reservationItem.updateItemState(ReservationItemState.RELEASED);
-      }
-    }
-    this.apply(new ReservationUpdatedEvent(this.orderId, this.state, this.reservedItems));
-  }
-
   releaseAll(): void {
-    this.updateState(ReservationState.RELEASING);
     for (const reservationItem of this.reservedItems) {
+      if(reservationItem.getState() === ReservationItemState.RELEASED) {
+        console.log(`Warning: Product ${reservationItem.getId().id} is already released`);
+      }
       reservationItem.updateItemState(ReservationItemState.RELEASED);
     }
-    this.apply(new ReservationUpdatedEvent(this.orderId, this.state, this.reservedItems));
+    this.apply(new ReservationUpdatedEvent(this.orderId, this.reservedItems));
   }
 
   complete(): void {
     this.updateState(ReservationState.COMPLETED);
-    this.apply(new ReservationCompletedEvent(this.orderId, this.state));
+    this.apply(new ReservationCompletedEvent(this.orderId));
   }
 
   cancel(): void {
