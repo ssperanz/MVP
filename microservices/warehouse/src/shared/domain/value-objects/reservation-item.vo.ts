@@ -5,31 +5,49 @@ import { ReservationItemState } from '../enums/reservation-item-state.enum.js';
 
 export class ReservationItem extends ProductItem {
   private itemState: ReservationItemState;
+  private itemReservedQty: Quantity;
 
   constructor(
     itemId: ProductId,
-    itemQty: Quantity,
-    itemState: ReservationItemState = ReservationItemState.INITIALIZED,
+    itemRequestedQty: Quantity,
   ) {
-    super(itemId, itemQty);
-    this.itemState = itemState;
+    super(itemId, itemRequestedQty);
+    this.itemReservedQty = new Quantity(0);
   }
 
   getState(): ReservationItemState {
     return this.itemState;
   }
 
-  updateItemState(newState: ReservationItemState): void {
+  getReservedQty(): Quantity {
+    return this.itemReservedQty;
+  }
+
+  getRequestedQty(): Quantity {
+    return this.getQty();
+  }
+
+  static create(itemId: ProductId, itemRequestedQty: Quantity): ReservationItem {
+    const reservationItem = new ReservationItem(itemId, itemRequestedQty);
+    reservationItem.updateItemState(ReservationItemState.INITIALIZED);
+    return reservationItem;
+  }
+
+  private updateItemState(newState: ReservationItemState): void {
     this.itemState = newState;
   }
 
   reserve(reservedQty: Quantity): void {
-    this.itemQty.increaseBy(reservedQty);
+    this.itemReservedQty.increaseBy(reservedQty);
     this.updateItemState(ReservationItemState.RESERVED);
   }
 
   release(): void {
-    this.itemQty.decreaseBy(this.itemQty);
+    this.itemReservedQty.decreaseBy(this.itemReservedQty);
     this.updateItemState(ReservationItemState.RELEASED);
+  }
+
+  validateItem(): number {
+    return this.getRequestedQty().getValue - this.getReservedQty().getValue;
   }
 }

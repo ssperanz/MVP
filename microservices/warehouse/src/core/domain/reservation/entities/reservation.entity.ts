@@ -5,71 +5,78 @@ import { ReservationItem } from '../../../../shared/domain/value-objects/reserva
 import { ReservationState } from '../../../../shared/domain/enums/reservation-state.enum.js';
 import { ReservationItemState } from '../../../../shared/domain/enums/reservation-item-state.enum.js';
 import { ReservationCreatedEvent } from '../events/reservation-created.event.js';
-import { ReservationUpdatedEvent } from '../events/reservation-updated.event.js';
 import { ReservationCompletedEvent } from '../events/reservation-completed.event.js';
 import { ReservationCanceledEvent } from '../events/reservation-canceled.event.js';
-import { ProductId } from 'src/shared/domain/value-objects/product-id.vo.js';
+import { ReservationUpdatedEvent } from '../events/reservation-updated.event.js';
+import { ReservationCancelingRequestedEvent } from '../events/reservation-canceling-requested.event.js';
 
 export class Reservation extends AggregateRoot {
   private orderId: OrderId;
-  private reservedItems: ReservationItem[];
+  private reservationItems: ReservationItem[];
   private state: ReservationState;
 
   constructor(
     orderId: OrderId,
-    reservedItems: ReservationItem[],
-    state: ReservationState = ReservationState.CREATED,
+    reservationItems: ReservationItem[],
   ) {
     super();
     this.orderId = orderId;
-    this.reservedItems = reservedItems;
-    this.state = state;
+    this.reservationItems = reservationItems;
   }
 
   getOrderId(): OrderId { return this.orderId; }
-  getReservedItems(): ReservationItem[] { return this.reservedItems; }
+  getReservationItems(): ReservationItem[] { return this.reservationItems; }
   getState(): ReservationState { return this.state; }
 
   private updateState(newState: ReservationState): void {
     this.state = newState;
   }
 
+    private releaseAll(): void {
+    for (const reservationItem of this.reservationItems) {
+      if(reservationItem.getState() === ReservationItemState.RELEASED) {
+        console.log(`Warning: Product ${reservationItem.getId().id} is already released`);
+        reservationItem.release();
+      }
+    }
+  }
+
+  getMissingItems(): ReservationItem[] {
+    return this.reservationItems.filter((item) => item.validateItem() !== 0);
+  }
+
   static create(orderId: OrderId, items: ProductItem[]): Reservation {
     const reservationItems = items.map(
-      (item) => new ReservationItem(item.getId(), item.getQty(), ReservationItemState.INITIALIZED),
+      (item) => ReservationItem.create(item.getId(), item.getQty())
     );
     const reservation = new Reservation(orderId, reservationItems);
+    reservation.updateState(ReservationState.CREATED)
     this.apply(new ReservationCreatedEvent(orderId, reservationItems));
     return reservation;
   }
 
   reserve(items: ProductItem[]): ReservationItem[] {
     for (const item of items) {
-      const reservationItem = this.reservedItems.find(
+      const reservationItem = this.reservationItems.find(
         (ri) => ri.getId().id === item.getId().id,
       );
       if (reservationItem) {
         reservationItem.reserve(item.getQty());
       }
     }
-    this.updateState(ReservationState.UPDATED);
-    this.apply(new ReservationUpdatedEvent(this.orderId, this.reservedItems));
-    return this.reservedItems;
-  }
-
-  releaseAll(): void {
-    for (const reservationItem of this.reservedItems) {
-      if(reservationItem.getState() === ReservationItemState.RELEASED) {
-        console.log(`Warning: Product ${reservationItem.getId().id} is already released`);
-      }
-      reservationItem.updateItemState(ReservationItemState.RELEASED);
-    }
-    this.apply(new ReservationUpdatedEvent(this.orderId, this.reservedItems));
+    this.updateState(ReservationState.RESERVED);
+    this.apply(new ReservationUpdatedEvent(this.orderId, this.reservationItems));
+    return this.reservationItems;
   }
 
   complete(): void {
     this.updateState(ReservationState.COMPLETED);
     this.apply(new ReservationCompletedEvent(this.orderId));
+  }
+
+  requestCanceling(): void {
+    this.updateState(ReservationState.CANCELING);
+    this.apply(new ReservationCancelingRequestedEvent(this.orderId, this.reservationItems));
   }
 
   cancel(): void {
