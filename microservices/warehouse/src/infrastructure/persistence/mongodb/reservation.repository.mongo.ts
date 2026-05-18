@@ -20,7 +20,7 @@ export class ReservationRepositoryMongo implements ReservationRepository {
   async save(reservation: Reservation): Promise<void> {
     const data = {
       orderId: reservation.getOrderId().getId(),
-      reservedItems: reservation.getReservedItems().map((ri) => ({
+      reservedItems: reservation.getReservationItems().map((ri) => ({
         productId: ri.getId().id,
         qty: ri.getQty().getValue,
         state: ri.getState(),
@@ -51,13 +51,11 @@ export class ReservationRepositoryMongo implements ReservationRepository {
       (ri) => new ReservationItem(
         new ProductId(ri.productId),
         new Quantity(ri.qty),
-        ri.state as ReservationItemState,
       ),
     );
     return new Reservation(
       new OrderId(doc.orderId),
       items,
-      doc.state as ReservationState,
     );
   }
 }
