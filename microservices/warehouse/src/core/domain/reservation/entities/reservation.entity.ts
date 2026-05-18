@@ -56,6 +56,10 @@ export class Reservation extends AggregateRoot {
     return missingItems;
   }
 
+  getProductsWithReservedQty(): ProductItem[] {
+    return this.reservationItems.map(ri => ri.getProductWithReservedQty());
+  }
+
   static create(orderId: OrderId, items: ProductItem[]): Reservation {
     const reservationItems = items.map(
       (item) => ReservationItem.create(item.getId(), item.getQty())
@@ -85,9 +89,10 @@ export class Reservation extends AggregateRoot {
     this.apply(new ReservationCompletedEvent(this.orderId));
   }
 
-  requestCanceling(): void {
+  requestCanceling(): ProductItem[] {
     this.updateState(ReservationState.CANCELING);
     this.apply(new ReservationCancelingRequestedEvent(this.orderId, this.reservationItems));
+    return this.getProductsWithReservedQty();
   }
 
   cancel(): void {

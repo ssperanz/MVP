@@ -2,7 +2,7 @@ import { OrderApplicationEvent } from 'src/shared/application/events/order-appli
 import { OrderId } from 'src/shared/domain/value-objects/order-id.vo';
 
 export class OrderValidationFailedEvent extends OrderApplicationEvent {
-  private sourceWh: number;
+  public readonly sourceWh: number;
 
   constructor(
     public readonly orderId: OrderId,

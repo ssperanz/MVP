@@ -27,6 +27,10 @@ export class ReservationItem extends ProductItem {
     return this.getQty();
   }
 
+  getProductWithReservedQty(): ProductItem {
+    return new ProductItem(this.getId(), this.getReservedQty());
+  }
+
   static create(itemId: ProductId, itemRequestedQty: Quantity): ReservationItem {
     const reservationItem = new ReservationItem(itemId, itemRequestedQty);
     reservationItem.updateItemState(ReservationItemState.INITIALIZED);
