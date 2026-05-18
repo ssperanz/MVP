@@ -9,6 +9,7 @@ import { ReservationCompletedEvent } from '../events/reservation-completed.event
 import { ReservationCanceledEvent } from '../events/reservation-canceled.event.js';
 import { ReservationUpdatedEvent } from '../events/reservation-updated.event.js';
 import { ReservationCancelingRequestedEvent } from '../events/reservation-canceling-requested.event.js';
+import { Quantity } from 'src/shared/domain/value-objects/quantity.vo.js';
 
 export class Reservation extends AggregateRoot {
   private orderId: OrderId;
@@ -41,8 +42,18 @@ export class Reservation extends AggregateRoot {
     }
   }
 
-  getMissingItems(): ReservationItem[] {
-    return this.reservationItems.filter((item) => item.validateItem() !== 0);
+  getMissingItems(): ProductItem[] {
+    const missingItems: ProductItem[] = [];
+    for (const reservationItem of this.reservationItems) {
+      const missingQty = reservationItem.validateItem();
+      if (missingQty < 0) {
+        console.log(`Warning: Product ${reservationItem.getId().id} is over-reserved by ${-missingQty} units`);
+      }
+      if (missingQty > 0) {
+        missingItems.push(new ProductItem(reservationItem.getId(), new Quantity(missingQty)));
+      }
+    }
+    return missingItems;
   }
 
   static create(orderId: OrderId, items: ProductItem[]): Reservation {
