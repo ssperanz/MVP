@@ -2,7 +2,6 @@ import { AggregateRoot } from '@nestjs/cqrs';
 import { OrderId } from '../../../../shared/domain/value-objects/order-id.vo.js';
 import { ProductItem } from '../../../../shared/domain/value-objects/product-item.vo.js';
 import { ReservationItem } from '../../../../shared/domain/value-objects/reservation-item.vo.js';
-import { ReservationState } from '../../../../shared/domain/enums/reservation-state.enum.js';
 import { ReservationItemState } from '../../../../shared/domain/enums/reservation-item-state.enum.js';
 import { ReservationCreatedEvent } from '../events/reservation-created.event.js';
 import { ReservationCompletedEvent } from '../events/reservation-completed.event.js';
@@ -10,6 +9,7 @@ import { ReservationCanceledEvent } from '../events/reservation-canceled.event.j
 import { ReservationUpdatedEvent } from '../events/reservation-updated.event.js';
 import { ReservationCancelingRequestedEvent } from '../events/reservation-canceling-requested.event.js';
 import { Quantity } from 'src/shared/domain/value-objects/quantity.vo.js';
+import { ReservationState } from 'src/shared/domain/enums/reservation-state.enum.js';
 
 export class Reservation extends AggregateRoot {
   private orderId: OrderId;
@@ -80,13 +80,18 @@ export class Reservation extends AggregateRoot {
       }
     }
     this.updateState(ReservationState.RESERVED);
-    this.apply(new ReservationUpdatedEvent(this.orderId, this.reservationItems));
+    this.apply(new ReservationUpdatedEvent(this.orderId));
     return this.reservationItems;
   }
 
-  complete(): void {
-    this.updateState(ReservationState.COMPLETED);
+  validate(): void {
+    this.updateState(ReservationState.VALIDATED);
     this.apply(new ReservationCompletedEvent(this.orderId));
+  }
+
+  pause(): void {
+    this.updateState(ReservationState.PENDING);
+    this.apply(new ReservationUpdatedEvent(this.orderId));
   }
 
   requestCanceling(): ProductItem[] {

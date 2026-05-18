@@ -25,8 +25,11 @@ export class ValidateOrderCommandHandler implements ICommandHandler<ValidateOrde
           missingItems.map((item) => ({ productId: item.getId().id, qty: item.getQty().getValue })),
         ),
       );
+      reservation.pause();
     } else {
       this.eventBus.publish(new OrderValidatedEvent(command.orderId));
+      reservation.validate();
     }
+    await this.reservationRepository.save(reservation);
   }
 }

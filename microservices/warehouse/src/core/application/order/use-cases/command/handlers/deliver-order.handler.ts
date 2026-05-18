@@ -27,7 +27,7 @@ export class DeliverOrderCommandHandler implements ICommandHandler<DeliverOrderC
         await this.productRepository.save(product);
       }
       if (order instanceof ReplenishmentOrder) {
-        this.eventBus.publish(new ReplenishmentDeliveredEvent(order.getOrderId(), order.getOrderReference()));
+        this.eventBus.publish(new ReplenishmentDeliveredEvent(order.getOrderId(), order.getOrderReference(), order.getOrderItems()));
       }
       else {
         this.eventBus.publish(new OrderDeliveredEvent(order.getOrderId()));
