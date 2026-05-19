@@ -1,22 +1,19 @@
 import { Module } from '@nestjs/common';
-import { WarehouseController } from './warehouse.controller';
-import { WarehouseService } from './warehouse.service';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { NatsMessagingModule } from './infrastructure/messaging/nats/nats-messaging.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { CqrsModule } from '@nestjs/cqrs';
+import { ProductModule } from './core/application/product/product.module';
 
 @Module({
   imports: [
-    ClientsModule.register([
-      {
-        name: 'NATS_CLIENT',
-        transport: Transport.NATS,
-        options: {
-          servers: [process.env.NATS_URL ?? 'nats://localhost:4222'],
-        },
-      }
-    ]),
+    CqrsModule.forRoot(),
+    MongooseModule.forRoot(process.env.MONGO_URL || 'mongodb://localhost:27017/warehouse'),
+    NatsMessagingModule,
+    ProductModule,
+    // OrderModule,
   ],
   providers: [],
-  exports: [ClientsModule],
+  controllers: [],
 
 })
 export class WarehouseModule {}
