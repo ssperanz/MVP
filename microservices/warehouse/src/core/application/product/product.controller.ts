@@ -1,4 +1,4 @@
-import { Controller } from "@nestjs/common";
+import { Controller, Get, Patch, Post } from "@nestjs/common";
 import { ProductService } from "./product.service";
 import { CreateProductDto } from "./dto/create-product.dto";
 import { UpdateProductDto } from "./dto/update-product.dto";
@@ -14,22 +14,27 @@ export class ProductController {
     private readonly productQueryFacade: ProductQueryFacade,
   ) {}
 
+  @Post()
   async createProduct(dto: CreateProductDto): Promise<void> {
     return this.productService.createProduct(dto);
   }
 
+  @Post(':id')
   async updateProduct(dto: UpdateProductDto): Promise<void> {
     return this.productService.updateProduct(dto);
   }
   
+  @Patch(':id/delete')
   async deleteProduct(dto: ProductIdDto): Promise<void> {
     return this.productService.deleteProduct(dto);
   }
 
+  @Get(':id')
   async getProductById(dto: ProductIdDto): Promise<ProductDto | null> {
     return this.productQueryFacade.getProductById(dto);
   }
 
+  @Get()
   async getInventory(): Promise<InventoryDto> {
     return this.productQueryFacade.listProducts();
   }

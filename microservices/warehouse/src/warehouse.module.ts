@@ -9,7 +9,7 @@ import { ReservationModule } from './core/application/reservation/reservation.mo
 @Module({
   imports: [
     CqrsModule.forRoot(),
-    MongooseModule.forRoot(process.env.MONGO_URL || 'mongodb://localhost:27017/warehouse/' + process.env.WAREHOUSE_ID + '/', {
+    MongooseModule.forRoot(process.env.MONGO_URL || 'mongodb://localhost:27017/warehouse/' + process.env.WH_ID + '/', {
 
     }),
     NatsMessagingModule,

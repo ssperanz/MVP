@@ -61,6 +61,10 @@ export class Order extends AggregateRoot {
     return this.orderState;
   }
 
+  setState(newOrderState: OrderState): OrderState {
+    return this.updateOrderState(newOrderState);
+  }
+
   markAsReserving(): void {
     this.updateOrderState(OrderState.RESERVING);
   }

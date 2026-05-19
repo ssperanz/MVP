@@ -6,6 +6,7 @@ import { OrderEventCloudPublisherNats } from './order-event-cloud.publisher.nats
 import { OrderEventDestinationWhPublisherNats } from './order-event-destination-wh.publisher.nats.js';
 import { ReplenishmentRequestPublisherNats } from './replenishment-request.publisher.nats.js';
 import { DispatchNotifierPublisherNats } from './dispatch-notifier.publisher.nats.js';
+import { InboundOrderEventListenerNats } from './inbound-order-event.listener.nats.js';
 
 @Module({
   imports: [
@@ -42,6 +43,10 @@ import { DispatchNotifierPublisherNats } from './dispatch-notifier.publisher.nat
       provide: 'IDispatchNotifierPort',
       useClass: DispatchNotifierPublisherNats,
     },
+    {
+      provide: 'IInboundOrderEventListenerPort',
+      useClass: InboundOrderEventListenerNats,
+    }
   ],
   exports: [
     'IProductEventCloudPublisher',
@@ -49,6 +54,7 @@ import { DispatchNotifierPublisherNats } from './dispatch-notifier.publisher.nat
     'IOrderEventDestinationWhPublisher',
     'IReplenishmentRequestPort',
     'IDispatchNotifierPort',
+    'IInboundOrderEventListenerPort',
   ],
 })
 export class NatsMessagingModule {}
