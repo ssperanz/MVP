@@ -10,7 +10,7 @@ export class OrderQueryFacade implements OrderQueryUseCase {
     private readonly queryBus: QueryBus,
   ) {}
 
-  async getOrderById(dto: OrderIdDto): Promise<OrderDto> {
+  async getOrderById(dto: OrderIdDto): Promise<OrderDto | null> {
     return this.queryBus.execute(new GetOrderQuery(dto.orderId));
   }
 

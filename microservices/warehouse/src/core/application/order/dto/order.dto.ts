@@ -1,12 +1,38 @@
+import { IsArray, IsDate, IsNumber, IsOptional, IsPositive, IsString } from "class-validator";
+import { AddressDto, OrderItemDto } from "./create-order.dto";
+
 export class OrderDto {
+  @IsString()
   orderId: string;
-  orderItems: Array<{ productId: string; qty: number; unitPrice: number; totalValue: number }>;
+
+  @IsArray()
+  orderItems: OrderItemDto[];
+
+  @IsString()
   orderType: string;
+
+  @IsString()
   orderState: string;
+
+  @IsDate()
   orderCreationDate: Date;
+
+  @IsNumber()
   departureWh: number;
+
+  @IsNumber()
+  @IsPositive()
   totalOrderValue: number;
-  destination?: { streetName: string; civicNumber: number; city: string; cap: string; country: string };
+
+  @IsArray()
+  @IsOptional()
+  destination?: AddressDto;
+  
+  @IsNumber()
+  @IsOptional()
   destinationWh?: number;
+
+  @IsString()
+  @IsOptional()
   orderReference?: string;
 }
