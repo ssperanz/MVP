@@ -5,9 +5,8 @@ import { CancelOrderCommand } from './use-cases/command/cancel-order.command';
 import { OrderIdDto } from './dto/order-id.dto';
 import { DeliverOrderCommand } from './use-cases/command/deliver-order.command';
 import { OrderDispatchedDto } from './dto/order-dispatched.dto';
-import { UpdateOrderStateDto } from './dto/update-order-state.dto';
-import { UpdateOrderStateCommand } from './use-cases/command/update-order-state.command';
 import { Injectable } from '@nestjs/common';
+import { OrderId } from 'src/shared/domain/value-objects/order-id.vo';
 
 @Injectable()
 export class OrderService {
@@ -35,14 +34,10 @@ export class OrderService {
     }
 
     async cancelOrder(dto: OrderIdDto): Promise<void> {
-      return this.commandBus.execute(new CancelOrderCommand(dto.orderId));
+      return this.commandBus.execute(new CancelOrderCommand(new OrderId(dto.orderId)));
     }
 
     async deliverOrder(dto: OrderDispatchedDto): Promise<void> {
-      return this.commandBus.execute(new DeliverOrderCommand(dto.orderId));
-    }
-
-    async updateOrderState(dto: UpdateOrderStateDto): Promise<void> {
-      return this.commandBus.execute(new UpdateOrderStateCommand(dto.orderId, dto.newState));
+      return this.commandBus.execute(new DeliverOrderCommand(new OrderId(dto.orderId)));
     }
   }
