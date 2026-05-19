@@ -32,21 +32,19 @@ export class TransferOrder extends Order {
     const order = new TransferOrder(orderId, orderItems, orderType, departureWh, destinationWh);
     order.apply(
       new OrderCreatedEvent(
-        orderId.getId(),
-        orderItems.map((i) => ({
-          productId: i.getId().id,
-          qty: i.getQty().getValue,
-          unitPrice: i.getItemPrice().getAmount(),
-        })),
-        departureWh.getId(),
+        orderId,
+        orderItems,
+        departureWh,
         orderType,
+        OrderState.CREATED,
+        order.getTotalOrderValue(),
       ),
     );
     return order;
   }
 
   markAsReplenishing(): void {
-    this.updateOrderState(OrderState.REPLENISHING);
+    this.updateOrderState(OrderState.RESTOCKING);
   }
 
   getDestinationWh(): WarehouseId { return this.destinationWh; }

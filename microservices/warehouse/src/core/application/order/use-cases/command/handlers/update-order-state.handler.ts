@@ -12,7 +12,6 @@ import { UpdateOrderStateCommand } from '../update-order-state.command.js';
 export class UpdateOrderStateCommandHandler implements ICommandHandler<UpdateOrderStateCommand> {
   constructor(
     @Inject('IOrderRepository') private readonly orderRepository: OrderRepository,
-    private eventBus: EventBus,
   ) {}
 
   async execute(command: UpdateOrderStateCommand): Promise<void> {

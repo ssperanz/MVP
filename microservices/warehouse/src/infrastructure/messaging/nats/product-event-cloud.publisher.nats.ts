@@ -20,13 +20,13 @@ export class ProductEventCloudPublisherNats implements ProductEventCloudPublishe
   constructor(@Inject('NATS_CLIENT') private readonly natsClient: ClientProxy) {}
 
   async publishProductCreated(payload: any): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || 'WH0'}.product.created`;
+    const subject = `warehouse.${process.env.WH_ID || '0'}.product.created`;
     this.logger.log(`Publishing product.created to NATS cloud`);
     this.natsClient.emit(subject, payload);
   }
 
   async publishProducNameUpdate(event: ProductNameUpdatedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || 'WH0'}.product.name.updated`;
+    const subject = `warehouse.${process.env.WH_ID || '0'}.product.name.updated`;
     this.logger.log(`Publishing product.name.updated to NATS cloud for product ID: ${event.productId}`);
     this.natsClient.emit(subject, {
       productId: event.productId,
@@ -35,7 +35,7 @@ export class ProductEventCloudPublisherNats implements ProductEventCloudPublishe
   }
 
   async publishProductAvailableQtyUpdate(event: ProductAvailableQtyUpdatedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || 'WH0'}.product.availableQty.updated`;
+    const subject = `warehouse.${process.env.WH_ID || '0'}.product.availableQty.updated`;
     this.logger.log(`Publishing product.availableQty.updated to NATS cloud for product ID: ${event.productId}`);
     this.natsClient.emit(subject, {
       productId: event.productId,
@@ -44,7 +44,7 @@ export class ProductEventCloudPublisherNats implements ProductEventCloudPublishe
   }
 
   async publishProductPriceUpdate(event: ProductPriceUpdatedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || 'WH0'}.product.price.updated`;
+    const subject = `warehouse.${process.env.WH_ID || '0'}.product.price.updated`;
     this.logger.log(`Publishing product.price.updated to NATS cloud for product ID: ${event.productId}`);
     this.natsClient.emit(subject, {
       productId: event.productId,
@@ -53,7 +53,7 @@ export class ProductEventCloudPublisherNats implements ProductEventCloudPublishe
   }
 
   async publishProductReservedQtyUpdate(event: ProductReservedQtyUpdatedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || 'WH0'}.product.reservedQty.updated`;
+    const subject = `warehouse.${process.env.WH_ID || '0'}.product.reservedQty.updated`;
     this.logger.log(`Publishing product.reservedQty.updated to NATS cloud for product ID: ${event.productId}`);
     this.natsClient.emit(subject, {
       productId: event.productId,
@@ -62,7 +62,7 @@ export class ProductEventCloudPublisherNats implements ProductEventCloudPublishe
   }
 
   async publishProductDispatched(event: ProductDispatchedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || 'WH0'}.product.dispatched`;
+    const subject = `warehouse.${process.env.WH_ID || '0'}.product.dispatched`;
     this.logger.log(`Publishing product.dispatched to NATS cloud for product ID: ${event.productId}`);
     this.natsClient.emit(subject, {
       productId: event.productId,
@@ -71,7 +71,7 @@ export class ProductEventCloudPublisherNats implements ProductEventCloudPublishe
   }
 
   async publishProductReceived(event: ProductReceivedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || 'WH0'}.product.received`;
+    const subject = `warehouse.${process.env.WH_ID || '0'}.product.received`;
     this.logger.log(`Publishing product.received to NATS cloud for product ID: ${event.productId}`);
     this.natsClient.emit(subject, {
       productId: event.productId,
@@ -80,7 +80,7 @@ export class ProductEventCloudPublisherNats implements ProductEventCloudPublishe
   }
 
   async publishProductMinThresUpdate(event: ProductMinThresUpdatedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || 'WH0'}.product.minThres.updated`;
+    const subject = `warehouse.${process.env.WH_ID || '0'}.product.minThres.updated`;
     this.logger.log(`Publishing product.minThres.updated to NATS cloud for product ID: ${event.productId}`);
     this.natsClient.emit(subject, {
       productId: event.productId,
@@ -89,7 +89,7 @@ export class ProductEventCloudPublisherNats implements ProductEventCloudPublishe
   }
 
   async publishProductMaxThresUpdate(event: ProductMaxThresUpdatedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || 'WH0'}.product.maxThres.updated`;
+    const subject = `warehouse.${process.env.WH_ID || '0'}.product.maxThres.updated`;
     this.logger.log(`Publishing product.maxThres.updated to NATS cloud for product ID: ${event.productId}`);
     this.natsClient.emit(subject, {
       productId: event.productId,
@@ -98,7 +98,7 @@ export class ProductEventCloudPublisherNats implements ProductEventCloudPublishe
   }
 
   async publishProductReserved(event: ProductReservedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || 'WH0'}.product.reserved`;
+    const subject = `warehouse.${process.env.WH_ID || '0'}.product.reserved`;
     this.logger.log(`Publishing product.reserved to NATS cloud for product ID: ${event.productId}`);
     this.natsClient.emit(subject, {
       productId: event.productId,
@@ -107,7 +107,7 @@ export class ProductEventCloudPublisherNats implements ProductEventCloudPublishe
   }
 
   async publishProductReleased(event: ProductReleasedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || 'WH0'}.product.released`;
+    const subject = `warehouse.${process.env.WH_ID || '0'}.product.released`;
     this.logger.log(`Publishing product.released to NATS cloud for product ID: ${event.productId}`);
     this.natsClient.emit(subject, {
       productId: event.productId,
@@ -116,7 +116,7 @@ export class ProductEventCloudPublisherNats implements ProductEventCloudPublishe
   }
 
   async publishProductRemoved(event: ProductRemovedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || 'WH0'}.product.removed`;
+    const subject = `warehouse.${process.env.WH_ID || '0'}.product.removed`;
     this.logger.log(`Publishing product.removed to NATS cloud`);
     this.natsClient.emit(subject, {
       productId: event.productId,

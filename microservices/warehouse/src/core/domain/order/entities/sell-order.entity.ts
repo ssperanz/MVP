@@ -33,14 +33,12 @@ export class SellOrder extends Order {
     const order = new SellOrder(orderId, orderItems, orderType, departureWh, destination);
     order.apply(
       new OrderCreatedEvent(
-        orderId.getId(),
-        orderItems.map((i) => ({
-          productId: i.getId().id,
-          qty: i.getQty().getValue,
-          unitPrice: i.getItemPrice().getAmount(),
-        })),
-        departureWh.getId(),
+        orderId,
+        orderItems,
+        departureWh,
         orderType,
+        OrderState.CREATED,
+        order.getTotalOrderValue(),
       ),
     );
     return order;

@@ -9,13 +9,13 @@ export class OrderEventCloudPublisherNats implements OrderEventCloudPublisher {
   constructor(@Inject('NATS_CLIENT') private readonly natsClient: ClientProxy) {}
 
   async publishOrderCreated(payload: any): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || 'WH0'}.order.created`;
+    const subject = `warehouse.${process.env.WH_ID || '0'}.order.created`;
     this.logger.log(`Publishing order.created to NATS cloud`);
     this.natsClient.emit(subject, payload);
   }
 
   async publishOrderStateUpdated(payload: any): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || 'WH0'}.order.state.updated`;
+    const subject = `warehouse.${process.env.WH_ID || '0'}.order.state.updated`;
     this.logger.log(`Publishing order.state.updated to NATS cloud`);
     this.natsClient.emit(subject, payload);
   }

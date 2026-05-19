@@ -2,7 +2,6 @@ import { Controller, Get, Patch, Post } from "@nestjs/common";
 import { OrderService } from "./order.service";
 import { CreateOrderDto } from "./dto/create-order.dto";
 import { CancelOrderDto } from "./dto/cancel-order.dto";
-import { OrderDispatchedDto } from "./dto/order-dispatched.dto";
 import { OrderIdDto } from "./dto/order-id.dto";
 import { OrderQueryFacade } from "./order.query.facade";
 import { OrderDto } from "./dto/order.dto";

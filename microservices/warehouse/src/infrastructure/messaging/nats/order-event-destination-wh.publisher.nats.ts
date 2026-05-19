@@ -11,7 +11,7 @@ export class OrderEventDestinationWhPublisherNats implements OrderEventDestinati
   constructor(@Inject('NATS_CLIENT') private readonly natsClient: ClientProxy) {}
 
   async publishOrderCreated(event: OrderCreatedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || 'WH0'}.order.created`;
+    const subject = `warehouse.${process.env.WH_ID || '0'}.order.created`;
     this.logger.log(`Publishing order created event for order ${event.orderId} to warehouse via NATS`);
     await this.natsClient.emit(subject, {
       orderId: event.orderId,
@@ -23,7 +23,7 @@ export class OrderEventDestinationWhPublisherNats implements OrderEventDestinati
   }
 
   async publishOrderStateUpdated(event: OrderStateUpdatedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || 'WH0'}.order.state.updated`;
+    const subject = `warehouse.${process.env.WH_ID || '0'}.order.state.updated`;
     this.logger.log(`Publishing order state updated event for order ${event.orderId} to warehouse via NATS`);
     await this.natsClient.emit(subject, {
       orderId: event.orderId,

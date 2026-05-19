@@ -42,14 +42,11 @@ export class ReplenishmentOrder extends TransferOrder {
     order.apply(
       new OrderCreatedEvent(
         orderId,
-        orderItems.map((i) => ({
-          productId: i.getId().id,
-          qty: i.getQty().getValue,
-          unitPrice: i.getItemPrice().getAmount(),
-        })),
+        orderItems,
         departureWh,
         orderType,
         OrderState.CREATED,
+        order.getTotalOrderValue(),
       ),
     );
     return order;
