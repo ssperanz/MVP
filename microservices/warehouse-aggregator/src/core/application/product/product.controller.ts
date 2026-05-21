@@ -15,7 +15,7 @@ export class ProductController {
     return this.productQueryFacade.getProductById(dto);
   }
 
-  @Get(':whId')
+  @Get('warehouse/:whId')
   async getProductByWhId(whId: number): Promise<ProductDto[] | null> {
     return this.productQueryFacade.getProductByWhId(whId);
   }
