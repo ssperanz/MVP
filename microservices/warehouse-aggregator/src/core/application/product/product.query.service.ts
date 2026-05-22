@@ -8,7 +8,7 @@ import { GetInventoryQuery } from './use-cases/query/get-inventory.query';
 import { GetProductByWhIdQuery } from './use-cases/query/get-product-by-wh-id.query';
 
 
-export class ProductQueryFacade implements ProductQueryUseCase {
+export class ProductQueryService implements ProductQueryUseCase {
   constructor(
     private readonly queryBus: QueryBus,
   ) {}
