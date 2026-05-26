@@ -6,7 +6,7 @@ import { GetOrderByIdQuery } from './use-cases/query/get-order-by-id.query';
 import { GetAllOrdersQuery } from './use-cases/query/get-all-orders.query';
 import { GetOrdersByWhIdQuery } from './use-cases/query/get-orders-by-wh-id.query';
 
-export class OrderQueryFacade implements OrderQueryUseCase {
+export class OrderQueryService implements OrderQueryUseCase {
   constructor(
     private readonly queryBus: QueryBus,
   ) {}

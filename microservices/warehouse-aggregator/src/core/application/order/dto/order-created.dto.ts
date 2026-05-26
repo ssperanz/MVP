@@ -27,7 +27,13 @@ export class AddressDto {
   country: string;
 }
 
-export class CreateOrderDto {
+export class OrderCreatedDto {
+  @IsNumber()
+  sourceWh: number;
+
+  @IsString()
+  orderId: string;
+
   @IsString()
   orderType: string;
 

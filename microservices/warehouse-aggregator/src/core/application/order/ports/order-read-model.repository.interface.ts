@@ -1,22 +1,13 @@
+import { OrderReadModel } from "src/infrastructure/persistence/mongodb/schemas/order-read-model.schema";
+import { OrderCreatedDto } from "../dto/order-created.dto";
+import { UpdateOrderStateDto } from "../dto/update-order-state.dto";
+
 export const IOrderReadModelRepositoryToken = Symbol('IOrderReadModelRepository');
 
 export interface OrderReadModelRepository {
-  findById(orderId: string): Promise<OrderReadModel | null>;
+  findByOrderId(orderId: string): Promise<OrderReadModel | null>;
   findByWhId(whId: number): Promise<OrderReadModel[] | null>;
   findAll(): Promise<OrderReadModel[]>;
-  upsert(order: OrderReadModel): Promise<void>;
-}
-
-export interface OrderReadModel {
-  sourceWh: number;
-  orderId: string;
-  orderItems: Array<{ productId: string; qty: number; unitPrice: number; totalValue: number }>;
-  orderType: string;
-  orderState: string;
-  orderCreationDate: Date;
-  departureWh: number;
-  totalOrderValue: number;
-  destination?: { streetName: string; civicNumber: number; city: string; cap: string; country: string };
-  destinationWh?: number;
-  orderReference?: string;
+  upsert(dto: OrderCreatedDto): Promise<void>;
+  update(dto: UpdateOrderStateDto): Promise<void>;
 }

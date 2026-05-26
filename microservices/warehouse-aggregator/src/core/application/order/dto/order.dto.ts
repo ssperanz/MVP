@@ -1,5 +1,5 @@
 import { IsArray, IsDate, IsNumber, IsOptional, IsPositive, IsString } from "class-validator";
-import { AddressDto, OrderItemDto } from "./create-order.dto";
+import { AddressDto, OrderItemDto } from "./order-created.dto";
 
 export class OrderDto {
   @IsNumber()

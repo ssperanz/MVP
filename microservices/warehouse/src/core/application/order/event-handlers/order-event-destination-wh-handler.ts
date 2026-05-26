@@ -6,7 +6,7 @@ import { OrderStateUpdatedEvent } from '../../../domain/order/events/order-state
 import { OrderCreatedEvent } from 'src/core/domain/order/events/order-created.event.js';
 import { OrderEvent } from 'src/shared/domain/events/order-event.base.js';
 
-@EventsHandler(OrderStateUpdatedEvent)
+@EventsHandler(OrderCreatedEvent, OrderStateUpdatedEvent)
 export class OrderEventDestinationWhHandler extends AbstractOrderEventHandler implements IEventHandler<OrderEvent> {
   constructor(
     @Inject('IOrderEventDestinationWhPublisher')
