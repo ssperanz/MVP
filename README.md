@@ -2,6 +2,10 @@
 
 ![Coverage](https://codecov.io/gh/teamcodealchemists/MVP/branch/main/graph/badge.svg)
 
+## Informativa
+
+Questa è una fork indipendente del progetto iniziale, della quale sono stati riprogettati e riscritti alcuni microservizi, tra cui il servizio di magazzino e quello di aggregazione dei dati dei magazzini.
+
 ## Descrizione
 
 Questo progetto rappresenta un **MVP (Minimum Viable Product)** per la gestione di un sistema di magazzini distribuiti, pensato per supportare scenari di logistica avanzata, orchestrazione di ordini, gestione delle scorte e monitoraggio centralizzato tramite microservizi.
@@ -19,7 +23,7 @@ microservices/
 │
 ├── cloud/                 # Aggregatori cloud (ordini, inventario)
 │
-├── warehouse/             # Microservizi warehouse (ordini, inventario, stato)
+├── warehouse/             # Microservizio warehouse (ordini, inventario, stato)
 │
 ├── grafana/               # Dashboard di monitoraggio
 │
@@ -39,10 +43,7 @@ microservices/
   - `inventory-aggregated`: Aggregazione e sincronizzazione inventario
 
 - **Warehouse**
-  - `orders`: Gestione ordini locale
-  - `inventory`: Gestione inventario locale
-  - `state`: Stato e metriche del magazzino
-  - `mongodb`: Database NoSQL per la persistenza locale
+  - `warehouse`: Gestione prodotti, ordini e stato del singolo magazzino
 
 - **Monitoring**
   - `grafana`: Dashboard per visualizzazione metriche
