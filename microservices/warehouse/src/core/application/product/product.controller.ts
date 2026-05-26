@@ -4,14 +4,14 @@ import { CreateProductDto } from "./dto/create-product.dto";
 import { UpdateProductDto } from "./dto/update-product.dto";
 import { ProductIdDto } from "./dto/product-id.dto";
 import { ProductDto } from "./dto/product.dto";
-import { ProductQueryFacade } from "./product.query.facade";
+import { ProductQueryService } from "./product.query.service";
 import { InventoryDto } from "./dto/inventory.dto";
 
 @Controller('products')
 export class ProductController {
   constructor(
     private readonly productService: ProductService,
-    private readonly productQueryFacade: ProductQueryFacade,
+    private readonly productQueryService: ProductQueryService,
   ) {}
 
   @Post()
@@ -31,11 +31,11 @@ export class ProductController {
 
   @Get(':id')
   async getProductById(dto: ProductIdDto): Promise<ProductDto | null> {
-    return this.productQueryFacade.getProductById(dto);
+    return this.productQueryService.getProductById(dto);
   }
 
   @Get()
   async getInventory(): Promise<InventoryDto> {
-    return this.productQueryFacade.listProducts();
+    return this.productQueryService.listProducts();
   }
 }

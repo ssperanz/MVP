@@ -3,14 +3,14 @@ import { OrderService } from "./order.service";
 import { CreateOrderDto } from "./dto/create-order.dto";
 import { CancelOrderDto } from "./dto/cancel-order.dto";
 import { OrderIdDto } from "./dto/order-id.dto";
-import { OrderQueryFacade } from "./order.query.facade";
+import { OrderQueryService } from "./order.query.service";
 import { OrderDto } from "./dto/order.dto";
 
 @Controller('orders')
 export class OrderController {
   constructor(
     private readonly orderService: OrderService,
-    private readonly orderQueryFacade: OrderQueryFacade,
+    private readonly orderQueryService: OrderQueryService,
   ) {}
 
   @Post()
@@ -25,11 +25,11 @@ export class OrderController {
 
   @Get(':id')
   async getOrderById(dto: OrderIdDto): Promise<OrderDto | null> {
-    return this.orderQueryFacade.getOrderById(dto);
+    return this.orderQueryService.getOrderById(dto);
   }
 
   @Get()
   async listOrders(): Promise<OrderDto[]> {
-    return this.orderQueryFacade.listOrders();
+    return this.orderQueryService.listOrders();
   }
 }

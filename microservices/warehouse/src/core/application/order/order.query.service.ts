@@ -5,7 +5,7 @@ import { OrderDto } from './dto/order.dto';
 import { GetOrderQuery } from './use-cases/query/get-order.query';
 import { GetAllOrdersQuery } from './use-cases/query/get-all-orders.query';
 
-export class OrderQueryFacade implements OrderQueryUseCase {
+export class OrderQueryService implements OrderQueryUseCase {
   constructor(
     private readonly queryBus: QueryBus,
   ) {}
