@@ -2,17 +2,17 @@ services:
   #==========================================================================#
   #                         Warehouse Microservices                          #
   #==========================================================================#
-  inventory-1:
+  warehouse-1:
     build:
-      context: ./microservices/warehouse/inventory
+      context: ./microservices/warehouse
       dockerfile: Dockerfile
-    container_name: inventory-1
+    container_name: warehouse-1
     environment:
-      - MONGO_URI=mongodb://mongo:27017/inventory-1
+      - MONGO_URI=mongodb://mongo:27017/warehouse-1
       - WAREHOUSE_ID=1
       - NATS_URL=nats://nats:4222
     volumes:
-      - ./microservices/warehouse/inventory/src:/usr/src/app/src
+      - ./microservices/warehouse/src:/usr/src/app/src
     networks:
       - shared-warehouses
     depends_on:
@@ -20,17 +20,17 @@ services:
       - nats
       - resgate
 
-  inventory-2:
+  warehouse-2:
     build:
-      context: ./microservices/warehouse/inventory
+      context: ./microservices/warehouse
       dockerfile: Dockerfile
-    container_name: inventory-2
+    container_name: warehouse-2
     environment:
-      - MONGO_URI=mongodb://mongo:27017/inventory-2
+      - MONGO_URI=mongodb://mongo:27017/warehouse-2
       - WAREHOUSE_ID=2
       - NATS_URL=nats://nats:4222
     volumes:
-      - ./microservices/warehouse/inventory/src:/usr/src/app/src
+      - ./microservices/warehouse/src:/usr/src/app/src
     networks:
       - shared-warehouses
     depends_on:
@@ -38,94 +38,24 @@ services:
       - nats
       - resgate
 
-  orders-1:
-    build:
-      context: ./microservices/warehouse/orders
-      dockerfile: Dockerfile
-    container_name: orders-1
-    environment:
-      - WAREHOUSE_ID=1
-      - NATS_URL=nats://nats:4222
-      - MONGODB_URI=mongodb://mongo:27017/orders-1
-    volumes:
-      - ./microservices/warehouse/orders/src:/usr/src/app/src
-    networks:
-      - shared-warehouses
-    depends_on:
-      - nats
-      - mongodb
-      - resgate
 
-  orders-2:
-    build:
-      context: ./microservices/warehouse/orders
-      dockerfile: Dockerfile
-    container_name: orders-2
-    environment:
-      - WAREHOUSE_ID=2
-      - NATS_URL=nats://nats:4222
-      - MONGODB_URI=mongodb://mongo:27017/orders-2
-    volumes:
-      - ./microservices/warehouse/orders/src:/usr/src/app/src
-    networks:
-      - shared-warehouses
-    depends_on:
-      - nats
-      - mongodb
-      - resgate
-
-  state-1:
-    build:
-      context: ./microservices/warehouse/state
-      dockerfile: Dockerfile
-    container_name: state-1
-    environment:
-      - WAREHOUSE_ID=1
-      - MONGO_URI=mongodb://mongo:27017/state-1
-      - NATS_URL=nats://nats:4222
-    volumes:
-      - ./microservices/warehouse/state/src:/usr/src/app/src
-    networks:
-      - shared-warehouses
-    depends_on:
-      - nats
-      - mongodb
-      - resgate
-
-  state-2:
-    build:
-      context: ./microservices/warehouse/state
-      dockerfile: Dockerfile
-    container_name: state-2
-    environment:
-      - WAREHOUSE_ID=2
-      - MONGO_URI=mongodb://mongo:27017/state-2
-      - NATS_URL=nats://nats:4222
-    volumes:
-      - ./microservices/warehouse/state/src:/usr/src/app/src
-    networks:
-      - shared-warehouses
-    depends_on:
-      - nats
-      - mongodb
-      - resgate
   #==========================================================================#
   #                         Cloud Microservices                              #
   #==========================================================================#
 
-  inventory-aggregated:
+  warehouse-aggregator:
     build:
-      context: ./microservices/cloud/inventory-aggregated
+      context: ./microservices/warehouse-aggregator
       dockerfile: Dockerfile
-    container_name: inventory-aggregated
+    container_name: warehouse-aggregator
     ports:
       - "3110:3110"
     environment:
-      - MONGO_URI=mongodb://mongo:27017/inventory-aggregated
+      - MONGO_URI=mongodb://mongo:27017/warehouse-aggregator
       - NATS_URL=nats://nats:4222
       - PORT=3110
     volumes:
-      - ./microservices/cloud/inventory-aggregated/src:/usr/src/app/src
+      - ./microservices/warehouse-aggregator/src:/usr/src/app/src
     networks:
       - shared-warehouses
     depends_on:
@@ -133,24 +63,6 @@ services:
       - nats
       - resgate
 
-  orders-aggregated:
-    build:
-      context: ./microservices/cloud/orders-aggregated
-      dockerfile: Dockerfile
-    ports:
-      - "3010:3010"
-    environment:
-      - PORT=3010
-      - MONGODB_URI=mongodb://mongodb:27017/orders-aggregated
-      - NATS_URL=nats://nats:4222
-    volumes:
-      - ./microservices/cloud/orders-aggregated/src:/usr/src/app/src
-    networks:
-      - shared-warehouses
-    depends_on:
-      - nats
-      - mongodb
-      - resgate
 
   #==========================================================================#
   #                 Centralized System Microservices                         #
@@ -283,7 +195,7 @@ services:
       - shared-warehouses
     restart: unless-stopped
     depends_on:
-      - orders-aggregated
+      - warehouse-aggregator
 
   grafana:
     image: grafana/grafana:latest
@@ -300,7 +212,7 @@ services:
       - shared-warehouses
     depends_on:
       - prometheus
-      - orders-aggregated
+      - warehouse-aggregator
 
 volumes:
   prometheus_data:
