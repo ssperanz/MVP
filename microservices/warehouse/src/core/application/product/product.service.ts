@@ -5,8 +5,9 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { UpdateProductCommand } from './use-cases/command/update-product.command';
 import { ProductIdDto } from './dto/product-id.dto';
 import { RemoveProductCommand } from './use-cases/command/remove-product.command';
+import { Injectable } from '@nestjs/common';
 
-
+@Injectable()
 export class ProductService {
   constructor(
     private readonly commandBus: CommandBus,

@@ -5,8 +5,9 @@ import { ProductDto } from './dto/product.dto';
 import { ProductQueryUseCase } from './use-cases/product.query.usecase';
 import { GetProductQuery } from './use-cases/query/get-product.query';
 import { GetInventoryQuery } from './use-cases/query/get-inventory.query';
+import { Injectable } from '@nestjs/common';
 
-
+@Injectable()
 export class ProductQueryService implements ProductQueryUseCase {
   constructor(
     private readonly queryBus: QueryBus,

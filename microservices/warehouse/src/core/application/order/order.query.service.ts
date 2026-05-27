@@ -4,7 +4,9 @@ import { OrderIdDto } from './dto/order-id.dto';
 import { OrderDto } from './dto/order.dto';
 import { GetOrderQuery } from './use-cases/query/get-order.query';
 import { GetAllOrdersQuery } from './use-cases/query/get-all-orders.query';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class OrderQueryService implements OrderQueryUseCase {
   constructor(
     private readonly queryBus: QueryBus,

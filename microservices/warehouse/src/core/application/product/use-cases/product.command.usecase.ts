@@ -4,7 +4,7 @@ import { ProductDto } from "../dto/product.dto";
 import { ProductIdDto } from "../dto/product-id.dto";
 
 export interface ProductCommandUseCase {
-  createProduct(dto: CreateProductDto): Promise<ProductDto>;
-  updateProduct(dto: UpdateProductDto): Promise<ProductDto>;
+  createProduct(dto: CreateProductDto): Promise<void>;
+  updateProduct(dto: UpdateProductDto): Promise<void>;
   deleteProduct(productId: ProductIdDto): Promise<void>;
 }

@@ -25,6 +25,7 @@ import { OrderEventCloudHandler } from './event-handlers/order-event-cloud-handl
 import { OrderEventDestinationWhHandler } from './event-handlers/order-event-destination-wh-handler.js';
 import { OrderService } from './order.service.js';
 import { OrderController } from './order.controller.js';
+import { OrderQueryService } from './order.query.service.js';
  
 const CommandHandlers = [
   CreateOrderCommandHandler,
@@ -73,7 +74,14 @@ const EventHandlers = [
       provide: 'IOrderReadModelRepository',
       useClass: OrderReadModelMongo,
     },
-    OrderService,
+    {
+      provide: 'OrderCommandUseCase',
+      useClass: OrderService,
+    },
+    {
+      provide: 'OrderQueryUseCase',
+      useClass: OrderQueryService,
+    },
     OrderSaga,
     ...CommandHandlers,
     ...QueryHandlers,

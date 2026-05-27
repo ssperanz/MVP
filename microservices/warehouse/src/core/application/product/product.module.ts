@@ -15,6 +15,7 @@ import { GetInventoryQueryHandler } from './use-cases/query/handlers/get-invento
 import { ProductEventCloudHandler } from './event-handler/product-event-cloud-handler.js';
 import { ProductReadModelUpdater } from './event-handler/product-read-model-updater.js';
 import { ProductController } from './product.controller.js';
+import { ProductQueryService } from './product.query.service.js';
 
 const CommandHandlers = [
   CreateProductCommandHandler,
@@ -51,7 +52,14 @@ const EventHandlers = [
       provide: 'IProductReadModelRepository',
       useClass: ProductReadModelMongo,
     },
-    ProductService,
+    {
+      provide: 'ProductCommandUseCase',
+      useClass: ProductService,
+    },
+    {
+      provide: 'ProductQueryUseCase',
+      useClass: ProductQueryService,
+    },
     ...CommandHandlers,
     ...QueryHandlers,
     ...EventHandlers,
