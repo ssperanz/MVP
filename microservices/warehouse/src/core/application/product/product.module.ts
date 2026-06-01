@@ -53,11 +53,11 @@ const EventHandlers = [
       useClass: ProductReadModelMongo,
     },
     {
-      provide: 'ProductCommandUseCase',
+      provide: 'IProductCommandUseCase',
       useClass: ProductService,
     },
     {
-      provide: 'ProductQueryUseCase',
+      provide: 'IProductQueryUseCase',
       useClass: ProductQueryService,
     },
     ...CommandHandlers,

@@ -6,9 +6,10 @@ import { UpdateProductCommand } from './use-cases/command/update-product.command
 import { ProductIdDto } from './dto/product-id.dto';
 import { RemoveProductCommand } from './use-cases/command/remove-product.command';
 import { Injectable } from '@nestjs/common';
+import { ProductCommandUseCase } from './use-cases/product.command.usecase';
 
 @Injectable()
-export class ProductService {
+export class ProductService implements ProductCommandUseCase {
   constructor(
     private readonly commandBus: CommandBus,
   ) {}
