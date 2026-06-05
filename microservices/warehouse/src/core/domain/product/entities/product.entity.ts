@@ -15,6 +15,8 @@ import { ProductReleasedEvent } from '../events/product-released.event.js';
 import { ProductDispatchedEvent } from '../events/product-dispatched.event.js';
 import { ProductReceivedEvent } from '../events/product-received.event.js';
 import { OrderId } from 'src/shared/domain/value-objects/order-id.vo.js';
+import { ProductCriticalMaxThresEvent } from '../events/product-critical-max-thres.event.js';
+import { ProductCriticalMinThresEvent } from '../events/product-critical-min-thres.event .js';
 
 export class Product extends AggregateRoot {
   constructor(
@@ -65,6 +67,15 @@ export class Product extends AggregateRoot {
   getMinThres(): Quantity { return this.minThres; }
   getMaxThres(): Quantity { return this.maxThres; }
 
+  private checkCriticalThresholds(): void {
+    if (this.availableQty.isLessThan(this.minThres)) {
+      this.apply(new ProductCriticalMinThresEvent(this.productId, this.minThres, this.availableQty));
+    }
+    if (this.availableQty.isGreaterThan(this.maxThres)) {
+      this.apply(new ProductCriticalMaxThresEvent(this.productId, this.maxThres, this.availableQty));
+    }
+  }
+
   updateName(newName: string): string {
     this.name = newName;
     this.apply(new ProductNameUpdatedEvent(this.productId, newName));
@@ -79,24 +90,28 @@ export class Product extends AggregateRoot {
 
   updateAvailableQty(newAvail: Quantity): Quantity {
     this.availableQty = newAvail;
+    this.checkCriticalThresholds();
     this.apply(new ProductAvailableQtyUpdatedEvent(this.productId, newAvail));
     return this.availableQty;
   }
 
   updateReservedQty(newReserved: Quantity): Quantity {
     this.reservedQty = newReserved;
+    this.checkCriticalThresholds();
     this.apply(new ProductReservedQtyUpdatedEvent(this.productId, newReserved));
     return this.reservedQty;
   }
 
   updateMinThres(newMinThres: Quantity): Quantity {
     this.minThres = newMinThres;
+    this.checkCriticalThresholds();
     this.apply(new ProductMinThresUpdatedEvent(this.productId, newMinThres));
     return this.minThres;
   }
 
   updateMaxThres(newMaxThres: Quantity): Quantity {
     this.maxThres = newMaxThres;
+    this.checkCriticalThresholds();
     this.apply(new ProductMaxThresUpdatedEvent(this.productId, newMaxThres));
     return this.maxThres;
   }
@@ -107,12 +122,14 @@ export class Product extends AggregateRoot {
       const availableToReserve = this.availableQty;
       this.availableQty = this.availableQty.decreaseBy(availableToReserve);
       this.reservedQty = this.reservedQty.increaseBy(availableToReserve);
+      this.checkCriticalThresholds();
       this.apply(new ProductReservedEvent(orderId, this.productId, availableToReserve));
       return availableToReserve;
     }
     else {
       this.availableQty = this.availableQty.decreaseBy(qtyToReserve);
       this.reservedQty = this.reservedQty.increaseBy(qtyToReserve);
+      this.checkCriticalThresholds();
       this.apply(new ProductReservedEvent(orderId, this.productId, qtyToReserve));
       return qtyToReserve;
     }
@@ -124,6 +141,7 @@ export class Product extends AggregateRoot {
     }
     this.reservedQty = this.reservedQty.decreaseBy(qtyToRelease);
     this.availableQty = this.availableQty.increaseBy(qtyToRelease);
+    this.checkCriticalThresholds();
     this.apply(new ProductReleasedEvent(orderId, this.productId, qtyToRelease));
     return this.availableQty;
   }
@@ -133,12 +151,14 @@ export class Product extends AggregateRoot {
       throw new Error('Not enough reserved quantity to dispatch');
     }
     this.reservedQty = this.reservedQty.decreaseBy(qtyToDispatch);
+    this.checkCriticalThresholds();
     this.apply(new ProductDispatchedEvent(orderId, this.productId, qtyToDispatch));
     return this.reservedQty;
   }
 
   receive(orderId: OrderId, qtyToReceive: Quantity): Quantity {
     this.availableQty = this.availableQty.increaseBy(qtyToReceive);
+    this.checkCriticalThresholds();
     this.apply(new ProductReceivedEvent(orderId, this.productId, qtyToReceive));
     return this.availableQty;
   }

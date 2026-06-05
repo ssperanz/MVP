@@ -10,9 +10,10 @@ import { OrderId } from 'src/shared/domain/value-objects/order-id.vo';
 import { UpdateOrderStateDto } from './dto/update-order-state.dto';
 import { UpdateOrderStateCommand } from './use-cases/command/update-order-state.command';
 import { OrderState } from 'src/shared/domain/enums/order-state.enum';
+import { OrderCommandUseCase } from './use-cases/order.usecase.command';
 
 @Injectable()
-export class OrderService {
+export class OrderService implements OrderCommandUseCase {
   constructor(
     private readonly commandBus: CommandBus,
   ) {}

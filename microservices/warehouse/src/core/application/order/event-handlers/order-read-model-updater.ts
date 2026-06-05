@@ -19,10 +19,10 @@ export class OrderReadModelUpdater extends AbstractOrderEventHandler implements 
     await this.orderReadModel.upsert({
       orderId: event.orderId.getId(),
       orderItems: event.orderItems.map((i) => ({
-        productId: i.productId,
-        qty: i.qty,
-        unitPrice: i.unitPrice,
-        totalValue: i.unitPrice * i.qty,
+        productId: i.getId().id,
+        qty: i.getQty().getValue,
+        unitPrice: i.getItemPrice().getAmount(),
+        totalValue: i.getItemPrice().getAmount() * i.getQty().getValue,
       })),
       orderType: event.orderType,
       orderState: 'CREATED',

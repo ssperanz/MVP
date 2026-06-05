@@ -19,7 +19,7 @@ export class centralSystemController {
     private readonly inboundPortsAdapter: InboundPortsAdapter,
   ) {}
 
-  @EventPattern('event.warehouse.*.centralSystem.request')
+  @EventPattern('warehouse.*.replenishment.request')
     async handleInsufficientQuantity(@Payload() raw: any): Promise<void> {
       console.log('Arrivato in handleInsufficientQuantity');
       try {
@@ -60,7 +60,7 @@ export class centralSystemController {
     }
 
 
-  @EventPattern('inventory.belowMinThres')
+  @EventPattern('warehouse.*.product.critical.minThres')
   async handleCriticalQuantityMin(@Payload() data: any): Promise<void> {
     console.log('Arrivato in handleCriticalQuantityMin');
     console.log('Payload raw:', JSON.stringify(data));
@@ -91,7 +91,7 @@ export class centralSystemController {
   }
 
 
-  @EventPattern('inventory.aboveMaxThres')
+  @EventPattern('warehouse.*.product.critical.maxThres')
   async handleCriticalQuantityMax(@Payload() data: any): Promise<void> {
     try {
       const pIdDto = new productIdDto();
