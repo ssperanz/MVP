@@ -1,6 +1,6 @@
 import { IEvent } from '@nestjs/cqrs';
 import * as crypto from 'crypto';
-import { EventType } from '../enums/event-type';
+import { EventType } from '../enums/event-type.enum';
 
 export abstract class DomainEvent implements IEvent {
   public readonly eventId: string;

@@ -1,4 +1,4 @@
-import { EventType } from 'src/shared/domain/enums/event-type.js';
+import { EventType } from 'src/shared/domain/enums/event-type.enum.js';
 import { DomainEvent } from './domain-event.base.js';
 import { OrderId } from '../value-objects/order-id.vo.js';
 import { OrderState } from '../enums/order-state.enum.js';

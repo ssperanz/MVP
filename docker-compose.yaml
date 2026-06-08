@@ -12,7 +12,7 @@ services:
       - WAREHOUSE_ID=1
       - NATS_URL=nats://nats:4222
     volumes:
-      - ./microservices/warehouse/src:/usr/src/app/src
+      - ./microservices/warehouse/src:/usr/src/app/src:Z
     networks:
       - shared-warehouses
     depends_on:
@@ -30,7 +30,7 @@ services:
       - WAREHOUSE_ID=2
       - NATS_URL=nats://nats:4222
     volumes:
-      - ./microservices/warehouse/src:/usr/src/app/src
+      - ./microservices/warehouse/src:/usr/src/app/src:Z
     networks:
       - shared-warehouses
     depends_on:
@@ -55,7 +55,7 @@ services:
       - NATS_URL=nats://nats:4222
       - PORT=3110
     volumes:
-      - ./microservices/warehouse-aggregator/src:/usr/src/app/src
+      - ./microservices/warehouse-aggregator/src:/usr/src/app/src:Z
     networks:
       - shared-warehouses
     depends_on:
@@ -80,7 +80,7 @@ services:
       - MONGO_DB=mongodb://mongo:27017/authentication
       - JWT_SECRET=IREALLYLOVEM31!!!!!!!!!!!!!!!!!!
     volumes:
-      - ./microservices/centralized/authentication/src:/usr/src/app/src
+      - ./microservices/centralized/authentication/src:/usr/src/app/src:Z
     networks:
       - shared-warehouses
     depends_on:
@@ -95,7 +95,7 @@ services:
     environment:
       - MONGO_DB=mongodb://mongo:27017/routing
     volumes:
-      - ./microservices/centralized/routing/src:/usr/src/app/src
+      - ./microservices/centralized/routing/src:/usr/src/app/src:Z
     networks:
       - shared-warehouses
     depends_on:
@@ -110,7 +110,7 @@ services:
       - MONGO_DB=mongodb://mongo:27017/state_aggregate
       - WAREHOUSE_ID=1
     volumes:
-      - ./microservices/centralized/state_aggregate/src:/usr/src/app/src
+      - ./microservices/centralized/state_aggregate/src:/usr/src/app/src:Z
     networks:
       - shared-warehouses
     depends_on:
@@ -126,7 +126,7 @@ services:
     environment:
       - MONGO_DB=mongodb://mongo:27017/centralsystem
     volumes:
-      - ./microservices/centralized/CentralSystem/src:/usr/src/app/src
+      - ./microservices/centralized/CentralSystem/src:/usr/src/app/src:Z
     networks:
       - shared-warehouses
     depends_on:
