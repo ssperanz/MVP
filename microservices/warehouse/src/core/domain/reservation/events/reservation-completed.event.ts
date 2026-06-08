@@ -6,6 +6,6 @@ export class ReservationCompletedEvent extends ReservationEvent {
   constructor(
     public readonly reservationId: OrderId,
   ) {
-    super(reservationId, ReservationState.COMPLETED);
+    super(reservationId, ReservationState.VALIDATED);
   }
 }

@@ -6,7 +6,7 @@ export class OrderDispatchedEvent extends OrderApplicationEvent {
   constructor(
     public readonly orderId: OrderId,
     public readonly sourceWh: number,
-    public readonly destinationWh: number,
+    public readonly destinationWh?: number,
   ) {
     super(orderId);
   }

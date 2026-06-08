@@ -16,12 +16,12 @@ export const IProductEventCloudPublisherToken = Symbol('IProductEventCloudPublis
 export interface ProductEventCloudPublisher {
   publishProductCreated(event: ProductCreatedEvent): Promise<void>;
   publishProductRemoved(event: ProductRemovedEvent): Promise<void>;
-  publishProducNameUpdate(event: ProductNameUpdatedEvent): Promise<void>
-  publishProductPriceUpdate(event: ProductPriceUpdatedEvent): Promise<void>
-  publishProductAvailableQtyUpdate(event: ProductAvailableQtyUpdatedEvent): Promise<void>
-  publishProductReservedQtyUpdate(event: ProductReservedQtyUpdatedEvent): Promise<void>
-  publishProductMinThresUpdate(event: ProductMinThresUpdatedEvent): Promise<void>
-  publishProductMaxThresUpdate(event: ProductMaxThresUpdatedEvent): Promise<void>
+  publishProducNameUpdate(event: ProductNameUpdatedEvent): Promise<void>;
+  publishProductPriceUpdate(event: ProductPriceUpdatedEvent): Promise<void>;
+  publishProductAvailableQtyUpdate(event: ProductAvailableQtyUpdatedEvent): Promise<void>;
+  publishProductReservedQtyUpdate(event: ProductReservedQtyUpdatedEvent): Promise<void>;
+  publishProductMinThresUpdate(event: ProductMinThresUpdatedEvent): Promise<void>;
+  publishProductMaxThresUpdate(event: ProductMaxThresUpdatedEvent): Promise<void>;
   publishProductReserved(event: ProductReservedEvent): Promise<void>;
   publishProductReleased(event: ProductReleasedEvent): Promise<void>;
   publishProductDispatched(event: ProductDispatchedEvent): Promise<void>;
