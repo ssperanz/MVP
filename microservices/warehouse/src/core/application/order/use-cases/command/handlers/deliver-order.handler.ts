@@ -6,6 +6,7 @@ import { DeliverOrderCommand } from '../deliver-order.command.js';
 import { OrderDeliveredEvent } from '../../../events/order-delivered.event.js';
 import { ReplenishmentOrder } from 'src/core/domain/order/entities/replenishment-order.entity.js';
 import { ReplenishmentDeliveredEvent } from '../../../events/replenishment-delivered.event.js';
+import { OrderId } from 'src/shared/domain/value-objects/order-id.vo.js';
 
 @CommandHandler(DeliverOrderCommand)
 export class DeliverOrderCommandHandler implements ICommandHandler<DeliverOrderCommand> {
@@ -16,7 +17,7 @@ export class DeliverOrderCommandHandler implements ICommandHandler<DeliverOrderC
   ) {}
 
   async execute(command: DeliverOrderCommand): Promise<void> {
-    const order = await this.orderRepository.load(command.orderId);
+    const order = await this.orderRepository.load(new OrderId(command.orderId));
     if (!order) throw new Error(`Order ${command.orderId} not found`);
 
     try {
