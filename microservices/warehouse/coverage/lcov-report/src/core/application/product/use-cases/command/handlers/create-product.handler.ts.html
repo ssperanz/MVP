@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>18/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/16</span>
+                <span class='fraction'>16/16</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -97,30 +97,28 @@
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -128,31 +126,33 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { CommandHandler, ICommandHandler, EventPublisher } from '@nestjs/cqrs';</span>
-<span class="cstat-no" title="statement not covered" >import { Inject } from '@nestjs/common';</span>
-<span class="cstat-no" title="statement not covered" >import { CreateProductCommand } from '../create-product.command.js';</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { CommandHandler, ICommandHandler, EventPublisher } from '@nestjs/cqrs';
+import { Inject } from '@nestjs/common';
+import { CreateProductCommand } from '../create-product.command.js';
 import type { ProductRepository } from '../../../ports/product.repository.interface.js';
-<span class="cstat-no" title="statement not covered" >import { Product } from '../../../../../domain/product/entities/product.entity.js';</span>
-<span class="cstat-no" title="statement not covered" >import { ProductId } from '../../../../../../shared/domain/value-objects/product-id.vo.js';</span>
-<span class="cstat-no" title="statement not covered" >import { Quantity } from '../../../../../../shared/domain/value-objects/quantity.vo.js';</span>
-<span class="cstat-no" title="statement not covered" >import { Money } from '../../../../../../shared/domain/value-objects/money.vo.js';</span>
+import { Product } from '../../../../../domain/product/entities/product.entity.js';
+import { ProductId } from '../../../../../../shared/domain/value-objects/product-id.vo.js';
+import { Quantity } from '../../../../../../shared/domain/value-objects/quantity.vo.js';
+import { Money } from '../../../../../../shared/domain/value-objects/money.vo.js';
 &nbsp;
 @CommandHandler(CreateProductCommand)
-export <span class="cstat-no" title="statement not covered" >class <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >CreateProductCommandHandler </span>implements ICommandHandler&lt;CreateProductCommand&gt; {</span></span>
-<span class="fstat-no" title="function not covered" >  constructor(</span>
-    @Inject('IProductRepository') private readonly <span class="cstat-no" title="statement not covered" >productRepository: ProductRepository,</span>
-    private <span class="cstat-no" title="statement not covered" >publisher: E</span>ventPublisher,
+export class CreateProductCommandHandler implements ICommandHandler&lt;CreateProductCommand&gt; {
+  constructor(
+    @Inject('IProductRepository') private readonly productRepository: ProductRepository,
+    private publisher: EventPublisher<span class="branch-1 cbranch-no" title="branch not covered" >,</span>
   ) {}
 &nbsp;
-<span class="fstat-no" title="function not covered" >  async </span>execute(command: CreateProductCommand): Promise&lt;void&gt; {
-    const existingProduct = <span class="cstat-no" title="statement not covered" >await this.productRepository.loadById(new ProductId(command.id));</span>
-<span class="cstat-no" title="statement not covered" >    if (existingProduct) {</span>
-<span class="cstat-no" title="statement not covered" >      throw new Error(`Product with ID ${command.id} already exists.`);</span>
+  async execute(command: CreateProductCommand): Promise&lt;void&gt; {
+    const existingProduct = await this.productRepository.loadById(new ProductId(command.id));
+    if (existingProduct) {
+      throw new Error(`Product with ID ${command.id} already exists.`);
     }
-    const product = <span class="cstat-no" title="statement not covered" >this.publisher.mergeObjectContext(</span>
+    const product = this.publisher.mergeObjectContext(
       Product.create(
         new ProductId(command.id),
         command.name,
@@ -162,8 +162,8 @@ export <span class="cstat-no" title="statement not covered" >class <span class="
         new Quantity(command.maxThres),
       ),
     );
-<span class="cstat-no" title="statement not covered" >    await this.productRepository.save(product);</span>
-<span class="cstat-no" title="statement not covered" >    product.commit();</span>
+    await this.productRepository.save(product);
+    product.commit();
   }
 }</pre></td></tr></table></pre>
 
@@ -172,7 +172,7 @@ export <span class="cstat-no" title="statement not covered" >class <span class="
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-08-09T12:08:09.690Z
+                at 2026-08-09T12:49:46.201Z
             </div>
         <script src="../../../../../../../prettify.js"></script>
         <script>

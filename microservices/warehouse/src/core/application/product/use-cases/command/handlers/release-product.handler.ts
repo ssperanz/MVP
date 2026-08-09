@@ -2,7 +2,7 @@ import { CommandHandler, ICommandHandler, EventPublisher, EventBus } from '@nest
 import { Inject } from '@nestjs/common';
 import type { ProductRepository } from '../../../ports/product.repository.interface.js';
 import { ProductsReleasedEvent } from '../../../events/products-released.event.js';
-import { ProductItem } from 'src/shared/domain/value-objects/product-item.vo.js';
+import { ProductItem } from '../../../../../../shared/domain/value-objects/product-item.vo.js';
 import { ReleaseProductsCommand } from '../release-products.command.js';
 
 @CommandHandler(ReleaseProductsCommand)

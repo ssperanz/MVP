@@ -118,7 +118,6 @@ export class Product extends AggregateRoot {
 
   reserve(orderId: OrderId, qtyToReserve: Quantity): Quantity {
     if (qtyToReserve.isGreaterThan(this.availableQty)) {
-      console.log('Not enough available quantity to reserve');
       const availableToReserve = this.availableQty;
       this.availableQty = this.availableQty.decreaseBy(availableToReserve);
       this.reservedQty = this.reservedQty.increaseBy(availableToReserve);
