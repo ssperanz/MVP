@@ -6,10 +6,10 @@ import { OrderIdDto } from './dto/order-id.dto';
 import { DeliverOrderCommand } from './use-cases/command/deliver-order.command';
 import { OrderDispatchedDto } from './dto/order-dispatched.dto';
 import { Injectable } from '@nestjs/common';
-import { OrderId } from 'src/shared/domain/value-objects/order-id.vo';
+import { OrderId } from '../../../shared/domain/value-objects/order-id.vo';
 import { UpdateOrderStateDto } from './dto/update-order-state.dto';
 import { UpdateOrderStateCommand } from './use-cases/command/update-order-state.command';
-import { OrderState } from 'src/shared/domain/enums/order-state.enum';
+import { OrderState } from '../../../shared/domain/enums/order-state.enum';
 import { OrderCommandUseCase } from './use-cases/order.usecase.command';
 
 @Injectable()
@@ -38,14 +38,14 @@ export class OrderService implements OrderCommandUseCase {
     }
 
     async cancelOrder(dto: OrderIdDto): Promise<void> {
-      return this.commandBus.execute(new CancelOrderCommand(new OrderId(dto.orderId)));
+      return this.commandBus.execute(new CancelOrderCommand(dto.orderId));
     }
 
     async deliverOrder(dto: OrderDispatchedDto): Promise<void> {
-      return this.commandBus.execute(new DeliverOrderCommand(new OrderId(dto.orderId)));
+      return this.commandBus.execute(new DeliverOrderCommand(dto.orderId));
     }
 
     async updateOrderStatus(dto: UpdateOrderStateDto): Promise<void> {
-      return this.commandBus.execute(new UpdateOrderStateCommand(new OrderId(dto.orderId), dto.newState as OrderState));
+      return this.commandBus.execute(new UpdateOrderStateCommand(dto.orderId, dto.newState as OrderState));
     }
   }

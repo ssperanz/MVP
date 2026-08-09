@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1786275550919" clover="3.2.0">
-  <project timestamp="1786275550919" name="All files">
-    <metrics statements="1769" coveredstatements="433" conditionals="549" coveredconditionals="40" methods="414" coveredmethods="120" elements="2732" coveredelements="593" complexity="0" loc="1769" ncloc="1769" packages="39" files="162" classes="162"/>
+<coverage generated="1786277289781" clover="3.2.0">
+  <project timestamp="1786277289781" name="All files">
+    <metrics statements="1768" coveredstatements="502" conditionals="549" coveredconditionals="50" methods="414" coveredmethods="136" elements="2731" coveredelements="688" complexity="0" loc="1768" ncloc="1768" packages="39" files="162" classes="162"/>
     <package name="src">
       <metrics statements="27" coveredstatements="9" conditionals="10" coveredconditionals="3" methods="4" coveredmethods="3"/>
       <file name="main.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/main.ts">
@@ -45,7 +45,7 @@
       </file>
     </package>
     <package name="src.core.application.order">
-      <metrics statements="74" coveredstatements="0" conditionals="44" coveredconditionals="0" methods="13" coveredmethods="0"/>
+      <metrics statements="73" coveredstatements="15" conditionals="44" coveredconditionals="7" methods="13" coveredmethods="5"/>
       <file name="order.controller.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/core/application/order/order.controller.ts">
         <metrics statements="15" coveredstatements="0" conditionals="28" coveredconditionals="0" methods="5" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
@@ -111,26 +111,25 @@
         <line num="20" count="0" type="stmt"/>
       </file>
       <file name="order.service.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/core/application/order/order.service.ts">
-        <metrics statements="19" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="5" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="18" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="23" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="24" count="0" type="stmt"/>
+        <metrics statements="18" coveredstatements="15" conditionals="12" coveredconditionals="7" methods="5" coveredmethods="5"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="18" count="4" type="cond" truecount="3" falsecount="1"/>
+        <line num="23" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="24" count="1" type="stmt"/>
         <line num="25" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="26" count="0" type="stmt"/>
         <line num="28" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="41" count="0" type="stmt"/>
-        <line num="45" count="0" type="stmt"/>
-        <line num="49" count="0" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="45" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.core.application.order-saga">
@@ -515,31 +514,31 @@
       </file>
     </package>
     <package name="src.core.application.order.use-cases.command">
-      <metrics statements="28" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
+      <metrics statements="28" coveredstatements="20" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="4"/>
       <file name="cancel-order.command.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/core/application/order/use-cases/command/cancel-order.command.ts">
-        <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
       </file>
       <file name="create-order.command.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/core/application/order/use-cases/command/create-order.command.ts">
-        <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
       </file>
       <file name="deliver-order.command.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/core/application/order/use-cases/command/deliver-order.command.ts">
-        <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
       </file>
       <file name="dispatch-order.command.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/core/application/order/use-cases/command/dispatch-order.command.ts">
         <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -549,11 +548,11 @@
         <line num="5" count="0" type="stmt"/>
       </file>
       <file name="update-order-state.command.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/core/application/order/use-cases/command/update-order-state.command.ts">
-        <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
       </file>
       <file name="validate-order.command.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/core/application/order/use-cases/command/validate-order.command.ts">
         <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -755,7 +754,7 @@
       </file>
     </package>
     <package name="src.core.application.product">
-      <metrics statements="59" coveredstatements="0" conditionals="44" coveredconditionals="0" methods="13" coveredmethods="0"/>
+      <metrics statements="59" coveredstatements="12" conditionals="44" coveredconditionals="3" methods="13" coveredmethods="4"/>
       <file name="product.controller.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/core/application/product/product.controller.ts">
         <metrics statements="17" coveredstatements="0" conditionals="36" coveredconditionals="0" methods="6" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
@@ -813,19 +812,19 @@
         <line num="21" count="0" type="stmt"/>
       </file>
       <file name="product.service.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/core/application/product/product.service.ts">
-        <metrics statements="12" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="4" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="14" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="38" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
+        <metrics statements="12" coveredstatements="12" conditionals="4" coveredconditionals="3" methods="4" coveredmethods="4"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="14" count="3" type="cond" truecount="3" falsecount="1"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.core.application.product.dto">
@@ -1067,18 +1066,18 @@
       </file>
     </package>
     <package name="src.core.application.product.use-cases.command">
-      <metrics statements="32" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
+      <metrics statements="32" coveredstatements="22" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="3"/>
       <file name="create-product.command.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/core/application/product/use-cases/command/create-product.command.ts">
-        <metrics statements="9" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
+        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
       </file>
       <file name="release-products.command.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/core/application/product/use-cases/command/release-products.command.ts">
         <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -1089,11 +1088,11 @@
         <line num="10" count="0" type="stmt"/>
       </file>
       <file name="remove-product.command.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/core/application/product/use-cases/command/remove-product.command.ts">
-        <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
       </file>
       <file name="reserve-products.command.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/core/application/product/use-cases/command/reserve-products.command.ts">
         <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -1104,16 +1103,16 @@
         <line num="10" count="0" type="stmt"/>
       </file>
       <file name="update-product.command.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/core/application/product/use-cases/command/update-product.command.ts">
-        <metrics statements="9" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
+        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.core.application.product.use-cases.command.handlers">
@@ -2174,24 +2173,24 @@
       </file>
       <file name="order-state.enum.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/shared/domain/enums/order-state.enum.ts">
         <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
-        <line num="1" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="2" count="4" type="stmt"/>
-        <line num="3" count="4" type="stmt"/>
-        <line num="4" count="4" type="stmt"/>
-        <line num="5" count="4" type="stmt"/>
-        <line num="6" count="4" type="stmt"/>
-        <line num="7" count="4" type="stmt"/>
-        <line num="8" count="4" type="stmt"/>
-        <line num="9" count="4" type="stmt"/>
-        <line num="10" count="4" type="stmt"/>
-        <line num="11" count="4" type="stmt"/>
+        <line num="1" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="7" count="5" type="stmt"/>
+        <line num="8" count="5" type="stmt"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="10" count="5" type="stmt"/>
+        <line num="11" count="5" type="stmt"/>
       </file>
       <file name="order-type.enum.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/shared/domain/enums/order-type.enum.ts">
         <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
-        <line num="1" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="2" count="4" type="stmt"/>
-        <line num="3" count="4" type="stmt"/>
-        <line num="4" count="4" type="stmt"/>
+        <line num="1" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
       </file>
       <file name="reservation-item-state.enum.ts" path="/home/ssperanz/Documenti/swe/integrazione/MVP/microservices/warehouse/src/shared/domain/enums/reservation-item-state.enum.ts">
         <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
