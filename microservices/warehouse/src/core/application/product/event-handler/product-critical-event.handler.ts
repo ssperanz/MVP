@@ -1,6 +1,6 @@
 import { EventsHandler } from "@nestjs/cqrs";
 import { ProductCriticalMaxThresEvent } from "src/core/domain/product/events/product-critical-max-thres.event";
-import { ProductCriticalMinThresEvent } from "src/core/domain/product/events/product-critical-min-thres.event ";
+import { ProductCriticalMinThresEvent } from "src/core/domain/product/events/product-critical-min-thres.event";
 import type { ProductCriticalEventPublisher } from "../ports/product-critical-event-publisher.port";
 
 @EventsHandler(ProductCriticalMinThresEvent, ProductCriticalMaxThresEvent)

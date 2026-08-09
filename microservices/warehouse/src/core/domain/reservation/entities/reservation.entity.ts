@@ -35,8 +35,7 @@ export class Reservation extends AggregateRoot {
 
     private releaseAll(): void {
     for (const reservationItem of this.reservationItems) {
-      if(reservationItem.getState() === ReservationItemState.RELEASED) {
-        console.log(`Warning: Product ${reservationItem.getId().id} is already released`);
+      if (reservationItem.getState() !== ReservationItemState.RELEASED) {
         reservationItem.release();
       }
     }
@@ -65,8 +64,8 @@ export class Reservation extends AggregateRoot {
       (item) => ReservationItem.create(item.getId(), item.getQty())
     );
     const reservation = new Reservation(orderId, reservationItems);
-    reservation.updateState(ReservationState.CREATED)
-    this.apply(new ReservationCreatedEvent(orderId, reservationItems));
+    reservation.updateState(ReservationState.CREATED);
+    reservation.apply(new ReservationCreatedEvent(orderId, reservationItems));
     return reservation;
   }
 

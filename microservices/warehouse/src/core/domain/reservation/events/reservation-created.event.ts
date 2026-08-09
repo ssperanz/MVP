@@ -1,7 +1,7 @@
-import { ReservationState } from 'src/shared/domain/enums/reservation-state.enum';
-import { ReservationEvent } from 'src/shared/domain/events/reservation-event.base.js';
-import { OrderId } from 'src/shared/domain/value-objects/order-id.vo';
-import { ReservationItem } from 'src/shared/domain/value-objects/reservation-item.vo';
+import { ReservationState } from '../../../../shared/domain/enums/reservation-state.enum';
+import { ReservationEvent } from '../../../../shared/domain/events/reservation-event.base.js';
+import { OrderId } from '../../../../shared/domain/value-objects/order-id.vo';
+import { ReservationItem } from '../../../../shared/domain/value-objects/reservation-item.vo';
 
 export class ReservationCreatedEvent extends ReservationEvent {
   constructor(

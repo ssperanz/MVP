@@ -16,7 +16,7 @@ import { ProductDispatchedEvent } from '../events/product-dispatched.event.js';
 import { ProductReceivedEvent } from '../events/product-received.event.js';
 import { OrderId } from 'src/shared/domain/value-objects/order-id.vo.js';
 import { ProductCriticalMaxThresEvent } from '../events/product-critical-max-thres.event.js';
-import { ProductCriticalMinThresEvent } from '../events/product-critical-min-thres.event .js';
+import { ProductCriticalMinThresEvent } from '../events/product-critical-min-thres.event.js';
 
 export class Product extends AggregateRoot {
   constructor(
