@@ -1,5 +1,4 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { ProductId } from 'src/shared/domain/value-objects/product-id.vo.js';
 import { OrderId } from '../../../../shared/domain/value-objects/order-id.vo.js';
 import { OrderItem } from '../../../../shared/domain/value-objects/order-item.vo.js';
 import { OrderType } from '../../../../shared/domain/enums/order-type.enum.js';
@@ -7,8 +6,9 @@ import { OrderState } from '../../../../shared/domain/enums/order-state.enum.js'
 import { WarehouseId } from '../../../../shared/domain/value-objects/warehouse-id.vo.js';
 import { Money } from '../../../../shared/domain/value-objects/money.vo.js';
 import { OrderStateUpdatedEvent } from '../events/order-state-updated.event.js';
-import { Order } from './order.entity.js';
+import { ProductId } from 'src/shared/domain/value-objects/product-id.vo.js';
 import { Quantity } from 'src/shared/domain/value-objects/quantity.vo.js';
+import { Order } from './order.entity.js';
 
 describe('Order Entity', () => {
   let orderId: OrderId;
@@ -51,4 +51,59 @@ describe('Order Entity', () => {
     expect(events).toHaveLength(1);
     expect(events[0]).toBeInstanceOf(OrderStateUpdatedEvent);
   });
+
+  it('should mark order as reserving', () => {
+    const order = new Order(orderId, orderItems, orderType, orderState, departureWh);
+    order.markAsReserving();
+    expect(order.getOrderState()).toEqual(OrderState.RESERVING);
+  });
+
+  it('should mark order as reserved', () => {
+    const order = new Order(orderId, orderItems, orderType, orderState, departureWh);
+    order.markAsReserved();
+    expect(order.getOrderState()).toEqual(OrderState.RESERVED);
+  });
+
+  it('should mark order as validating', () => {
+    const order = new Order(orderId, orderItems, orderType, orderState, departureWh);
+    order.markAsValidating();
+    expect(order.getOrderState()).toEqual(OrderState.VALIDATING);
+  });
+
+  it('should mark order as canceling', () => {
+    const order = new Order(orderId, orderItems, orderType, orderState, departureWh);
+    order.markAsCanceling();
+    expect(order.getOrderState()).toEqual(OrderState.CANCELING);
+  });
+
+  it('should mark order as canceled', () => {
+    const order = new Order(orderId, orderItems, orderType, orderState, departureWh);
+    order.markAsCanceled();
+    expect(order.getOrderState()).toEqual(OrderState.CANCELED);
+  });
+
+  it('should mark order as dispatching', () => {
+    const order = new Order(orderId, orderItems, orderType, orderState, departureWh);
+    order.markAsDispatching();
+    expect(order.getOrderState()).toEqual(OrderState.DISPATCHING);
+  });
+
+  it('should mark order as restocking', () => {
+    const order = new Order(orderId, orderItems, orderType, orderState, departureWh);
+    order.markAsRestocking();
+    expect(order.getOrderState()).toEqual(OrderState.RESTOCKING);
+  });
+
+  it('should mark order as dispatched', () => {
+    const order = new Order(orderId, orderItems, orderType, orderState, departureWh);
+    order.markAsDispatched();
+    expect(order.getOrderState()).toEqual(OrderState.DISPATCHED);
+  });
+
+  it('should mark order as delivered', () => {
+    const order = new Order(orderId, orderItems, orderType, orderState, departureWh);
+    order.markAsDelivered();
+    expect(order.getOrderState()).toEqual(OrderState.DELIVERED);
+  });
+
 });

@@ -13,7 +13,7 @@ export class CreateReservationCommandHandler implements ICommandHandler<CreateRe
 
   async execute(command: CreateReservationCommand): Promise<void> {
     if (await this.reservationRepository.load(command.orderId)) {
-      throw new Error(`Reservation with order ID ${command.orderId.getId} already exists.`);
+      throw new Error(`Reservation with order ID ${command.orderId.getId()} already exists.`);
     }
     const reservation = Reservation.create(command.orderId, command.items);
     const tracked = this.publisher.mergeObjectContext(reservation);

@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/13</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/13</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -101,81 +101,81 @@
 <a name='L36'></a><a href='#L36'>36</a>
 <a name='L37'></a><a href='#L37'>37</a>
 <a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { IsArray, IsDate, IsNumber, IsOptional, IsPositive, IsString } from "class-validator";</span>
-<span class="cstat-no" title="statement not covered" >import { AddressDto, OrderItemDto } from "./create-order.dto";</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IsArray, IsDate, IsNumber, IsOptional, IsPositive, IsString } from "class-validator";
+import { AddressDto, OrderItemDto } from "./create-order.dto";
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export class O</span>rderDto {
+export class OrderDto {
   @IsString()
-<span class="cstat-no" title="statement not covered" >  orderId: string;</span>
+  orderId: string;
 &nbsp;
   @IsArray()
-<span class="cstat-no" title="statement not covered" >  orderItems: OrderItemDto[];</span>
+  orderItems: OrderItemDto[];
 &nbsp;
   @IsString()
-<span class="cstat-no" title="statement not covered" >  orderType: string;</span>
+  orderType: string;
 &nbsp;
   @IsString()
-<span class="cstat-no" title="statement not covered" >  orderState: string;</span>
+  orderState: string;
 &nbsp;
   @IsDate()
-<span class="cstat-no" title="statement not covered" >  orderCreationDate: Date;</span>
+  orderCreationDate: Date<span class="branch-1 cbranch-no" title="branch not covered" >;</span>
 &nbsp;
   @IsNumber()
-<span class="cstat-no" title="statement not covered" >  departureWh: number;</span>
+  departureWh: number;
 &nbsp;
   @IsNumber()
   @IsPositive()
-<span class="cstat-no" title="statement not covered" >  totalOrderValue: number;</span>
+  totalOrderValue: number;
 &nbsp;
   @IsArray()
   @IsOptional()
-<span class="cstat-no" title="statement not covered" >  destination?: AddressDto;</span>
+  destination?: AddressDto<span class="branch-1 cbranch-no" title="branch not covered" >;</span>
   
   @IsNumber()
   @IsOptional()
-<span class="cstat-no" title="statement not covered" >  destinationWh?: number;</span>
+  destinationWh?: number;
 &nbsp;
   @IsString()
   @IsOptional()
-<span class="cstat-no" title="statement not covered" >  orderReference?: string;</span>
+  orderReference?: string;
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -184,7 +184,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-08-09T14:19:59.626Z
+                at 2026-08-09T15:05:13.825Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>
