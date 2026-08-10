@@ -45,9 +45,6 @@ export class Reservation extends AggregateRoot {
     const missingItems: ProductItem[] = [];
     for (const reservationItem of this.reservationItems) {
       const missingQty = reservationItem.validateItem();
-      if (missingQty < 0) {
-        console.log(`Warning: Product ${reservationItem.getId().id} is over-reserved by ${-missingQty} units`);
-      }
       if (missingQty > 0) {
         missingItems.push(new ProductItem(reservationItem.getId(), new Quantity(missingQty)));
       }

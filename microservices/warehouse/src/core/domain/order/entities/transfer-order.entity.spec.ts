@@ -27,4 +27,30 @@ describe('TransferOrder', () => {
     expect(events).toHaveLength(1);
     expect(events[0]).toBeInstanceOf(OrderCreatedEvent);
   });
+
+  it('should mark TransferOrder as reserving and update state', () => {
+    const orderId = new OrderId('order-123');
+    const orderItems = [new OrderItem(new ProductId('product-1'), new Quantity(2), new Money(10)), new OrderItem(new ProductId('product-2'), new Quantity(1), new Money(20))];
+    const orderType = OrderType.TRANSFER;
+    const departureWh = new WarehouseId(1);
+    const destinationWh = new WarehouseId(2);
+
+    const transferOrder = TransferOrder.create(orderId, orderItems, orderType, departureWh, destinationWh);
+    transferOrder.markAsReserving();
+
+    expect(transferOrder.getOrderState()).toEqual(OrderState.RESERVING);
+  });
+
+  it('should mark TransferOrder as replenishing and update state', () => {
+    const orderId = new OrderId('order-123');
+    const orderItems = [new OrderItem(new ProductId('product-1'), new Quantity(2), new Money(10)), new OrderItem(new ProductId('product-2'), new Quantity(1), new Money(20))];
+    const orderType = OrderType.TRANSFER;
+    const departureWh = new WarehouseId(1);
+    const destinationWh = new WarehouseId(2);
+
+    const transferOrder = TransferOrder.create(orderId, orderItems, orderType, departureWh, destinationWh);
+    transferOrder.markAsReplenishing();
+
+    expect(transferOrder.getOrderState()).toEqual(OrderState.RESTOCKING);
+  });
 });

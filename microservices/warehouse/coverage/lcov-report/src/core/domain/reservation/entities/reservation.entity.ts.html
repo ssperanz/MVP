@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>48/56</span>
+                <span class='fraction'>54/54</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/8</span>
+                <span class='fraction'>3/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.11% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>16/17</span>
+                <span class='fraction'>17/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.45% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>47/55</span>
+                <span class='fraction'>53/53</span>
             </div>
         
             
@@ -167,10 +167,7 @@
 <a name='L102'></a><a href='#L102'>102</a>
 <a name='L103'></a><a href='#L103'>103</a>
 <a name='L104'></a><a href='#L104'>104</a>
-<a name='L105'></a><a href='#L105'>105</a>
-<a name='L106'></a><a href='#L106'>106</a>
-<a name='L107'></a><a href='#L107'>107</a>
-<a name='L108'></a><a href='#L108'>108</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<a name='L105'></a><a href='#L105'>105</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -214,17 +211,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -320,18 +314,15 @@ export class Reservation extends AggregateRoot {
     }
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  getMissingItems(</span>): ProductItem[] {
-    const missingItems: ProductItem[] = <span class="cstat-no" title="statement not covered" >[];</span>
-<span class="cstat-no" title="statement not covered" >    for (const reservationItem of this.reservationItems) {</span>
-      const missingQty = <span class="cstat-no" title="statement not covered" >reservationItem.validateItem();</span>
-<span class="cstat-no" title="statement not covered" >      if (missingQty &lt; 0) {</span>
-<span class="cstat-no" title="statement not covered" >        console.log(`Warning: Product ${reservationItem.getId().id} is over-reserved by ${-missingQty} units`);</span>
-      }
-<span class="cstat-no" title="statement not covered" >      if (missingQty &gt; 0) {</span>
-<span class="cstat-no" title="statement not covered" >        missingItems.push(new ProductItem(reservationItem.getId(), new Quantity(missingQty)));</span>
+  getMissingItems(): ProductItem[] {
+    const missingItems: ProductItem[] = [];
+    for (const reservationItem of this.reservationItems) {
+      const missingQty = reservationItem.validateItem();
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (missingQty &gt; 0) {
+        missingItems.push(new ProductItem(reservationItem.getId(), new Quantity(missingQty)));
       }
     }
-<span class="cstat-no" title="statement not covered" >    return missingItems;</span>
+    return missingItems;
   }
 &nbsp;
   getProductsWithReservedQty(): ProductItem[] {
@@ -391,7 +382,7 @@ export class Reservation extends AggregateRoot {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-08-10T09:43:36.183Z
+                at 2026-08-10T13:13:03.346Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

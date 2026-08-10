@@ -106,4 +106,17 @@ describe('Order Entity', () => {
     expect(order.getOrderState()).toEqual(OrderState.DELIVERED);
   });
 
+  it('should set order state directly', () => {
+    const order = new Order(orderId, orderItems, orderType, orderState, departureWh);
+    const newState = OrderState.CANCELED;
+    order.setState(newState);
+    expect(order.getOrderState()).toEqual(newState);
+  });
+
+  it('should return the creation date of the order', () => {
+    const order = new Order(orderId, orderItems, orderType, orderState, departureWh);
+    const creationDate = order.getCreationDate();
+    expect(creationDate).toBeInstanceOf(Date);
+  });
+
 });

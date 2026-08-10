@@ -1,13 +1,13 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Saga, ICommand, ofType } from '@nestjs/cqrs';
 import { Observable, map } from 'rxjs';
-import { OrderCreatedEvent } from 'src/core/domain/order/events/order-created.event';
+import { OrderCreatedEvent } from '../../../core/domain/order/events/order-created.event';
+import { ReservationCreatedEvent } from '../../../core/domain/reservation/events/reservation-created.event';
 import { CreateReservationCommand } from '../reservation/use-cases/command/create-reservation.command';
-import { ReservationCreatedEvent } from 'src/core/domain/reservation/events/reservation-created.event';
 import { ReserveProductsCommand } from '../product/use-cases/command/reserve-products.command';
 import { UpdateReservationCommand } from '../reservation/use-cases/command/update-reservation.command';
 import { ProductsReservedEvent } from '../product/events/products-reserved.event';
-import { ReservationUpdatedEvent } from 'src/core/domain/reservation/events/reservation-updated.event';
+import { ReservationUpdatedEvent } from '../../../core/domain/reservation/events/reservation-updated.event';
 import { ValidateOrderCommand } from '../order/use-cases/command/validate-order.command';
 import { DispatchOrderCommand } from '../order/use-cases/command/dispatch-order.command';
 import { OrderDispatchFailedEvent } from '../order/events/order-dispatch-failed.event';
@@ -16,7 +16,8 @@ import { ReplenishmentDeliveredEvent } from '../order/events/replenishment-deliv
 import { CancelReservationCommand } from '../reservation/use-cases/command/cancel-reservation.command';
 import { ProductsReleasedEvent } from '../product/events/products-released.event';
 import { ReleaseProductsCommand } from '../product/use-cases/command/release-products.command';
-import { ReservationCancelingRequestedEvent } from 'src/core/domain/reservation/events/reservation-canceling-requested.event';
+import { ReservationCancelingRequestedEvent } from '../../../core/domain/reservation/events/reservation-canceling-requested.event';
+import { OrderValidatedEvent } from '../order/events/order-validated.event';
 
 @Injectable()
 export class OrderSaga {
@@ -69,13 +70,13 @@ export class OrderSaga {
     );
   }
 
-  /* Step 5: If order validation fails, we want to cancel the order. */
+  /* Step 5: If order order is validated, we want to dispatch */
   @Saga()
   onOrderValidated = (events$: Observable<any>): Observable<ICommand> => {
     return events$.pipe(
-      ofType(ValidateOrderCommand),
+      ofType(OrderValidatedEvent),
       map((event) => {
-        this.logger.log(`Received ValidateOrderCommand for order ID ${event.orderId.getId()}`);
+        this.logger.log(`Received OrderValidatedEvent for order ID ${event.orderId.getId()}`);
         return new DispatchOrderCommand(event.orderId.getId());
       }),
     );
@@ -93,14 +94,14 @@ export class OrderSaga {
     );
   }
 
-  /* Dispatch Failure case: If order validation fails, we want to cancel the order. */
+  /* Dispatch Failure case: If order dispatch fails, we want to cancel the order. */
   @Saga()
   onDispatchFailed = (events$: Observable<any>): Observable<ICommand> => {
     return events$.pipe(
       ofType(OrderDispatchFailedEvent),
       map((event) => {
         this.logger.log(`Received OrderDispatchFailedEvent for order ID ${event.orderId.getId()}`);
-        return new CancelOrderCommand(event.orderId);
+        return new CancelOrderCommand(event.orderId.getId());
       }),
     );
   }

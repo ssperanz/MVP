@@ -49,4 +49,27 @@ describe('DeliverOrderCommandHandler', () => {
     expect(eventBusMock.publish).toHaveBeenCalled();
   });
 
+  it('should throw an error if the order is not found', async () => {
+    const command = new DeliverOrderCommand('order-1');
+    orderRepositoryMock.load.mockResolvedValue(null);
+
+    await expect(commandHandler.execute(command)).rejects.toThrow('Order order-1 not found');
+  });
+
+  it('should throw an error if a product is not found', async () => {
+    const command = new DeliverOrderCommand('order-1');
+
+    const orderMock = {
+      getOrderId: jest.fn().mockReturnValue(new OrderId('order-1')),
+      getOrderItems: jest.fn().mockReturnValue([{ getId: jest.fn().mockReturnValue({ id: 'product-1' }), getQty: jest.fn() }]),
+    } as unknown as jest.Mocked<ReplenishmentOrder>;
+
+    orderRepositoryMock.load.mockResolvedValue(orderMock);
+    productRepositoryMock.loadById.mockResolvedValue(null);
+
+    await expect(commandHandler.execute(command)).rejects.toThrow('Product product-1 not found');
+  });
+
+
+
 });

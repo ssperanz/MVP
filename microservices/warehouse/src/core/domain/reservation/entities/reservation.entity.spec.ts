@@ -33,6 +33,7 @@ describe('Reservation Entity', () => {
       expect(reservation.getOrderId()).toEqual(orderId);
       expect(reservation.getReservationItems()).toHaveLength(2);
       expect(reservation.getState()).toBe(ReservationState.CREATED);
+      expect(reservation.getMissingItems()).toHaveLength(2);
 
       const events = reservation.getUncommittedEvents();
       expect(events).toHaveLength(1);
