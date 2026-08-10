@@ -43,10 +43,6 @@ import { InboundOrderEventListenerNats } from './inbound-order-event.listener.na
       provide: 'IDispatchNotifierPort',
       useClass: DispatchNotifierPublisherNats,
     },
-    {
-      provide: 'IInboundOrderEventListenerPort',
-      useClass: InboundOrderEventListenerNats,
-    }
   ],
   exports: [
     'IProductEventCloudPublisher',
@@ -54,7 +50,6 @@ import { InboundOrderEventListenerNats } from './inbound-order-event.listener.na
     'IOrderEventDestinationWhPublisher',
     'IReplenishmentRequestPort',
     'IDispatchNotifierPort',
-    'IInboundOrderEventListenerPort',
   ],
 })
 export class NatsMessagingModule {}

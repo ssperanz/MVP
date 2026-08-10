@@ -64,6 +64,6 @@ const EventHandlers = [
     ...QueryHandlers,
     ...EventHandlers,
   ],
-  exports: [ProductService, 'IProductRepository', MongooseModule],
+  exports: ['IProductCommandUseCase', 'IProductRepository'],
 })
 export class ProductModule {}

@@ -1,16 +1,17 @@
-import { Controller } from "@nestjs/common";
+import { Controller, Inject } from "@nestjs/common";
 import { EventPattern } from "@nestjs/microservices";
-import { CancelOrderDto } from "src/core/application/order/dto/cancel-order.dto";
-import { CreateOrderDto } from "src/core/application/order/dto/create-order.dto";
-import { OrderDispatchedDto } from "src/core/application/order/dto/order-dispatched.dto";
-import { UpdateOrderStateDto } from "src/core/application/order/dto/update-order-state.dto";
-import { OrderService } from "src/core/application/order/order.service";
-import { InboundOrderEventListenerPort } from "src/core/application/order/ports/inbound-order-event-listener.port";
+import { CancelOrderDto } from "../../../core/application/order/dto/cancel-order.dto";
+import { CreateOrderDto } from "../../../core/application/order/dto/create-order.dto";
+import { OrderDispatchedDto } from "../../../core/application/order/dto/order-dispatched.dto";
+import { UpdateOrderStateDto } from "../../../core/application/order/dto/update-order-state.dto";
+import { InboundOrderEventListenerPort } from "../../../core/application/order/ports/inbound-order-event-listener.port";
+import type { OrderCommandUseCase } from "src/core/application/order/use-cases/order.usecase.command";
 
 @Controller()
 export class InboundOrderEventListenerNats implements InboundOrderEventListenerPort{
   constructor(
-    private readonly orderService: OrderService,
+    @Inject('OrderCommandUseCase')
+    private readonly orderService: OrderCommandUseCase,
   ) {}
 
   @EventPattern(`warehouse.${process.env.WAREHOUSE_ID}.order.created`)

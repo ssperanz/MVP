@@ -26,6 +26,8 @@ import { OrderEventDestinationWhHandler } from './event-handlers/order-event-des
 import { OrderService } from './order.service.js';
 import { OrderController } from './order.controller.js';
 import { OrderQueryService } from './order.query.service.js';
+import { InboundOrderEventListenerNats } from 'src/infrastructure/messaging/nats/inbound-order-event.listener.nats.js';
+import { Order } from 'src/core/domain/order/entities/order.entity.js';
  
 const CommandHandlers = [
   CreateOrderCommandHandler,
@@ -60,8 +62,13 @@ const EventHandlers = [
       { name: ReservationSchema.name, schema: ReservationMongoSchema },
     ]),
   ],
-  controllers: [OrderController],
+  controllers: [
+    OrderController,
+    InboundOrderEventListenerNats
+  ],
   providers: [
+    OrderService,
+    OrderQueryService,
     {
       provide: 'IOrderRepository',
       useClass: OrderRepositoryMongo,
@@ -76,11 +83,11 @@ const EventHandlers = [
     },
     {
       provide: 'OrderCommandUseCase',
-      useClass: OrderService,
+      useExisting: OrderService,
     },
     {
       provide: 'OrderQueryUseCase',
-      useClass: OrderQueryService,
+      useExisting: OrderQueryService,
     },
     OrderSaga,
     ...CommandHandlers,

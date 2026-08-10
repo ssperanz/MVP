@@ -24,7 +24,6 @@ export class OrderDto {
   @IsPositive()
   totalOrderValue: number;
 
-  @IsArray()
   @IsOptional()
   destination?: AddressDto;
   

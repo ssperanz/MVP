@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">86.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/17</span>
+                <span class='fraction'>13/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/28</span>
+                <span class='fraction'>15/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>3/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">84.61% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>11/13</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -97,73 +97,79 @@
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { Controller, Get, Patch, Post } from "@nestjs/common";</span>
-<span class="cstat-no" title="statement not covered" >import { CreateOrderDto } from "./dto/create-order.dto";</span>
-<span class="cstat-no" title="statement not covered" >import { CancelOrderDto } from "./dto/cancel-order.dto";</span>
-<span class="cstat-no" title="statement not covered" >import { OrderIdDto } from "./dto/order-id.dto";</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Body, Controller, Get, Inject, Param, Patch, Post } from "@nestjs/common";
+import { CreateOrderDto } from "./dto/create-order.dto";
+import { CancelOrderDto } from "./dto/cancel-order.dto";
+import { OrderIdDto } from "./dto/order-id.dto";
 import { OrderDto } from "./dto/order.dto";
 import type { OrderCommandUseCase } from "./use-cases/order.usecase.command";
 import type { OrderQueryUseCase } from "./use-cases/order.usecase.query";
 &nbsp;
 @Controller('orders')
-export <span class="cstat-no" title="statement not covered" >class <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >OrderController </span>{</span></span>
-<span class="fstat-no" title="function not covered" >  constructor(</span>
-    private readonly <span class="cstat-no" title="statement not covered" >orderCommandUseCase: OrderCommandUseCase,</span>
-    private readonly <span class="cstat-no" title="statement not covered" >orderQueryUseCase: OrderQueryUseCase,</span>
+export class OrderController {
+  constructor(
+    @Inject('OrderCommandUseCase')
+    private readonly orderCommandUseCase: OrderCommandUseCase,
+    @Inject('OrderQueryUseCase')
+    private readonly orderQueryUseCase: OrderQueryUseCase,
   ) {}
 &nbsp;
   @Post()
-  async <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >createOrder(</span>dto: CreateOrderDto): Promise&lt;void&gt; {</span>
+  async <span class="fstat-no" title="function not covered" >createOrder(</span>@Body() dto: CreateOrderDto<span class="branch-1 cbranch-no" title="branch not covered" >): P</span>romise<span class="branch-1 cbranch-no" title="branch not covered" >&lt;void&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this.orderCommandUseCase.createOrder(dto);</span>
   }
 &nbsp;
   @Patch(':id/cancel')
-  async <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >cancelOrder(</span>dto: CancelOrderDto): Promise&lt;void&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return this.orderCommandUseCase.cancelOrder(dto);</span>
+  async <span class="fstat-no" title="function not covered" >cancelOrder(</span>@Param('id') orderId: string): Promise<span class="branch-1 cbranch-no" title="branch not covered" >&lt;void&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return this.orderCommandUseCase.cancelOrder({ orderId });</span>
   }
 &nbsp;
   @Get(':id')
-  async <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >getOrderById(</span>dto: OrderIdDto): Promise&lt;OrderDto | null&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return this.orderQueryUseCase.getOrderById(dto);</span>
+  async getOrderById(@Param('id') orderId: string): Promise<span class="branch-1 cbranch-no" title="branch not covered" >&lt;OrderDto | null&gt; {</span>
+    return this.orderQueryUseCase.getOrderById({ orderId });
   }
 &nbsp;
   @Get()
-  async <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >listOrders(</span>): Promise&lt;OrderDto[]&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return this.orderQueryUseCase.listOrders();</span>
+  async listOrders(): Promise<span class="branch-1 cbranch-no" title="branch not covered" >&lt;OrderDto[]&gt; {</span>
+    return this.orderQueryUseCase.listOrders();
   }
 }</pre></td></tr></table></pre>
 
@@ -172,7 +178,7 @@ export <span class="cstat-no" title="statement not covered" >class <span class="
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-08-10T14:48:32.185Z
+                at 2026-08-10T16:43:12.548Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

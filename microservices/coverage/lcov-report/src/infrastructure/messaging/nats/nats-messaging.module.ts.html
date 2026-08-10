@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -118,20 +118,14 @@
 <a name='L53'></a><a href='#L53'>53</a>
 <a name='L54'></a><a href='#L54'>54</a>
 <a name='L55'></a><a href='#L55'>55</a>
-<a name='L56'></a><a href='#L56'>56</a>
-<a name='L57'></a><a href='#L57'>57</a>
-<a name='L58'></a><a href='#L58'>58</a>
-<a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L56'></a><a href='#L56'>56</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -178,20 +172,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { Module } from '@nestjs/common';</span>
-<span class="cstat-no" title="statement not covered" >import { ClientsModule, Transport } from '@nestjs/microservices';</span>
-<span class="cstat-no" title="statement not covered" >import { CqrsModule } from '@nestjs/cqrs';</span>
-<span class="cstat-no" title="statement not covered" >import { ProductEventCloudPublisherNats } from './product-event-cloud.publisher.nats.js';</span>
-<span class="cstat-no" title="statement not covered" >import { OrderEventCloudPublisherNats } from './order-event-cloud.publisher.nats.js';</span>
-<span class="cstat-no" title="statement not covered" >import { OrderEventDestinationWhPublisherNats } from './order-event-destination-wh.publisher.nats.js';</span>
-<span class="cstat-no" title="statement not covered" >import { ReplenishmentRequestPublisherNats } from './replenishment-request.publisher.nats.js';</span>
-<span class="cstat-no" title="statement not covered" >import { DispatchNotifierPublisherNats } from './dispatch-notifier.publisher.nats.js';</span>
-<span class="cstat-no" title="statement not covered" >import { InboundOrderEventListenerNats } from './inbound-order-event.listener.nats.js';</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Module } from '@nestjs/common';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { CqrsModule } from '@nestjs/cqrs';
+import { ProductEventCloudPublisherNats } from './product-event-cloud.publisher.nats.js';
+import { OrderEventCloudPublisherNats } from './order-event-cloud.publisher.nats.js';
+import { OrderEventDestinationWhPublisherNats } from './order-event-destination-wh.publisher.nats.js';
+import { ReplenishmentRequestPublisherNats } from './replenishment-request.publisher.nats.js';
+import { DispatchNotifierPublisherNats } from './dispatch-notifier.publisher.nats.js';
+import { InboundOrderEventListenerNats } from './inbound-order-event.listener.nats.js';
 &nbsp;
 @Module({
   imports: [
@@ -228,10 +218,6 @@
       provide: 'IDispatchNotifierPort',
       useClass: DispatchNotifierPublisherNats,
     },
-    {
-      provide: 'IInboundOrderEventListenerPort',
-      useClass: InboundOrderEventListenerNats,
-    }
   ],
   exports: [
     'IProductEventCloudPublisher',
@@ -239,10 +225,9 @@
     'IOrderEventDestinationWhPublisher',
     'IReplenishmentRequestPort',
     'IDispatchNotifierPort',
-    'IInboundOrderEventListenerPort',
   ],
 })
-export <span class="cstat-no" title="statement not covered" >class <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >NatsMessagingModule </span>{}</span></span>
+export class NatsMessagingModule {}
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -250,7 +235,7 @@ export <span class="cstat-no" title="statement not covered" >class <span class="
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-08-10T14:48:32.185Z
+                at 2026-08-10T16:43:12.548Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

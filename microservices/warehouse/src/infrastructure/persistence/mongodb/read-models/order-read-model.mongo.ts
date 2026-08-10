@@ -32,20 +32,37 @@ export class OrderReadModelMongo implements OrderReadModelRepository {
     await this.orderReadModel.findOneAndUpdate(
       { orderId: order.orderId },
       { $set: order },
-      { upsert: true, new: true },
+      { upsert: true, returnDocument: 'after' },
     ).exec();
   }
 
   private toReadModel(doc: OrderReadModelDocument): OrderReadModel {
     return {
       orderId: doc.orderId,
-      orderItems: doc.orderItems,
+
+      orderItems: doc.orderItems.map((item) => ({
+        productId: item.productId,
+        qty: item.qty,
+        unitPrice: item.unitPrice,
+        totalValue: item.totalValue,
+      })),
+
       orderType: doc.orderType,
       orderState: doc.orderState,
       orderCreationDate: doc.orderCreationDate,
       departureWh: doc.departureWh,
       totalOrderValue: doc.totalOrderValue,
-      destination: doc.destination,
+
+      destination: doc.destination
+        ? {
+            streetName: doc.destination.streetName,
+            civicNumber: doc.destination.civicNumber,
+            city: doc.destination.city,
+            cap: doc.destination.cap,
+            country: doc.destination.country,
+          }
+        : undefined,
+
       destinationWh: doc.destinationWh,
       orderReference: doc.orderReference,
     };

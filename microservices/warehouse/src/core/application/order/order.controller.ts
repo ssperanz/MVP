@@ -1,4 +1,4 @@
-import { Controller, Get, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Param, Patch, Post } from "@nestjs/common";
 import { CreateOrderDto } from "./dto/create-order.dto";
 import { CancelOrderDto } from "./dto/cancel-order.dto";
 import { OrderIdDto } from "./dto/order-id.dto";
@@ -9,23 +9,25 @@ import type { OrderQueryUseCase } from "./use-cases/order.usecase.query";
 @Controller('orders')
 export class OrderController {
   constructor(
+    @Inject('OrderCommandUseCase')
     private readonly orderCommandUseCase: OrderCommandUseCase,
+    @Inject('OrderQueryUseCase')
     private readonly orderQueryUseCase: OrderQueryUseCase,
   ) {}
 
   @Post()
-  async createOrder(dto: CreateOrderDto): Promise<void> {
+  async createOrder(@Body() dto: CreateOrderDto): Promise<void> {
     return this.orderCommandUseCase.createOrder(dto);
   }
 
   @Patch(':id/cancel')
-  async cancelOrder(dto: CancelOrderDto): Promise<void> {
-    return this.orderCommandUseCase.cancelOrder(dto);
+  async cancelOrder(@Param('id') orderId: string): Promise<void> {
+    return this.orderCommandUseCase.cancelOrder({ orderId });
   }
 
   @Get(':id')
-  async getOrderById(dto: OrderIdDto): Promise<OrderDto | null> {
-    return this.orderQueryUseCase.getOrderById(dto);
+  async getOrderById(@Param('id') orderId: string): Promise<OrderDto | null> {
+    return this.orderQueryUseCase.getOrderById({ orderId });
   }
 
   @Get()

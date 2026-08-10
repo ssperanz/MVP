@@ -8,13 +8,14 @@ import { OrderService } from '../order.service.js';
 import { UpdateOrderStateDto } from '../dto/update-order-state.dto.js';
 import { SellOrder } from 'src/core/domain/order/entities/sell-order.entity.js';
 import { OrderId } from 'src/shared/domain/value-objects/order-id.vo.js';
+import type { OrderCommandUseCase } from '../use-cases/order.usecase.command.js';
 
 @EventsHandler(OrderDispatchedEvent)
 export class OrderDispatchedEventHandler implements IEventHandler<OrderDispatchedEvent> {
   constructor(
     @Inject('IDispatchNotifierPort') private readonly notifier: DispatchNotifierPort,
     @Inject('IOrderRepository') private readonly orderRepository: OrderRepository,
-    @Inject('IOrderService') private readonly orderService: OrderService,
+    @Inject('OrderCommandUseCase') private readonly orderService: OrderCommandUseCase,
   ) {}
 
   async handle(event: OrderDispatchedEvent): Promise<void> {

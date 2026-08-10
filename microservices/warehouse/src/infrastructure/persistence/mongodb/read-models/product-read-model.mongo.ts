@@ -48,7 +48,7 @@ export class ProductReadModelMongo implements ProductReadModelRepository {
     await this.productReadModel.findOneAndUpdate(
       { productId: product.productId },
       { $set: product },
-      { upsert: true, new: true },
+      { upsert: true, returnDocument: 'after' },
     ).exec();
   }
 
