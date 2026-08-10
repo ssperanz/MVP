@@ -1,6 +1,6 @@
 import { EventsHandler } from "@nestjs/cqrs";
-import { ProductCriticalMaxThresEvent } from "src/core/domain/product/events/product-critical-max-thres.event";
-import { ProductCriticalMinThresEvent } from "src/core/domain/product/events/product-critical-min-thres.event";
+import { ProductCriticalMaxThresEvent } from "../../../../core/domain/product/events/product-critical-max-thres.event";
+import { ProductCriticalMinThresEvent } from "../../../../core/domain/product/events/product-critical-min-thres.event";
 import type { ProductCriticalEventPublisher } from "../ports/product-critical-event-publisher.port";
 
 @EventsHandler(ProductCriticalMinThresEvent, ProductCriticalMaxThresEvent)
@@ -11,7 +11,7 @@ export class ProductCriticalEventHandler {
 
   async handleProductCriticalMinThresEvent(event: ProductCriticalMinThresEvent): Promise<void> {
     await this.criticalEventPublisher.publishCriticalMinThresEvent(
-      event.productId.toString(),
+      event.productId.id,
       event.minThres.getValue,
       event.currentQty.getValue,
     );
@@ -19,7 +19,7 @@ export class ProductCriticalEventHandler {
 
   async handleProductCriticalMaxThresEvent(event: ProductCriticalMaxThresEvent): Promise<void> {
     await this.criticalEventPublisher.publishCriticalMaxThresEvent(
-      event.productId.toString(),
+      event.productId.id,
       event.maxThres.getValue,
       event.currentQty.getValue,
     );

@@ -14,6 +14,7 @@ export class OrderCreatedEvent extends OrderEvent {
     public readonly orderType: OrderType,
     public readonly orderState: OrderState,
     public readonly totalOrderValue: Money,
+    public readonly destination?: WarehouseId,
   ) {
     super(orderId, orderState);
   }

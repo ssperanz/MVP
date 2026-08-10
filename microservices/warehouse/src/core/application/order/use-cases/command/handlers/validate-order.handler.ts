@@ -4,6 +4,7 @@ import { ValidateOrderCommand } from '../validate-order.command.js';
 import { OrderValidationFailedEvent } from '../../../events/order-validation-failed.event.js';
 import { OrderValidatedEvent } from '../../../events/order-validated.event.js';
 import type { ReservationRepository } from 'src/core/application/reservation/ports/reservation.repository.interface.js';
+import { WarehouseId } from 'src/shared/domain/value-objects/warehouse-id.vo.js';
 
 @CommandHandler(ValidateOrderCommand)
 export class ValidateOrderCommandHandler implements ICommandHandler<ValidateOrderCommand> {
@@ -21,6 +22,7 @@ export class ValidateOrderCommandHandler implements ICommandHandler<ValidateOrde
     if (missingItems.length > 0) {
       this.eventBus.publish(
         new OrderValidationFailedEvent(
+          new WarehouseId(Number(process.env.WAREHOUSE_ID)),
           command.orderId,
           missingItems.map((item) => ({ productId: item.getId().id, qty: item.getQty().getValue })),
         ),

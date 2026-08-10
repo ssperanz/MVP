@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -88,54 +88,54 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { EventsHandler, IEventHandler } from '@nestjs/cqrs';</span>
-<span class="cstat-no" title="statement not covered" >import { Inject } from '@nestjs/common';</span>
-<span class="cstat-no" title="statement not covered" >import { AbstractOrderEventHandler } from './abstract-order-event-handler.js';</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { Inject } from '@nestjs/common';
+import { AbstractOrderEventHandler } from './abstract-order-event-handler.js';
 import type { OrderEventCloudPublisher } from '../ports/order-event-cloud-publisher.port.js';
-<span class="cstat-no" title="statement not covered" >import { OrderCreatedEvent } from '../../../domain/order/events/order-created.event.js';</span>
-<span class="cstat-no" title="statement not covered" >import { OrderStateUpdatedEvent } from '../../../domain/order/events/order-state-updated.event.js';</span>
+import { OrderCreatedEvent } from '../../../domain/order/events/order-created.event.js';
+import { OrderStateUpdatedEvent } from '../../../domain/order/events/order-state-updated.event.js';
 import { OrderEvent } from 'src/shared/domain/events/order-event.base.js';
 &nbsp;
 @EventsHandler(OrderCreatedEvent, OrderStateUpdatedEvent)
-export <span class="cstat-no" title="statement not covered" >class <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >OrderEventCloudHandler </span>extends AbstractOrderEventHandler implements IEventHandler&lt;OrderEvent&gt; {</span></span>
-<span class="fstat-no" title="function not covered" >  constructor(</span>
+export class OrderEventCloudHandler extends AbstractOrderEventHandler implements IEventHandler&lt;OrderEvent&gt; {
+  constructor(
     @Inject('IOrderEventCloudPublisher')
-    private readonly <span class="cstat-no" title="statement not covered" >publisher: OrderEventCloudPublisher,</span>
+    private readonly publisher: OrderEventCloudPublisher,
   ) {
-<span class="cstat-no" title="statement not covered" >    super();</span>
+    super();
   }
 &nbsp;
-  override <span class="fstat-no" title="function not covered" >async </span>onOrderCreated(event: OrderCreatedEvent): Promise&lt;void&gt; {
-<span class="cstat-no" title="statement not covered" >    await this.publisher.publishOrderCreated(event);</span>
+  override async onOrderCreated(event: OrderCreatedEvent): Promise&lt;void&gt; {
+    await this.publisher.publishOrderCreated(event);
   }
 &nbsp;
-  override <span class="fstat-no" title="function not covered" >async </span>onOrderStateUpdated(event: OrderStateUpdatedEvent): Promise&lt;void&gt; {
-<span class="cstat-no" title="statement not covered" >    await this.publisher.publishOrderStateUpdated(event);</span>
+  override async onOrderStateUpdated(event: OrderStateUpdatedEvent): Promise&lt;void&gt; {
+    await this.publisher.publishOrderStateUpdated(event);
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -145,7 +145,7 @@ export <span class="cstat-no" title="statement not covered" >class <span class="
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-08-09T15:05:13.825Z
+                at 2026-08-10T09:43:36.183Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>
