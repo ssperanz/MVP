@@ -61,7 +61,7 @@ export class OrderRepositoryMongo implements OrderRepository {
     await this.orderModel.findOneAndUpdate(
       { orderId: data.orderId },
       { $set: data },
-      { upsert: true, new: true },
+      { upsert: true, returnDocument: 'after' },
     ).exec();
   }
 

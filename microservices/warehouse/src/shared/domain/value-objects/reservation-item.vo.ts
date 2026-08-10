@@ -37,6 +37,20 @@ export class ReservationItem extends ProductItem {
     return reservationItem;
   }
 
+  static restore(
+    itemId: ProductId,
+    requestedQty: Quantity,
+    reservedQty: Quantity,
+    state: ReservationItemState,
+  ): ReservationItem {
+    const item = new ReservationItem(itemId, requestedQty);
+  
+    item.itemReservedQty = reservedQty;
+    item.updateItemState(state);
+  
+    return item;
+  }
+
   private updateItemState(newState: ReservationItemState): void {
     this.itemState = newState;
   }

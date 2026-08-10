@@ -25,6 +25,17 @@ export class Reservation extends AggregateRoot {
     this.reservationItems = reservationItems;
   }
 
+  static restore(
+    orderId: OrderId,
+    reservationItems: ReservationItem[],
+    state: ReservationState,
+  ): Reservation {
+    const reservation = new Reservation(orderId, reservationItems);
+    reservation.updateState(state);
+  
+    return reservation;
+  }
+
   getOrderId(): OrderId { return this.orderId; }
   getReservationItems(): ReservationItem[] { return this.reservationItems; }
   getState(): ReservationState { return this.state; }
@@ -33,7 +44,7 @@ export class Reservation extends AggregateRoot {
     this.state = newState;
   }
 
-    private releaseAll(): void {
+  private releaseAll(): void {
     for (const reservationItem of this.reservationItems) {
       if (reservationItem.getState() !== ReservationItemState.RELEASED) {
         reservationItem.release();

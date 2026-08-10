@@ -23,6 +23,7 @@ export class ReservationRepositoryMongo implements ReservationRepository {
       reservedItems: reservation.getReservationItems().map((ri) => ({
         productId: ri.getId().id,
         qty: ri.getQty().getValue,
+        reservedQty: ri.getReservedQty().getValue,
         state: ri.getState(),
       })),
       state: reservation.getState(),
@@ -31,7 +32,7 @@ export class ReservationRepositoryMongo implements ReservationRepository {
     await this.reservationModel.findOneAndUpdate(
       { orderId: data.orderId },
       { $set: data },
-      { upsert: true, new: true },
+      { upsert: true, returnDocument: 'after' },
     ).exec();
   }
 
@@ -48,14 +49,17 @@ export class ReservationRepositoryMongo implements ReservationRepository {
 
   private toDomain(doc: ReservationDocument): Reservation {
     const items = doc.reservedItems.map(
-      (ri) => new ReservationItem(
+      (ri) => ReservationItem.restore(
         new ProductId(ri.productId),
         new Quantity(ri.qty),
+        new Quantity(ri.reservedQty),
+        ri.state as ReservationItemState,
       ),
     );
-    return new Reservation(
+    return Reservation.restore(
       new OrderId(doc.orderId),
       items,
+      doc.state as ReservationState,
     );
   }
 }

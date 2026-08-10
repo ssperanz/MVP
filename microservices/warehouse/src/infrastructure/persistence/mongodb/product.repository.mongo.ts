@@ -28,7 +28,7 @@ export class ProductRepositoryMongo implements ProductRepository {
     await this.productModel.findOneAndUpdate(
       { id: data.id },
       { $set: data },
-      { upsert: true, new: true },
+      { upsert: true, returnDocument: 'after' },
     ).exec();
   }
 

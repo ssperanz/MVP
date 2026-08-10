@@ -167,6 +167,14 @@ services:
     #volumes:
     #  - ./microservizi/mongo_db:/docker-entrypoint-initdb.d
 
+  mongodb-test:
+    image: mongo:latest
+    container_name: mongo-test
+    ports:
+      - "27018:27017"
+    networks:
+      - shared-warehouses
+
   nats:
     container_name: nats
     image: nats:latest
