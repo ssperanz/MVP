@@ -17,6 +17,7 @@ import { Quantity } from 'src/shared/domain/value-objects/quantity.vo.js';
 import { OrderId } from 'src/shared/domain/value-objects/order-id.vo.js';
 import { Money } from 'src/shared/domain/value-objects/money.vo.js';
 import { ProductEventCloudPublisherNats } from './product-event-cloud.publisher.nats.js';
+import { ProductCreatedEvent } from 'src/core/domain/product/events/product-created.event.js';
 
 describe('ProductEventCloudPublisherNats', () => {
   let productEventCloudPublisherNats: ProductEventCloudPublisherNats;
@@ -33,20 +34,20 @@ describe('ProductEventCloudPublisherNats', () => {
   });
 
   it('should publish product created event with correct subject and payload', async () => {
-    const payload = { 
-      productId: new ProductId('prod123'), 
-      name: 'Product A',
-      price: 19.99,
-      qty: 100,
-      reservedQty: 0,
-      minThres: 10,
-      maxThres: 200,
-    };
-    await productEventCloudPublisherNats.publishProductCreated(payload);
+    const event = new ProductCreatedEvent(new ProductId('prod123'), 'Product A', new Money(19.99), new Quantity(100), new Quantity(0), new Quantity(10), new Quantity(200));
+    await productEventCloudPublisherNats.publishProductCreated(event);
 
     expect(natsClientMock.emit).toHaveBeenCalledWith(
       `warehouse.${process.env.WH_ID || '0'}.product.created`,
-      payload
+      {
+        productId: event.productId.id,
+        name: event.name,
+        unitPrice: event.unitPrice.getAmount,
+        availableQty: event.availableQty.getValue,
+        reservedQty: event.reservedQty.getValue,
+        minThres: event.minThres.getValue,
+        maxThres: event.maxThres.getValue,
+      }
     );
   });
 

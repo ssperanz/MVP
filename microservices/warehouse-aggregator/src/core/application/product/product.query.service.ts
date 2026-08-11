@@ -6,8 +6,9 @@ import { ProductQueryUseCase } from './use-cases/product.query.usecase';
 import { GetProductByProductIdQuery } from './use-cases/query/get-product-by-product-id.query';
 import { GetInventoryQuery } from './use-cases/query/get-inventory.query';
 import { GetProductByWhIdQuery } from './use-cases/query/get-product-by-wh-id.query';
+import { Injectable } from '@nestjs/common';
 
-
+@Injectable()
 export class ProductQueryService implements ProductQueryUseCase {
   constructor(
     private readonly queryBus: QueryBus,

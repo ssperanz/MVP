@@ -12,34 +12,34 @@ export class ProductReadModelRepositoryMongo implements ProductReadModelReposito
   ) {}
 
   async findByProductId(productId: string): Promise<ProductReadModel[] | null> {
-    return this.model.find({ productId }).exec();
+    return this.model.find({ productId }).lean().exec();
   }
 
   async findByWhId(whId: number): Promise<ProductReadModel[]> {
-    return this.model.find({ sourceWh: whId }).exec();
+    return this.model.find({ sourceWh: whId }).lean().exec();
   }
 
   async findAll(): Promise<ProductReadModel[]> {
-    return this.model.find({}).exec();
+    return this.model.find({}).lean().exec();
   }
 
-  async upsert(dto: ProductCreatedDto): Promise<void> {
+  async upsert(dto: ProductCreatedDto, sourceWh: number): Promise<void> {
     await this.model.updateOne(
-      { productId: dto.productId, sourceWh: dto.sourceWh },
-      { $set: dto },
+      { productId: dto.productId, sourceWh: sourceWh },
+      { $set: { ...dto, sourceWh } },
       { upsert: true }
     ).exec();
   }
 
-  async update(dto: ProductUpdatedDto): Promise<void> {
-    const { productId, sourceWh, ...patch } = dto;
+  async update(dto: ProductUpdatedDto, sourceWh: number): Promise<void> {
+    const { productId, ...patch } = dto;
     await this.model.updateOne(
       { productId, sourceWh },
-      { $set: patch }
+      { $set: { ...patch, sourceWh } }
     ).exec();
   }
 
-  async delete(dto: ProductDeletedDto): Promise<void> {
-    await this.model.deleteOne({ productId: dto.productId, sourceWh: dto.sourceWh }).exec();
+  async delete(dto: ProductDeletedDto, sourceWh: number): Promise<void> {
+    await this.model.deleteOne({ productId: dto.productId, sourceWh: sourceWh }).exec();
   }
 }

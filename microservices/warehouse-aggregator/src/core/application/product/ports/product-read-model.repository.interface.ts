@@ -7,7 +7,7 @@ export interface ProductReadModelRepository {
   findByProductId(productId: string): Promise<ProductReadModel[] | null>;
   findByWhId(whId: number): Promise<ProductReadModel[]>;
   findAll(): Promise<ProductReadModel[]>;
-  upsert(dto: ProductCreatedDto): Promise<void>;
-  update(dto: ProductUpdatedDto): Promise<void>;
-  delete(dto: ProductDeletedDto): Promise<void>;
+  upsert(dto: ProductCreatedDto, sourceWh: number): Promise<void>;
+  update(dto: ProductUpdatedDto, sourceWh: number): Promise<void>;
+  delete(dto: ProductDeletedDto, sourceWh: number): Promise<void>;
 }

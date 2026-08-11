@@ -7,6 +7,15 @@ import { ProductReadModelRepositoryMongo } from "../../../infrastructure/persist
 import { ProductEventListenerNats } from "../../../infrastructure/messaging/nats/product-event-listener.nats";
 import { ProductQueryService } from "./product.query.service";
 import { ProductController } from "./product.controller";
+import { GetInventoryQueryHandler } from "./use-cases/query/handlers/get-inventory.handler";
+import { GetProductByProductIdQueryHandler } from "./use-cases/query/handlers/get-product-by-product-id.handler";
+import { GetProductByWhIdQueryHandler } from "./use-cases/query/handlers/get-product-by-wh-id.handler";
+
+const QueryHandlers = [
+  GetInventoryQueryHandler,
+  GetProductByProductIdQueryHandler,
+  GetProductByWhIdQueryHandler,
+];
 
 @Module({
   imports: [
@@ -22,11 +31,17 @@ import { ProductController } from "./product.controller";
   ],
   providers: [
     ProductQueryService,
+    {
+      provide: 'IProductQueryUseCase',
+      useExisting: ProductQueryService,
+    },
     ProductReadModelRepositoryMongo,
     {
-      provide: 'ProductReadModelRepository',
+      provide: 'IProductReadModelRepository',
       useExisting: ProductReadModelRepositoryMongo,
     },
+
+    ...QueryHandlers
   ],
 })
 

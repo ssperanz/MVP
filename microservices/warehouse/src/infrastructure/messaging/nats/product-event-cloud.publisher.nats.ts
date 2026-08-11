@@ -12,6 +12,7 @@ import { ProductMaxThresUpdatedEvent } from 'src/core/domain/product/events/prod
 import { ProductReservedEvent } from 'src/core/domain/product/events/product-reserved.event.js';
 import { ProductReleasedEvent } from 'src/core/domain/product/events/product-released.event.js';
 import { ProductRemovedEvent } from 'src/core/domain/product/events/product-removed.event.js';
+import { ProductCreatedEvent } from 'src/core/domain/product/events/product-created.event.js';
 
 @Injectable()
 export class ProductEventCloudPublisherNats implements ProductEventCloudPublisher {
@@ -19,9 +20,18 @@ export class ProductEventCloudPublisherNats implements ProductEventCloudPublishe
 
   constructor(@Inject('NATS_CLIENT') private readonly natsClient: ClientProxy) {}
 
-  async publishProductCreated(payload: any): Promise<void> {
+  async publishProductCreated(event: ProductCreatedEvent): Promise<void> {
     const subject = `warehouse.${process.env.WH_ID || '0'}.product.created`;
-    this.logger.log(`Publishing product.created to NATS cloud`);
+    const payload = {
+      productId: event.productId.id,
+      name: event.name,
+      unitPrice: event.unitPrice.getAmount,
+      availableQty: event.availableQty.getValue,
+      reservedQty: event.reservedQty.getValue,
+      minThres: event.minThres.getValue,
+      maxThres: event.maxThres.getValue,
+    };
+
     this.natsClient.emit(subject, payload);
   }
 

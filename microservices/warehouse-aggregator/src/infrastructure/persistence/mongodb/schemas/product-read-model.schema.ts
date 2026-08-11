@@ -3,7 +3,7 @@ import { HydratedDocument } from 'mongoose';
 
 export type ProductReadModelDocument = HydratedDocument<ProductReadModel>;
 
-@Schema({ collection: 'product_read_models' })
+@Schema({ collection: 'aggregated_product_read_models' })
 export class ProductReadModel {
   @Prop({ required: true })
   sourceWh: number;

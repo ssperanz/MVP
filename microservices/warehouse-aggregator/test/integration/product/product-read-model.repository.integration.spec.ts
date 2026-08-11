@@ -125,7 +125,9 @@ describe('ProductReadModelRepositoryMongo - Integration', () => {
       maxThres: 200,
     };
 
-    await repository.upsert(product);
+    const sourceWh = 1;
+
+    await repository.upsert(product, sourceWh);
 
     const result = await model.findOne({ productId: 'product-1' }).lean();
 
@@ -156,7 +158,6 @@ describe('ProductReadModelRepositoryMongo - Integration', () => {
     });
 
     const updatedProduct = {
-      sourceWh: 1,
       productId: 'product-1',
       name: 'Updated Product 1',
       unitPrice: 150,
@@ -166,7 +167,9 @@ describe('ProductReadModelRepositoryMongo - Integration', () => {
       maxThres: 250,
     };
 
-    await repository.update(updatedProduct);
+    const sourceWh = 1;
+
+    await repository.update(updatedProduct, sourceWh);
 
     const result = await model.findOne({ productId: 'product-1' }).lean();
 
@@ -196,7 +199,7 @@ describe('ProductReadModelRepositoryMongo - Integration', () => {
       maxThres: 200,
     });
 
-    await repository.delete({ sourceWh: 1, productId: 'product-1' });
+    await repository.delete({ productId: 'product-1' }, 1);
 
     const result = await model.findOne({ productId: 'product-1' }).lean();
 

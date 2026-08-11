@@ -5,7 +5,7 @@ export interface ProductEventListener {
 }
 
 export interface ProductCreatedDto {
-  sourceWh: number;
+  //sourceWh: number;
   productId: string;
   name: string;
   unitPrice: number;
@@ -16,7 +16,7 @@ export interface ProductCreatedDto {
 }
 
 export interface ProductUpdatedDto {
-  sourceWh: number;
+  //sourceWh: number;
   productId: string;
   name?: string;
   unitPrice?: number;
@@ -27,6 +27,6 @@ export interface ProductUpdatedDto {
 }
 
 export interface ProductDeletedDto {
-  sourceWh: number;
+  //sourceWh: number;
   productId: string;
 }
