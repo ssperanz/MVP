@@ -45,6 +45,7 @@ import { InboundOrderEventListenerNats } from './inbound-order-event.listener.na
     },
   ],
   exports: [
+    ClientsModule,
     'IProductEventCloudPublisher',
     'IOrderEventCloudPublisher',
     'IOrderEventDestinationWhPublisher',

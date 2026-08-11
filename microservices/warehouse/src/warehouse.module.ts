@@ -5,6 +5,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { ProductModule } from './core/application/product/product.module';
 import { OrderModule } from './core/application/order/order.module';
 import { ReservationModule } from './core/application/reservation/reservation.module';
+import { StateModule } from './core/application/state/state.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ReservationModule } from './core/application/reservation/reservation.mo
     ProductModule,
     OrderModule,
     ReservationModule,
+    StateModule
   ],
   providers: [],
   controllers: [],

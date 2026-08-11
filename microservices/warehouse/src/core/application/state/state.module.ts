@@ -8,9 +8,15 @@ import { AccessController } from './access.controller';
 import { InboundPortsAdapter } from 'src/infrastructure/messaging/nats/state/inboundPortAdapters';
 import { StateEventHandler } from './event-handler/state-event.handler';
 import { OutboundPortsAdapter } from 'src/infrastructure/messaging/nats/state/outboundPortAdapters';
+import { StateSchema, StateSchemaFactory, StateSchemaName } from 'src/infrastructure/persistence/mongodb/schemas/state.schema';
+
+
 @Module({
   imports: [
-    MongooseModule.forRoot(`${process.env.MONGO_URI}`),
+    MongooseModule.forFeature([{ 
+      name: StateSchemaName,
+      schema: StateSchemaFactory
+    }]),
     NatsMessagingModule,
     StateRepositoryModule,
   ],

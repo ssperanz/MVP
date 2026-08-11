@@ -6,7 +6,7 @@ import { WarehouseState } from "src/core/domain/state/entities/warehouse-state.e
 
 @Injectable()
 export class StateEventHandler implements OnModuleInit {
-  constructor(@Inject('NATS_SERVICE') private readonly natsClient: ClientProxy) {}
+  constructor(@Inject('NATS_CLIENT') private readonly natsClient: ClientProxy) {}
 
   async onModuleInit() {
     await this.natsClient.connect(); 
