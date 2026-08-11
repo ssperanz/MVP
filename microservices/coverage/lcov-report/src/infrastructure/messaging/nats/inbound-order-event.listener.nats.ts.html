@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>14/18</span>
+                <span class='fraction'>18/18</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/16</span>
+                <span class='fraction'>16/16</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -99,40 +99,40 @@
 <a name='L34'></a><a href='#L34'>34</a>
 <a name='L35'></a><a href='#L35'>35</a>
 <a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Controller, Inject } from "@nestjs/common";
@@ -152,23 +152,23 @@ export class InboundOrderEventListenerNats implements InboundOrderEventListenerP
   ) {}
 &nbsp;
   @EventPattern(`warehouse.${process.env.WAREHOUSE_ID}.order.created`)
-  async <span class="fstat-no" title="function not covered" >handleOrderCreated(</span>dto: CreateOrderDto<span class="branch-1 cbranch-no" title="branch not covered" >): P</span>romise<span class="branch-1 cbranch-no" title="branch not covered" >&lt;void&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    await this.orderService.createOrder(dto);</span>
+  async handleOrderCreated(dto: CreateOrderDto<span class="branch-1 cbranch-no" title="branch not covered" >): P</span>romise<span class="branch-1 cbranch-no" title="branch not covered" >&lt;void&gt; {</span>
+    await this.orderService.createOrder(dto);
   }
 &nbsp;
   @EventPattern(`warehouse.${process.env.WAREHOUSE_ID}.order.incoming`)
-  async <span class="fstat-no" title="function not covered" >handleInternalOrderArrival(</span>dto: OrderDispatchedDto<span class="branch-1 cbranch-no" title="branch not covered" >): P</span>romise<span class="branch-1 cbranch-no" title="branch not covered" >&lt;void&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    await this.orderService.deliverOrder(dto);</span>
+  async handleInternalOrderArrival(dto: OrderDispatchedDto<span class="branch-1 cbranch-no" title="branch not covered" >): P</span>romise<span class="branch-1 cbranch-no" title="branch not covered" >&lt;void&gt; {</span>
+    await this.orderService.deliverOrder(dto);
   }
 &nbsp;
   @EventPattern(`warehouse.${process.env.WAREHOUSE_ID}.order.status.updated`)
-  async <span class="fstat-no" title="function not covered" >handleOrderStatusUpdated(</span>dto: UpdateOrderStateDto<span class="branch-1 cbranch-no" title="branch not covered" >): P</span>romise<span class="branch-1 cbranch-no" title="branch not covered" >&lt;void&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    await this.orderService.updateOrderStatus(dto);</span>
+  async handleOrderStatusUpdated(dto: UpdateOrderStateDto<span class="branch-1 cbranch-no" title="branch not covered" >): P</span>romise<span class="branch-1 cbranch-no" title="branch not covered" >&lt;void&gt; {</span>
+    await this.orderService.updateOrderStatus(dto);
   }
 &nbsp;
   @EventPattern(`warehouse.${process.env.WAREHOUSE_ID}.order.cancelled`)
-  async <span class="fstat-no" title="function not covered" >handleOrderCancelledEvent(</span>dto: CancelOrderDto<span class="branch-1 cbranch-no" title="branch not covered" >): P</span>romise<span class="branch-1 cbranch-no" title="branch not covered" >&lt;void&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    await this.orderService.cancelOrder(dto);</span>
+  async handleOrderCancelledEvent(dto: CancelOrderDto<span class="branch-1 cbranch-no" title="branch not covered" >): P</span>romise<span class="branch-1 cbranch-no" title="branch not covered" >&lt;void&gt; {</span>
+    await this.orderService.cancelOrder(dto);
   }
 &nbsp;
 }</pre></td></tr></table></pre>
@@ -178,7 +178,7 @@ export class InboundOrderEventListenerNats implements InboundOrderEventListenerP
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-08-10T16:43:12.548Z
+                at 2026-08-11T08:02:00.044Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

@@ -11,7 +11,7 @@ export class ReplenishmentRequestPublisherNats implements ReplenishmentRequestPo
   async requestReplenishment(
     {orderId, insufficientItems}: { orderId: string; insufficientItems: Array<{ productId: string; qty: number }> },
   ): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || 'WH0'}.replenishment.request`;
+    const subject = `warehouse.${process.env.WH_ID || '0'}.replenishment.request`;
     this.logger.log(`Publishing replenishment request for order ${orderId} via NATS`);
     this.natsClient.emit(subject, {
       orderId,

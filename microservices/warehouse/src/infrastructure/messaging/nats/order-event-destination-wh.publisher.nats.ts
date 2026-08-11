@@ -16,8 +16,8 @@ export class OrderEventDestinationWhPublisherNats implements OrderEventDestinati
     await this.natsClient.emit(subject, {
       orderId: event.orderId,
       items: event.orderItems.map(item => ({
-        productId: item.getId,
-        qty: item.getQty,
+        productId: item.getId().id,
+        qty: item.getQty().getValue,
       })),
     }).toPromise();
   }

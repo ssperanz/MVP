@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/14</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">37.5% </span>
+                <span class="strong">87.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/8</span>
+                <span class='fraction'>7/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/12</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -96,34 +96,34 @@
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -141,22 +141,22 @@ export class OrderEventDestinationWhPublisherNats implements OrderEventDestinati
 &nbsp;
   constructor(@Inject('NATS_CLIENT') private readonly natsClient: ClientProxy<span class="branch-1 cbranch-no" title="branch not covered" >) {}</span>
 &nbsp;
-<span class="fstat-no" title="function not covered" >  async </span>publishOrderCreated(event: OrderCreatedEvent): Promise&lt;void&gt; {
-    const subject = <span class="cstat-no" title="statement not covered" >`warehouse.${process.env.WH_ID || '0'}.order.created`;</span>
-<span class="cstat-no" title="statement not covered" >    this.logger.log(`Publishing order created event for order ${event.orderId} to warehouse via NATS`);</span>
-<span class="cstat-no" title="statement not covered" >    await this.natsClient.emit(subject, {</span>
+  async publishOrderCreated(event: OrderCreatedEvent): Promise&lt;void&gt; {
+    const subject = `warehouse.${process.env.WH_ID || '0'}.order.created`;
+    this.logger.log(`Publishing order created event for order ${event.orderId} to warehouse via NATS`);
+    await this.natsClient.emit(subject, {
       orderId: event.orderId,
-      items: event.orderItems.map(<span class="fstat-no" title="function not covered" >item </span>=&gt; (<span class="cstat-no" title="statement not covered" >{</span>
-        productId: item.getId,
-        qty: item.getQty,
+      items: event.orderItems.map(item =&gt; ({
+        productId: item.getId().id,
+        qty: item.getQty().getValue,
       })),
     }).toPromise();
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  async </span>publishOrderStateUpdated(event: OrderStateUpdatedEvent): Promise&lt;void&gt; {
-    const subject = <span class="cstat-no" title="statement not covered" >`warehouse.${process.env.WH_ID || '0'}.order.state.updated`;</span>
-<span class="cstat-no" title="statement not covered" >    this.logger.log(`Publishing order state updated event for order ${event.orderId} to warehouse via NATS`);</span>
-<span class="cstat-no" title="statement not covered" >    await this.natsClient.emit(subject, {</span>
+  async publishOrderStateUpdated(event: OrderStateUpdatedEvent): Promise&lt;void&gt; {
+    const subject = `warehouse.${process.env.WH_ID || '0'}.order.state.updated`;
+    this.logger.log(`Publishing order state updated event for order ${event.orderId} to warehouse via NATS`);
+    await this.natsClient.emit(subject, {
       orderId: event.orderId,
       newState: event.orderState,
     }).toPromise();
@@ -169,7 +169,7 @@ export class OrderEventDestinationWhPublisherNats implements OrderEventDestinati
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-08-10T16:43:12.548Z
+                at 2026-08-11T08:02:00.044Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
