@@ -1,9 +1,9 @@
-import { HeartbeatDTO } from "src/core/application/state/dto/heartbeat.dto";
-import { WarehouseIdDTO } from "src/core/application/state/dto/warehouse-id.dto";
-import { WarehouseStateDTO } from "src/core/application/state/dto/warehouse-state.dto";
-import { Heartbeat } from "src/core/domain/state/entities/heartbeat.entity";
-import { WarehouseState } from "src/core/domain/state/entities/warehouse-state.entity";
-import { WarehouseId } from "src/shared/domain/value-objects/warehouse-id.vo";
+import { HeartbeatDTO } from "../../core/application/state/dto/heartbeat.dto";
+import { WarehouseIdDTO } from "../../core/application/state/dto/warehouse-id.dto";
+import { WarehouseStateDTO } from "../../core/application/state/dto/warehouse-state.dto";
+import { Heartbeat } from "../../core/domain/state/entities/heartbeat.entity";
+import { WarehouseState } from "../../core/domain/state/entities/warehouse-state.entity";
+import { WarehouseId } from "../../shared/domain/value-objects/warehouse-id.vo";
 
 
 export const DataMapper = {

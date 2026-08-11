@@ -1,10 +1,10 @@
 // src/application/state.service.ts
 import { Injectable, Inject, Logger } from '@nestjs/common';
 import { StateRepository } from './ports/state.repository';
-import { OutboundPortsAdapter } from 'src/infrastructure/messaging/nats/state/outboundPortAdapters';
-import { WarehouseId } from 'src/shared/domain/value-objects/warehouse-id.vo';
-import { WarehouseState } from 'src/core/domain/state/entities/warehouse-state.entity';
-import { Heartbeat } from 'src/core/domain/state/entities/heartbeat.entity';
+import { OutboundPortsAdapter } from '../../../infrastructure/messaging/nats/state/outboundPortAdapters';
+import { WarehouseId } from '../../../shared/domain/value-objects/warehouse-id.vo';
+import { WarehouseState } from '../../../core/domain/state/entities/warehouse-state.entity';
+import { Heartbeat } from '../../../core/domain/state/entities/heartbeat.entity';
 
 @Injectable()
 export class StateService {

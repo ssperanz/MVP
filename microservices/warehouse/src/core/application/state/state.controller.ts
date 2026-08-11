@@ -1,7 +1,7 @@
 // src/interfaces/http/state.controller.ts
 import { Controller, Logger } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import { InboundPortsAdapter } from 'src/infrastructure/messaging/nats/state/inboundPortAdapters';
+import { InboundPortsAdapter } from '../../../infrastructure/messaging/nats/state/inboundPortAdapters';
 
 
 @Controller()

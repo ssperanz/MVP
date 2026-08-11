@@ -1,9 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { StateRepository } from 'src/core/application/state/ports/state.repository';
+import { StateRepository } from '../../../core/application/state/ports/state.repository';
 import type { StateModel } from './models/state.model';
-import { WarehouseId } from 'src/shared/domain/value-objects/warehouse-id.vo';
-import { WarehouseState } from 'src/core/domain/state/entities/warehouse-state.entity';
+import { WarehouseId } from '../../../shared/domain/value-objects/warehouse-id.vo';
+import { WarehouseState } from '../../../core/domain/state/entities/warehouse-state.entity';
 
 @Injectable()
 export class StateRepositoryMongo implements StateRepository {
