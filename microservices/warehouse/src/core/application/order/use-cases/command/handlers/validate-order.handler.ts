@@ -3,8 +3,8 @@ import { Inject } from '@nestjs/common';
 import { ValidateOrderCommand } from '../validate-order.command.js';
 import { OrderValidationFailedEvent } from '../../../events/order-validation-failed.event.js';
 import { OrderValidatedEvent } from '../../../events/order-validated.event.js';
-import type { ReservationRepository } from 'src/core/application/reservation/ports/reservation.repository.interface.js';
-import { WarehouseId } from 'src/shared/domain/value-objects/warehouse-id.vo.js';
+import type { ReservationRepository } from '../../../../../../core/application/reservation/ports/reservation.repository.interface.js';
+import { WarehouseId } from '../../../../../../shared/domain/value-objects/warehouse-id.vo.js';
 
 @CommandHandler(ValidateOrderCommand)
 export class ValidateOrderCommandHandler implements ICommandHandler<ValidateOrderCommand> {

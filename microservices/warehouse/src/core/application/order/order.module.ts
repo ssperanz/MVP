@@ -26,8 +26,7 @@ import { OrderEventDestinationWhHandler } from './event-handlers/order-event-des
 import { OrderService } from './order.service.js';
 import { OrderController } from './order.controller.js';
 import { OrderQueryService } from './order.query.service.js';
-import { InboundOrderEventListenerNats } from 'src/infrastructure/messaging/nats/inbound-order-event.listener.nats.js';
-import { Order } from 'src/core/domain/order/entities/order.entity.js';
+import { InboundOrderEventListenerNats } from '../../../infrastructure/messaging/nats/inbound-order-event.listener.nats.js';
  
 const CommandHandlers = [
   CreateOrderCommandHandler,

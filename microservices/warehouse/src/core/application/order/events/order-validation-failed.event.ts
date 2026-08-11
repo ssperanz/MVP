@@ -1,4 +1,4 @@
-import { WarehouseId } from 'src/shared/domain/value-objects/warehouse-id.vo';
+import { WarehouseId } from '../../../../shared/domain/value-objects/warehouse-id.vo';
 import { OrderApplicationEvent } from '../../../../shared/application/events/order-application-event';
 import { OrderId } from '../../../../shared/domain/value-objects/order-id.vo';
 

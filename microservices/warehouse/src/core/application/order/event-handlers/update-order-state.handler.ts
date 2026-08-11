@@ -10,9 +10,9 @@ import { OrderDispatchedEvent } from '../events/order-dispatched.event.js';
 import { OrderDispatchFailedEvent } from '../events/order-dispatch-failed.event.js';
 import { OrderDeliveredEvent } from '../events/order-delivered.event.js';
 import { OrderCanceledEvent } from '../events/order-canceled.event.js';
-import { OrderEvent } from 'src/shared/domain/events/order-event.base.js';
-import { OrderApplicationEvent } from 'src/shared/application/events/order-application-event.js';
-import { ReservationEvent } from 'src/shared/domain/events/reservation-event.base.js';
+import { OrderEvent } from '../../../../shared/domain/events/order-event.base.js';
+import { OrderApplicationEvent } from '../../../../shared/application/events/order-application-event.js';
+import { ReservationEvent } from '../../../../shared/domain/events/reservation-event.base.js';
 import { ProductsReservedEvent } from '../../product/events/products-reserved.event.js';
 
 @EventsHandler(

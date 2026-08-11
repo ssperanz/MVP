@@ -3,8 +3,8 @@ import { Inject } from '@nestjs/common';
 import { AbstractOrderEventHandler } from './abstract-order-event-handler.js';
 import type { OrderEventDestinationWhPublisher } from '../ports/order-event-destination-wh-publisher.port.js';
 import { OrderStateUpdatedEvent } from '../../../domain/order/events/order-state-updated.event.js';
-import { OrderCreatedEvent } from 'src/core/domain/order/events/order-created.event.js';
-import { OrderEvent } from 'src/shared/domain/events/order-event.base.js';
+import { OrderCreatedEvent } from '../../../../core/domain/order/events/order-created.event.js';
+import { OrderEvent } from '../../../../shared/domain/events/order-event.base.js';
 
 @EventsHandler(OrderCreatedEvent, OrderStateUpdatedEvent)
 export class OrderEventDestinationWhHandler extends AbstractOrderEventHandler implements IEventHandler<OrderEvent> {

@@ -1,4 +1,4 @@
-import { OrderEvent } from 'src/shared/domain/events/order-event.base.js';
+import { OrderEvent } from '../../../../shared/domain/events/order-event.base.js';
 import { OrderCreatedEvent } from '../../../domain/order/events/order-created.event.js';
 import { OrderStateUpdatedEvent } from '../../../domain/order/events/order-state-updated.event.js';
 

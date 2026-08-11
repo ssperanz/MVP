@@ -3,11 +3,11 @@ import { Inject } from '@nestjs/common';
 import { OrderDispatchedEvent } from '../events/order-dispatched.event.js';
 import type { DispatchNotifierPort } from '../ports/dispatch-notifier.port.js';
 import type { OrderRepository } from '../ports/order.repository.interface.js';
-import { TransferOrder } from 'src/core/domain/order/entities/transfer-order.entity.js';
 import { OrderService } from '../order.service.js';
 import { UpdateOrderStateDto } from '../dto/update-order-state.dto.js';
-import { SellOrder } from 'src/core/domain/order/entities/sell-order.entity.js';
-import { OrderId } from 'src/shared/domain/value-objects/order-id.vo.js';
+import { TransferOrder } from '../../../../core/domain/order/entities/transfer-order.entity.js';
+import { SellOrder } from '../../../../core/domain/order/entities/sell-order.entity.js';
+import { OrderId } from '../../../../shared/domain/value-objects/order-id.vo.js';
 import type { OrderCommandUseCase } from '../use-cases/order.usecase.command.js';
 
 @EventsHandler(OrderDispatchedEvent)

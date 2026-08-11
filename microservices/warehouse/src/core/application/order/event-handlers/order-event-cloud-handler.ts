@@ -4,7 +4,7 @@ import { AbstractOrderEventHandler } from './abstract-order-event-handler.js';
 import type { OrderEventCloudPublisher } from '../ports/order-event-cloud-publisher.port.js';
 import { OrderCreatedEvent } from '../../../domain/order/events/order-created.event.js';
 import { OrderStateUpdatedEvent } from '../../../domain/order/events/order-state-updated.event.js';
-import { OrderEvent } from 'src/shared/domain/events/order-event.base.js';
+import { OrderEvent } from '../../../../shared/domain/events/order-event.base.js';
 
 @EventsHandler(OrderCreatedEvent, OrderStateUpdatedEvent)
 export class OrderEventCloudHandler extends AbstractOrderEventHandler implements IEventHandler<OrderEvent> {

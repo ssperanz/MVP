@@ -8,8 +8,8 @@ import { ReservationCompletedEvent } from '../events/reservation-completed.event
 import { ReservationCanceledEvent } from '../events/reservation-canceled.event.js';
 import { ReservationUpdatedEvent } from '../events/reservation-updated.event.js';
 import { ReservationCancelingRequestedEvent } from '../events/reservation-canceling-requested.event.js';
-import { Quantity } from 'src/shared/domain/value-objects/quantity.vo.js';
-import { ReservationState } from 'src/shared/domain/enums/reservation-state.enum.js';
+import { Quantity } from '../../../../shared/domain/value-objects/quantity.vo.js';
+import { ReservationState } from '../../../../shared/domain/enums/reservation-state.enum.js';
 
 export class Reservation extends AggregateRoot {
   private orderId: OrderId;

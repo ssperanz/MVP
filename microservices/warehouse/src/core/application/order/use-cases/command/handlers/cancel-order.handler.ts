@@ -1,9 +1,9 @@
 import { CommandHandler, ICommandHandler, EventBus } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import { CancelOrderCommand } from '../cancel-order.command.js';
-import type { ReservationRepository } from 'src/core/application/reservation/ports/reservation.repository.interface.js';
-import { ReservationCancelingRequestedEvent } from 'src/core/domain/reservation/events/reservation-canceling-requested.event.js';
-import { OrderId } from 'src/shared/domain/value-objects/order-id.vo.js';
+import type { ReservationRepository } from '../../../../../../core/application/reservation/ports/reservation.repository.interface.js';
+import { ReservationCancelingRequestedEvent } from '../../../../../../core/domain/reservation/events/reservation-canceling-requested.event.js';
+import { OrderId } from '../../../../../../shared/domain/value-objects/order-id.vo.js';
 
 @CommandHandler(CancelOrderCommand)
 export class CancelOrderCommandHandler implements ICommandHandler<CancelOrderCommand> {

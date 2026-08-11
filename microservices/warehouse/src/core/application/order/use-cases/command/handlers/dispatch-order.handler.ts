@@ -8,7 +8,7 @@ import { ProductId } from '../../../../../../shared/domain/value-objects/product
 import { Quantity } from '../../../../../../shared/domain/value-objects/quantity.vo.js';
 import { OrderDispatchedEvent } from '../../../events/order-dispatched.event.js';
 import { OrderDispatchFailedEvent } from '../../../events/order-dispatch-failed.event.js';
-import { TransferOrder } from 'src/core/domain/order/entities/transfer-order.entity.js';
+import { TransferOrder } from '../../../../../../core/domain/order/entities/transfer-order.entity.js';
 
 @CommandHandler(DispatchOrderCommand)
 export class DispatchOrderCommandHandler implements ICommandHandler<DispatchOrderCommand> {

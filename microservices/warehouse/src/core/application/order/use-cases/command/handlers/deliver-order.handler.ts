@@ -4,9 +4,9 @@ import type { OrderRepository } from '../../../ports/order.repository.interface.
 import type { ProductRepository } from '../../../../product/ports/product.repository.interface.js';
 import { DeliverOrderCommand } from '../deliver-order.command.js';
 import { OrderDeliveredEvent } from '../../../events/order-delivered.event.js';
-import { ReplenishmentOrder } from 'src/core/domain/order/entities/replenishment-order.entity.js';
 import { ReplenishmentDeliveredEvent } from '../../../events/replenishment-delivered.event.js';
-import { OrderId } from 'src/shared/domain/value-objects/order-id.vo.js';
+import { ReplenishmentOrder } from '../../../../../../core/domain/order/entities/replenishment-order.entity.js';
+import { OrderId } from '../../../../../../shared/domain/value-objects/order-id.vo.js';
 
 @CommandHandler(DeliverOrderCommand)
 export class DeliverOrderCommandHandler implements ICommandHandler<DeliverOrderCommand> {
