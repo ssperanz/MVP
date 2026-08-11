@@ -1,11 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Controller, Inject, Injectable } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import type { ProductCreatedDto, ProductDeletedDto, ProductEventListener, ProductUpdatedDto } from 'src/core/application/product/ports/product-event-listener.port';
 import type { ProductReadModelRepository } from 'src/core/application/product/ports/product-read-model.repository.interface';
 
-@Injectable()
+@Controller()
 export class ProductEventListenerNats implements ProductEventListener {
-  constructor(private readonly productReadModelRepository: ProductReadModelRepository) {}
+  constructor(
+    @Inject('ProductReadModelRepository')
+    private readonly productReadModelRepository: ProductReadModelRepository
+  ) {}
 
   @EventPattern('warehouse.*.product.created')
   async onProductCreated(@Payload() dto: ProductCreatedDto) {

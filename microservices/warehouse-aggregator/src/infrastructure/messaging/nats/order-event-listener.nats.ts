@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
-import { OrderCreatedDto } from 'src/core/application/order/dto/order-created.dto';
-import { UpdateOrderStateDto } from 'src/core/application/order/dto/update-order-state.dto';
-import { OrderEventListener } from 'src/core/application/order/ports/order-event-listener.port';
-import { OrderReadModelRepositoryMongo } from 'src/infrastructure/persistence/mongodb/order-read-model.repository';
+import { OrderCreatedDto } from '../../../core/application/order/dto/order-created.dto';
+import { UpdateOrderStateDto } from '../../../core/application/order/dto/update-order-state.dto';
+import { OrderEventListener } from '../../../core/application/order/ports/order-event-listener.port';
+import { OrderReadModelRepositoryMongo } from '../../../infrastructure/persistence/mongodb/order-read-model.repository';
 
 @Injectable()
 export class OrderEventListenerNats implements OrderEventListener {

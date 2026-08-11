@@ -7,7 +7,7 @@ export class OrderItemDto {
   productId: string;
 
   @IsNumber()
-  qty: number;
+  quantity: number;
 }
 
 export class AddressDto {
@@ -40,7 +40,7 @@ export class OrderCreatedDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => OrderItemDto)
-  items: OrderItemDto[];
+  orderItems: OrderItemDto[];
 
   @IsOptional()
   @IsNumber()

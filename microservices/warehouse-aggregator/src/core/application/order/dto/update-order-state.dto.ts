@@ -8,8 +8,5 @@ export class UpdateOrderStateDto {
   orderId: string;
 
   @IsString()
-  newState: string;
-
-  @IsString()
-  orderType: string;
+  orderState: string;
 }

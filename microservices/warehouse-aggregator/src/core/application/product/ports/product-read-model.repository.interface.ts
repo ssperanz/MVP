@@ -1,4 +1,4 @@
-import { ProductReadModel } from "src/infrastructure/persistence/mongodb/schemas/product-read-model.schema";
+import type { ProductReadModel } from "src/infrastructure/persistence/mongodb/schemas/product-read-model.schema";
 import { ProductCreatedDto, ProductDeletedDto, ProductUpdatedDto } from "./product-event-listener.port";
 
 export const IProductReadModelRepositoryToken = Symbol('IProductReadModelRepository');

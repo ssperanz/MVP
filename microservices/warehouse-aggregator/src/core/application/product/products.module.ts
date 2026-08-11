@@ -6,6 +6,7 @@ import { ProductReadModel, ProductReadModelMongoSchema } from "src/infrastructur
 import { ProductController } from "./product.controller";
 import { ProductEventListenerNats } from "src/infrastructure/messaging/nats/product-event-listener.nats";
 import { ProductQueryService } from "./product.query.service";
+import { ProductReadModelRepositoryMongo } from "src/infrastructure/persistence/mongodb/product-read-model.repository";
 
 @Module({
   imports: [
@@ -15,15 +16,18 @@ import { ProductQueryService } from "./product.query.service";
       { name: ProductReadModel.name, schema: ProductReadModelMongoSchema },
     ]),
   ],
-  controllers: [ProductController],
-  providers: [
-    {
-      provide: 'IProductEventListener',
-      useClass: ProductEventListenerNats,
-    },
-    ProductQueryService,
+  controllers: [
+    ProductController,
+    ProductEventListenerNats
   ],
-  exports: ['IProductEventListener'],
+  providers: [
+    ProductQueryService,
+    ProductReadModelRepositoryMongo,
+    {
+      provide: 'ProductReadModelRepository',
+      useExisting: ProductReadModelRepositoryMongo,
+    },
+  ],
 })
 
 export class ProductsModule {}

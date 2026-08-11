@@ -18,20 +18,6 @@ import { ProductEventListenerNats } from './product-event-listener.nats';
       },
     ]),
   ],
-  controllers: [],
-  providers: [
-    {
-      provide: 'IOrderEventListener',
-      useClass: OrderEventListenerNats,
-    },
-    {
-      provide: 'IProductEventListener',
-      useClass: ProductEventListenerNats,
-    },
-  ],
-  exports: [
-    'IOrderEventListener',
-    'IProductEventListener',
-  ],
+  exports: [ClientsModule],
 })
 export class NatsMessagingModule {}
