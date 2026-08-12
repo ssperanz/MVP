@@ -16,7 +16,7 @@ export class ProductController {
     private readonly productQueryService: ProductQueryService,
   ) {}
 
-  @Get(':id')
+  @Get(':productId')
   async getProductById(
     @Param() dto: ProductIdDto,
   ): Promise<ProductDto[] | null> {
