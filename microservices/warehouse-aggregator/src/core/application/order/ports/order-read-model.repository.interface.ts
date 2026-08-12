@@ -8,6 +8,6 @@ export interface OrderReadModelRepository {
   findByOrderId(orderId: string): Promise<OrderReadModel | null>;
   findByWhId(whId: number): Promise<OrderReadModel[] | null>;
   findAll(): Promise<OrderReadModel[]>;
-  upsert(dto: OrderCreatedDto): Promise<void>;
-  update(dto: UpdateOrderStateDto): Promise<void>;
+  upsert(dto: OrderCreatedDto, sourceWh: number): Promise<void>;
+  update(dto: UpdateOrderStateDto, sourceWh: number): Promise<void>;
 }

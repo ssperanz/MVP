@@ -9,6 +9,8 @@ services:
       - MONGO_URI=mongodb://mongodb-test:27017/warehouse-1
       - WAREHOUSE_ID=1
       - NATS_URL=nats://nats-test:4222
+    ports:
+      - "3000:3000"
     networks:
       - e2e-network
     depends_on:

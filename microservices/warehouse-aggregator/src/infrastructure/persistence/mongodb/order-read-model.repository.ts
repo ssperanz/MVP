@@ -24,16 +24,16 @@ export class OrderReadModelRepositoryMongo implements OrderReadModelRepository {
     return this.model.find({}).exec();
   }
 
-  async upsert(dto: OrderCreatedDto): Promise<void> {
+  async upsert(dto: OrderCreatedDto, sourceWh: number): Promise<void> {
     await this.model.updateOne(
-      { orderId: dto.orderId, sourceWh: dto.sourceWh },
+      { orderId: dto.orderId, sourceWh },
       { $set: dto },
       { upsert: true }
     ).exec();
   }
 
-  async update(dto: UpdateOrderStateDto): Promise<void> {
-    const { orderId, sourceWh, ...patch } = dto;
+  async update(dto: UpdateOrderStateDto, sourceWh: number): Promise<void> {
+    const { orderId, ...patch } = dto;
     await this.model.updateOne(
       { orderId, sourceWh },
       { $set: patch }

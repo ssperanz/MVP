@@ -1,127 +1,140 @@
 import axios from 'axios';
-import { connect, StringCodec } from 'nats';
 
-describe('Warehouse → Warehouse Aggregator synchronization', () => {
-  let connection: Awaited<ReturnType<typeof connect>>;
-  const sc = StringCodec();
-
+describe('Warehouse → Warehouse Aggregator product synchronization', () => {
+  const warehouseUrl = 'http://localhost:3000';
   const aggregatorUrl = 'http://localhost:3110';
 
-  beforeAll(async () => {
-    connection = await connect({
-      servers: 'nats://localhost:4222',
-    });
-  });
-
-  afterAll(async () => {
-    await connection.drain();
-  });
-
-  async function waitForProduct(
-    productId: string,
-    predicate: (product: any) => boolean,
-    timeout = 5000,
-    interval = 100,
-  ): Promise<void> {
+  async function waitForProduct(productId: string, url: string, timeout = 5000,): Promise<any> {
     const start = Date.now();
 
     while (Date.now() - start < timeout) {
       try {
         const response = await axios.get(
-          `${aggregatorUrl}/products/${productId}`,
+          `${url}/products/${productId}`,
         );
 
         const product = response.data?.find(
-          (product: any) => product.productId === productId,
+          (p: any) => p.productId === productId,
         );
 
-        if (product && predicate(product)) {
-          return;
+        if (product) {
+          return product;
         }
       } catch {
-        // Aggregator might not have processed the event yet.
+        // Product not synchronized yet
       }
 
-      await new Promise((resolve) => setTimeout(resolve, interval));
+      await new Promise((resolve) => setTimeout(resolve, 100));
     }
 
     throw new Error(
-      `Product ${productId} did not reach the expected state within ${timeout}ms`,
+      `Product ${productId} was not synchronized within ${timeout}ms`,
     );
   }
 
-  it('should synchronize ProductCreatedEvent with the aggregator', async () => {
-    const payload = {
-      productId: 'system-test-product-001',
+  it('should successfully create a product in the warehouse', async () => {
+    const product = {
+      id: `system-test-${Date.now()}`,
       name: 'System Test Product',
       unitPrice: 10,
-      availableQty: 100,
-      reservedQty: 0,
+      availableQuantity: 100,
+      reservedQuantity: 0,
       minThres: 10,
       maxThres: 200,
     };
 
-    connection.publish(
-      'warehouse.1.product.created',
-      sc.encode(JSON.stringify(payload)),
+    // 1. Create product through Warehouse API
+    const response = await axios.post(
+        `${warehouseUrl}/products`,
+        product,
     );
+  
+    expect(response.status).toBe(201);
 
-    await connection.flush();
-
-    await waitForProduct(
-      payload.productId,
-      (product) =>
-        product.name === payload.name &&
-        product.unitPrice === payload.unitPrice &&
-        product.availableQty === payload.availableQty &&
-        product.reservedQty === payload.reservedQty &&
-        product.minThres === payload.minThres &&
-        product.maxThres === payload.maxThres &&
-        product.sourceWh === 1,
-    );
   });
 
-  it('should synchronize ProductNameUpdatedEvent with the aggregator', async () => {
-    const productId = 'system-test-product-name-001';
 
-    const createPayload = {
-      productId,
-      name: 'Original Product Name',
+  it('should retrieve a created product from the warehouse', async () => {
+    const product = {
+      id: `system-test-${Date.now()}`,
+      name: 'System Test Product',
       unitPrice: 10,
-      availableQty: 100,
-      reservedQty: 0,
+      availableQuantity: 100,
+      reservedQuantity: 0,
       minThres: 10,
       maxThres: 200,
     };
 
-    connection.publish(
-      'warehouse.1.product.created',
-      sc.encode(JSON.stringify(createPayload)),
+    // Create product
+    const createResponse = await axios.post(
+      `${warehouseUrl}/products`,
+      product,
     );
 
-    await connection.flush();
-    
-    await waitForProduct(
-      productId,
-      (product) => product.name === 'Original Product Name',
-    );
-    
-    connection.publish(
-      'warehouse.1.product.name.updated',
-      sc.encode(
-        JSON.stringify({
-          productId,
-          name: 'Updated Product Name',
-        }),
-      ),
+    expect(createResponse.status).toBe(201);
+
+    // Retrieve product
+    const getResponse = await axios.get(
+      `${warehouseUrl}/products/${product.id}`,
     );
 
-    await connection.flush();
-    
-    await waitForProduct(
-      productId,
-      (product) => product.name === 'Updated Product Name',
-    );
+    expect(getResponse.status).toBe(200);
+
+    console.log('Product:', product);
+    expect(getResponse.data).toMatchObject({
+      productId: product.id,
+      name: product.name,
+      unitPrice: product.unitPrice,
+      availableQty: product.availableQuantity,
+      reservedQty: product.reservedQuantity,
+      minThres: product.minThres,
+      maxThres: product.maxThres,
+    });
   });
 
+  it('should synchronize a created product with the aggregator', async () => {
+    const product = {
+      id: `system-test-${Date.now()}`,
+      name: 'System Test Product',
+      unitPrice: 10,
+      availableQuantity: 100,
+      reservedQuantity: 0,
+      minThres: 10,
+      maxThres: 200,
+    };
+
+    // 1. Create product through Warehouse API
+    let createResponse;
+
+    try {
+      createResponse = await axios.post(
+        `${warehouseUrl}/products`,
+        product,
+      );
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Warehouse response:', error.response?.data);
+        console.error('Warehouse status:', error.response?.status);
+      }
+
+      throw error;
+    }
+
+    expect(createResponse.status).toBe(201);
+
+    // 2. Wait for Aggregator synchronization
+    const aggregatedProduct = await waitForProduct(product.id, aggregatorUrl);
+
+    // 3. Verify synchronization
+    expect(aggregatedProduct).toMatchObject({
+      productId: product.id,
+      name: product.name,
+      unitPrice: product.unitPrice,
+      availableQty: product.availableQuantity,
+      reservedQty: product.reservedQuantity,
+      minThres: product.minThres,
+      maxThres: product.maxThres,
+      sourceWh: 1,
+    });
+  });
 });

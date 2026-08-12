@@ -25,7 +25,7 @@ export class ProductEventCloudPublisherNats implements ProductEventCloudPublishe
     const payload = {
       productId: event.productId.id,
       name: event.name,
-      unitPrice: event.unitPrice.getAmount,
+      unitPrice: event.unitPrice.getAmount(),
       availableQty: event.availableQty.getValue,
       reservedQty: event.reservedQty.getValue,
       minThres: event.minThres.getValue,

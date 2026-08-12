@@ -26,11 +26,6 @@ export class ProductEventListenerNats {
     @Ctx() context: NatsContext,
   ) {
     const sourceWh = this.getWarehouseId(context);
-console.log('PRODUCT UPDATED RECEIVED:', {
-    subject: context.getSubject(),
-    dto,
-    sourceWh,
-  });
 
     await this.productReadModelRepository.update(dto, sourceWh);
   }

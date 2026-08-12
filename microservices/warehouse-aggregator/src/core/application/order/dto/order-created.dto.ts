@@ -28,9 +28,6 @@ export class AddressDto {
 }
 
 export class OrderCreatedDto {
-  @IsNumber()
-  sourceWh: number;
-
   @IsString()
   orderId: string;
 

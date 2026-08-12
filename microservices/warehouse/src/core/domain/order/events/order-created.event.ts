@@ -14,7 +14,15 @@ export class OrderCreatedEvent extends OrderEvent {
     public readonly orderType: OrderType,
     public readonly orderState: OrderState,
     public readonly totalOrderValue: Money,
-    public readonly destination?: WarehouseId,
+    public readonly destinationWh?: WarehouseId,
+    public readonly destinationAddress?: {
+      streetName: string;
+      civicNumber: number;
+      city: string;
+      cap: string;
+      country: string;
+    },
+    public readonly orderReference?: string,
   ) {
     super(orderId, orderState);
   }
