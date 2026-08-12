@@ -9,6 +9,7 @@
     "mongoose": "^8.18.0"
   },
   "devDependencies": {
-    "@types/mongoose": "^5.11.96"
+    "@types/mongoose": "^5.11.96",
+    "newman": "^6.2.2"
   }
 }

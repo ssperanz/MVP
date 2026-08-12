@@ -34,7 +34,7 @@ describe('Bootstrap unit test', () => {
       expect.objectContaining({
         transport: expect.anything(),
         options: expect.objectContaining({
-          servers: ['nats://nats:4222'],
+          servers: ['nats://localhost:4222'],
           deserializer: expect.any(InboundResponseDeserializer),
           serializer: expect.any(OutboundResponseSerializer),
         }),

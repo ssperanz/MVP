@@ -10,7 +10,9 @@ import { ProductsModule } from './core/application/product/products.module';
 @Module({
   imports: [
     CqrsModule.forRoot(),
-    MongooseModule.forRoot(process.env.MONGO_URL || 'mongodb://localhost:27018/warehouse_test' || 'mongodb://localhost:27017/warehouse-aggregator/', {
+    MongooseModule.forRoot(process.env.MONGO_URI || 
+      //'mongodb://localhost:27018/warehouse_test' || 
+      'mongodb://mongo:27017/warehouse-aggregator/', {
 
     }),
     NatsMessagingModule,

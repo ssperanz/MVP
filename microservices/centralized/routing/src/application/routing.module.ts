@@ -14,7 +14,7 @@ import { AccessController } from './../interfaces/access.controller';
 @Module({
   imports: [
     // Importa moduli necessari, ad esempio per il database
-    MongooseModule.forRoot('mongodb://host.docker.internal:27017/routing'),
+    MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://host.docker.internal:27017/routing'),
     RoutingRepositoryModule,
     NatsModule,
   ],

@@ -14,7 +14,7 @@ import { ScheduleModule } from '@nestjs/schedule';
   imports: [
     //MongooseModule.forRoot('mongodb://host.docker.internal:27017/state_aggregate'),
     ScheduleModule.forRoot(),
-    MongooseModule.forRoot(process.env.MONGO_DB || 'mongodb://host.docker.internal:27017/state_aggregate'),
+    MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://host.docker.internal:27017/state_aggregate'),
     NatsModule,
     CloudStateRepositoryModule
   ],

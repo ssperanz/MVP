@@ -16,7 +16,7 @@ async function bootstrap() {
   const microserivceNats = app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.NATS,
     options: {
-      servers: ['nats://nats:4222'],
+      servers: [process.env.NATS_URL || 'nats://localhost:4222'],
       deserializer: new InboundResponseDeserializer(),
       serializer: new OutboundResponseSerializer(),
     },

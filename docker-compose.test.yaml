@@ -1,0 +1,89 @@
+services:
+
+  warehouse-1:
+    build:
+      context: ./microservices/warehouse
+      dockerfile: Dockerfile
+    container_name: warehouse-1-test
+    environment:
+      - MONGO_URI=mongodb://mongodb-test:27017/warehouse-1
+      - WAREHOUSE_ID=1
+      - NATS_URL=nats://nats-test:4222
+    networks:
+      - e2e-network
+    depends_on:
+      - mongodb-test
+      - nats-test
+
+  warehouse-aggregator:
+    build:
+      context: ./microservices/warehouse-aggregator
+      dockerfile: Dockerfile
+    container_name: warehouse-aggregator-test
+    ports:
+      - "3110:3110"
+    environment:
+      - MONGO_URI=mongodb://mongodb-test:27017/warehouse-aggregator
+      - NATS_URL=nats://nats-test:4222
+      - PORT=3110
+    networks:
+      - e2e-network
+    depends_on:
+      - mongodb-test
+      - nats-test
+
+  routing:
+    build:
+      context: ./microservices/centralized/routing
+      dockerfile: Dockerfile
+    container_name: routing
+    environment:
+      - MONGO_URI=mongodb://mongodb-test:27017/routing
+      - NATS_URL=nats://nats-test:4222
+    volumes:
+      - ./microservices/centralized/routing/src:/usr/src/app/src:Z
+    networks:
+      - e2e-network
+    depends_on:
+      - nats-test
+      - mongodb-test
+      
+  state_aggregate:
+    build:
+      context: ./microservices/centralized/state_aggregate
+      dockerfile: Dockerfile
+    container_name: state_aggregate
+    environment:
+      - MONGO_URI=mongodb://mongodb-test:27017/state_aggregate
+      - NATS_URL=nats://nats-test:4222
+    volumes:
+      - ./microservices/centralized/state_aggregate/src:/usr/src/app/src:Z
+    networks:
+      - e2e-network
+    depends_on:
+      - nats-test
+      - mongodb-test
+
+
+
+  mongodb-test:
+    image: mongo:latest
+    container_name: mongodb-test
+    ports:
+      - "27018:27017"
+    networks:
+      - e2e-network
+
+  nats-test:
+    image: nats:latest
+    container_name: nats-test
+    command:
+      - "--jetstream"
+    ports:
+      - "4222:4222"
+    networks:
+      - e2e-network
+
+networks:
+  e2e-network:
+    driver: bridge
