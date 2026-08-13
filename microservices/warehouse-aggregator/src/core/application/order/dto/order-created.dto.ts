@@ -39,9 +39,8 @@ export class OrderCreatedDto {
   @Type(() => OrderItemDto)
   orderItems: OrderItemDto[];
 
-  @IsOptional()
   @IsNumber()
-  departure?: number;
+  departure: number;
 
   @IsOptional()
   @ValidateIf(o => !o.destinationAddress)

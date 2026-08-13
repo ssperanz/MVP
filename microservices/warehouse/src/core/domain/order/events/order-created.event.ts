@@ -22,7 +22,7 @@ export class OrderCreatedEvent extends OrderEvent {
       cap: string;
       country: string;
     },
-    public readonly orderReference?: string,
+    public readonly orderReference?: OrderId,
   ) {
     super(orderId, orderState);
   }

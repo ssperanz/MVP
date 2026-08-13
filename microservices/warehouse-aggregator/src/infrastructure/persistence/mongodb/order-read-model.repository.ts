@@ -13,21 +13,22 @@ export class OrderReadModelRepositoryMongo implements OrderReadModelRepository {
   ) {}
 
   async findByOrderId(orderId: string): Promise<OrderReadModel | null> {
-    return this.model.findOne({ orderId }).exec();
+    return this.model.findOne({ orderId }).lean().exec();
+
   }
 
   async findByWhId(whId: number): Promise<OrderReadModel[] | null> {
-    return this.model.find({ sourceWh: whId }).exec();
+    return this.model.find({ sourceWh: whId }).lean().exec();
   }
 
   async findAll(): Promise<OrderReadModel[]> {
-    return this.model.find({}).exec();
+    return this.model.find({}).lean().exec();
   }
 
   async upsert(dto: OrderCreatedDto, sourceWh: number): Promise<void> {
     await this.model.updateOne(
       { orderId: dto.orderId, sourceWh },
-      { $set: dto },
+      { $set: { ...dto, sourceWh } },
       { upsert: true }
     ).exec();
   }

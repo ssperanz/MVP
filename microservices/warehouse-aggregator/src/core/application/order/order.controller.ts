@@ -15,7 +15,7 @@ export class OrderController {
     private readonly orderQueryService: OrderQueryService,
   ) {}
 
-  @Get(':id')
+  @Get(':orderId')
   async getOrderById(
     @Param() dto: OrderIdDto,
   ): Promise<OrderDto | null> {

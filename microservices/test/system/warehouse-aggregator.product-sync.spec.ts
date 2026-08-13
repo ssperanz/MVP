@@ -80,7 +80,6 @@ describe('Warehouse → Warehouse Aggregator product synchronization', () => {
 
     expect(getResponse.status).toBe(200);
 
-    console.log('Product:', product);
     expect(getResponse.data).toMatchObject({
       productId: product.id,
       name: product.name,

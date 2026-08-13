@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { ReserveProductsCommand } from '../reserve-products.command.js';
 import type { ProductRepository } from '../../../ports/product.repository.interface.js';
 import { ProductsReservedEvent } from '../../../events/products-reserved.event.js';
-import { ProductItem } from 'src/shared/domain/value-objects/product-item.vo.js';
+import { ProductItem } from '../../../../../../shared/domain/value-objects/product-item.vo.js';
 
 @CommandHandler(ReserveProductsCommand)
 export class ReserveProductsCommandHandler implements ICommandHandler<ReserveProductsCommand> {

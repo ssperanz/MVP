@@ -38,6 +38,7 @@ export class TransferOrder extends Order {
         orderType,
         OrderState.CREATED,
         order.getTotalOrderValue(),
+        destinationWh,
       ),
     );
     return order;

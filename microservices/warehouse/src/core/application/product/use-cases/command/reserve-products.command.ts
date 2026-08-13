@@ -1,6 +1,6 @@
 import { Command } from '@nestjs/cqrs';
-import { OrderId } from 'src/shared/domain/value-objects/order-id.vo';
-import { ProductItem } from 'src/shared/domain/value-objects/product-item.vo';
+import { OrderId } from '../../../../../shared/domain/value-objects/order-id.vo';
+import { ProductItem } from '../../../../../shared/domain/value-objects/product-item.vo';
 
 export class ReserveProductsCommand extends Command<void> {
   constructor(

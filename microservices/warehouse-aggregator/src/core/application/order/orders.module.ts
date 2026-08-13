@@ -25,12 +25,12 @@ const QueryHandlers = [
       { name: OrderReadModel.name, schema: OrderReadModelMongoSchema },
     ]),
   ],
-  controllers: [OrderController],
+  controllers: [OrderController, OrderEventListenerNats],
   providers: [
-    {
+    /*{
       provide: 'IOrderEventListener',
       useClass: OrderEventListenerNats,
-    },
+    },*/
     {
       provide: 'IOrderReadModelRepository',
       useClass: OrderReadModelRepositoryMongo,
@@ -40,7 +40,7 @@ const QueryHandlers = [
 
     ...QueryHandlers
   ],
-  exports: ['IOrderEventListener'],
+  exports: [/*'IOrderEventListener'*/],
 })
 
 export class OrdersModule {}

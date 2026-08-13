@@ -1,4 +1,4 @@
-import { Controller, Injectable } from '@nestjs/common';
+import { Controller, Inject, Injectable } from '@nestjs/common';
 import { Ctx, EventPattern, NatsContext, Payload } from '@nestjs/microservices';
 import { OrderCreatedDto } from '../../../core/application/order/dto/order-created.dto';
 import { UpdateOrderStateDto } from '../../../core/application/order/dto/update-order-state.dto';
@@ -7,7 +7,9 @@ import { OrderReadModelRepositoryMongo } from '../../../infrastructure/persisten
 
 @Controller()
 export class OrderEventListenerNats {
-  constructor(private readonly orderReadModelRepository: OrderReadModelRepositoryMongo) {}
+  constructor(
+    @Inject('IOrderReadModelRepository')
+    private readonly orderReadModelRepository: OrderReadModelRepositoryMongo) {}
   
   @EventPattern('warehouse.*.order.created')
   async onOrderCreated(
@@ -15,13 +17,9 @@ export class OrderEventListenerNats {
     @Ctx() context: NatsContext
   ): Promise<void> {
     const sourceWh = this.getWarehouseId(context);
-  console.log('ORDER CREATED RECEIVED', {
-    subject: context.getSubject(),
-    dto,
-    sourceWh,
-  });
+
     await this.orderReadModelRepository.upsert(dto, sourceWh);
-  }
+  };
   
   @EventPattern('warehouse.*.order.state.updated')
   async onOrderUpdated(

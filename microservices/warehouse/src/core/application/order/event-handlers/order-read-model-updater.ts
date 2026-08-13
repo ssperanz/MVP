@@ -29,6 +29,9 @@ export class OrderReadModelUpdater extends AbstractOrderEventHandler implements 
       orderCreationDate: event.occurredOn,
       departureWh: event.departure.getId(),
       totalOrderValue: event.totalOrderValue.getAmount(),
+      destinationWh: event.destinationWh?.getId(),
+      destination: event.destinationAddress ?? undefined,
+      orderReference: event.orderReference?.getId(),
     });
   }
 

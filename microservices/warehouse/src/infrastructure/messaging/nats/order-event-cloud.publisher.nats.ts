@@ -12,23 +12,23 @@ export class OrderEventCloudPublisherNats implements OrderEventCloudPublisher {
 
   async publishOrderCreated(event: OrderCreatedEvent): Promise<void> {
     const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.order.created`;
-    this.logger.log(`Publishing order.created to NATS cloud`);
+    this.logger.log(`Publishing order.created to NATS cloud: ${subject}`);
     const payload = {
-      orderId: event.orderId.getId,
+      orderId: event.orderId.getId(),
 
       orderType: event.orderType.toString(),
 
       orderItems: event.orderItems.map(item => ({
-        productId: item.getId.toString(),
-        quantity: Number(item.getQty),
+        productId: item.getId().id,
+        quantity: item.getQty().getValue,
       })),
 
       ...(event.departure !== undefined && {
-        departure: event.departure.getId,
+        departureWh: event.departure.getId(),
       }),
 
       ...(event.destinationWh !== undefined && {
-        destinationWh: event.destinationWh.getId,
+        destinationWh: event.destinationWh.getId(),
       }),
 
       ...(event.destinationAddress !== undefined && {
@@ -46,7 +46,7 @@ export class OrderEventCloudPublisherNats implements OrderEventCloudPublisher {
       }),
     };
 
-    this.natsClient.emit(subject, payload);
+    await this.natsClient.emit(subject, payload);
   }
 
   async publishOrderStateUpdated(event: OrderStateUpdatedEvent): Promise<void> {
@@ -56,6 +56,6 @@ export class OrderEventCloudPublisherNats implements OrderEventCloudPublisher {
       orderId: event.orderId.getId(),
       orderState: event.orderState.toString(),
     };
-    this.natsClient.emit(subject, payload);
+    await this.natsClient.emit(subject, payload);
   }
 }
