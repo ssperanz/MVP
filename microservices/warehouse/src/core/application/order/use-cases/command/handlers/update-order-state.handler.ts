@@ -7,18 +7,18 @@ import { OrderDeliveredEvent } from '../../../events/order-delivered.event.js';
 import { ReplenishmentOrder } from 'src/core/domain/order/entities/replenishment-order.entity.js';
 import { ReplenishmentDeliveredEvent } from '../../../events/replenishment-delivered.event.js';
 import { UpdateOrderStateCommand } from '../update-order-state.command.js';
-import { OrderId } from 'src/shared/domain/value-objects/order-id.vo.js';
+import { OrderId } from '../../../../../../shared/domain/value-objects/order-id.vo.js';
 
 @CommandHandler(UpdateOrderStateCommand)
 export class UpdateOrderStateCommandHandler implements ICommandHandler<UpdateOrderStateCommand> {
   constructor(
     @Inject('IOrderRepository') private readonly orderRepository: OrderRepository,
   ) {}
-
+  
   async execute(command: UpdateOrderStateCommand): Promise<void> {
     const order = await this.orderRepository.load(new OrderId(command.orderId));
     if (!order) throw new Error(`Order ${command.orderId} not found`);
-
+    console.log(`Updating order ${command.orderId} state to ${command.newState}`);
     try {
       order.setState(command.newState);
       await this.orderRepository.save(order);

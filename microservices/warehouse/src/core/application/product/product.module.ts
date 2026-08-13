@@ -16,11 +16,15 @@ import { ProductEventCloudHandler } from './event-handler/product-event-cloud-ha
 import { ProductReadModelUpdater } from './event-handler/product-read-model-updater.js';
 import { ProductController } from './product.controller.js';
 import { ProductQueryService } from './product.query.service.js';
+import { ReserveProductsCommandHandler } from './use-cases/command/handlers/reserve-product.handler.js';
+import { ReleaseProductsCommandHandler } from './use-cases/command/handlers/release-product.handler.js';
 
 const CommandHandlers = [
   CreateProductCommandHandler,
   UpdateProductCommandHandler,
   RemoveProductCommandHandler,
+  ReserveProductsCommandHandler,
+  ReleaseProductsCommandHandler,
 ];
 
 const QueryHandlers = [

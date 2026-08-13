@@ -56,12 +56,12 @@ export class ReservationItem extends ProductItem {
   }
 
   reserve(reservedQty: Quantity): void {
-    this.itemReservedQty.increaseBy(reservedQty);
+    this.itemReservedQty = this.itemReservedQty.increaseBy(reservedQty);
     this.updateItemState(ReservationItemState.RESERVED);
   }
 
   release(): void {
-    this.itemReservedQty.decreaseBy(this.itemReservedQty);
+    this.itemReservedQty = this.itemReservedQty.decreaseBy(this.itemReservedQty);
     this.updateItemState(ReservationItemState.RELEASED);
   }
 

@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Saga, ICommand, ofType } from '@nestjs/cqrs';
-import { Observable, map } from 'rxjs';
+import { Observable, filter, map } from 'rxjs';
 import { OrderCreatedEvent } from '../../../core/domain/order/events/order-created.event';
 import { ReservationCreatedEvent } from '../../../core/domain/reservation/events/reservation-created.event';
 import { CreateReservationCommand } from '../reservation/use-cases/command/create-reservation.command';
@@ -18,6 +18,11 @@ import { ProductsReleasedEvent } from '../product/events/products-released.event
 import { ReleaseProductsCommand } from '../product/use-cases/command/release-products.command';
 import { ReservationCancelingRequestedEvent } from '../../../core/domain/reservation/events/reservation-canceling-requested.event';
 import { OrderValidatedEvent } from '../order/events/order-validated.event';
+import { EventType } from 'src/shared/domain/enums/event-type.enum';
+import { OrderDispatchedEvent } from '../order/events/order-dispatched.event';
+import { OrderType } from 'src/shared/domain/enums/order-type.enum';
+import { DeliverOrderCommand } from '../order/use-cases/command/deliver-order.command';
+import { OrderDeliveredEvent } from '../order/events/order-delivered.event';
 
 @Injectable()
 export class OrderSaga {
@@ -81,6 +86,21 @@ export class OrderSaga {
       }),
     );
   }
+
+  /* Sell Order Dispatched case: If a Sell Order is dispatched, we want to simulate a successful delivery. */
+  @Saga()
+  onSellOrderDispatched = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(OrderDispatchedEvent),
+      filter((event) => event.orderType === OrderType.SELL),
+      map((event) => {
+        this.logger.log(`Received Sell Order DispatchedEvent for order ID ${event.orderId.getId()}`);
+        return new DeliverOrderCommand(event.orderId.getId());
+      }),
+    );
+  }
+
+  /* NB: TransferOrder and ReplenishmentOrder are not handled by this saga, because it has to be handled by a different warehouse. */
 
   /* Replenishment Delivered case: When a ReplenishmentDeliveredEvent is emitted, we want to reserve the replenished products for the original order. */
   @Saga()

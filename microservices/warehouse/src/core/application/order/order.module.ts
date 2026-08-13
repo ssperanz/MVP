@@ -27,6 +27,7 @@ import { OrderService } from './order.service.js';
 import { OrderController } from './order.controller.js';
 import { OrderQueryService } from './order.query.service.js';
 import { InboundOrderEventListenerNats } from '../../../infrastructure/messaging/nats/inbound-order-event.listener.nats.js';
+import { UpdateOrderStateCommandHandler } from './use-cases/command/handlers/update-order-state.handler.js';
  
 const CommandHandlers = [
   CreateOrderCommandHandler,
@@ -34,6 +35,7 @@ const CommandHandlers = [
   ValidateOrderCommandHandler,
   DispatchOrderCommandHandler,
   DeliverOrderCommandHandler,
+  UpdateOrderStateCommandHandler,
 ];
 
 const QueryHandlers = [
