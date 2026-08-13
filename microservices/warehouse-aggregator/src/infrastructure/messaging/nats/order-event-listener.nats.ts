@@ -27,11 +27,7 @@ export class OrderEventListenerNats {
     @Ctx() context: NatsContext
   ): Promise<void> {
     const sourceWh = this.getWarehouseId(context);
-      console.log('ORDER STATE UPDATED RECEIVED', {
-    subject: context.getSubject(),
-    dto,
-    sourceWh,
-  });
+    
     await this.orderReadModelRepository.update(dto, sourceWh);
   }
 

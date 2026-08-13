@@ -11,10 +11,9 @@ import { ProductsModule } from './core/application/product/products.module';
   imports: [
     CqrsModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_URI || 
-      //'mongodb://localhost:27018/warehouse_test' || 
-      'mongodb://mongo:27017/warehouse-aggregator/', {
+      'mongodb://localhost:27018/warehouse_test'
+    ),
 
-    }),
     NatsMessagingModule,
     OrdersModule,
     ProductsModule,

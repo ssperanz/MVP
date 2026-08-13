@@ -1,35 +1,62 @@
-import { Injectable } from '@nestjs/common';
-import { EventPattern, Payload } from '@nestjs/microservices';
-import { OrderCreatedDto } from 'src/core/application/order/dto/order-created.dto';
-import { UpdateOrderStateDto } from 'src/core/application/order/dto/update-order-state.dto';
-import { OrderEventListener } from 'src/core/application/order/ports/order-event-listener.port';
-import { OrderReadModelRepositoryMongo } from 'src/infrastructure/persistence/mongodb/order-read-model.repository';
-import { OrderEventListenerNats } from './order-event-listener.nats';
+import { NatsContext } from "@nestjs/microservices";
+import { OrderEventListenerNats } from "./order-event-listener.nats";
 
 describe('OrderEventListenerNats', () => {
-  let orderEventListenerNats: OrderEventListenerNats;
-  let orderReadModelRepositoryMock: OrderReadModelRepositoryMongo;
+  let listener: OrderEventListenerNats;
+  let orderReadModelRepository: {
+    upsert: jest.Mock;
+    update: jest.Mock;
+  };
+
+  const context = {
+    getSubject: jest.fn().mockReturnValue('warehouse.1.order.created'),
+  } as unknown as NatsContext;
 
   beforeEach(() => {
-    orderReadModelRepositoryMock = {
-      upsert: jest.fn().mockResolvedValue(undefined),
-      update: jest.fn().mockResolvedValue(undefined),
-    } as unknown as OrderReadModelRepositoryMongo;
+    orderReadModelRepository = {
+      upsert: jest.fn(),
+      update: jest.fn(),
+    };
 
-    orderEventListenerNats = new OrderEventListenerNats(orderReadModelRepositoryMock);
+    listener = new OrderEventListenerNats(
+      orderReadModelRepository as any,
+    );
   });
 
   it('should call upsert on orderReadModelRepository when onOrderCreated is called', async () => {
-    const dto: OrderCreatedDto = { orderId: '12345', orderItems: [], sourceWh: 1, orderType: 'TRANSFER' };
-    await orderEventListenerNats.onOrderCreated(dto);
+    const dto = {
+      orderId: 'order-1',
+      orderItems: [],
+      orderType: 'TRANSFER',
+      departureWh: 1,
+      destinationWh: 2,
+    } as any;
 
-    expect(orderReadModelRepositoryMock.upsert).toHaveBeenCalledWith(dto);
+    await listener.onOrderCreated(dto, context);
+
+    expect(orderReadModelRepository.upsert).toHaveBeenCalledWith(
+      dto,
+      1,
+    );
   });
 
-  it('should call update on orderReadModelRepository when onOrderUpdated  is called', async () => {
-    const dto: UpdateOrderStateDto = { sourceWh: 1, orderId: '12345', orderState: 'DELIVERED' };
-    await orderEventListenerNats.onOrderUpdated(dto);
+  it('should call update on orderReadModelRepository when onOrderUpdated is called', async () => {
+    const dto = {
+      orderId: 'order-1',
+      orderState: 'VALIDATED',
+    } as any;
 
-    expect(orderReadModelRepositoryMock.update).toHaveBeenCalledWith(dto);
+    const updateContext = {
+      getSubject: jest.fn().mockReturnValue(
+        'warehouse.1.order.state.updated',
+      ),
+    } as unknown as NatsContext;
+
+    await listener.onOrderUpdated(dto, updateContext);
+
+    expect(orderReadModelRepository.update).toHaveBeenCalledWith(
+      dto,
+      1,
+    );
   });
 });

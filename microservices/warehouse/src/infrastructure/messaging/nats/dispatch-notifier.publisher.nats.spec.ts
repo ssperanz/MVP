@@ -24,7 +24,7 @@ describe('DispatchNotifierPublisherNats', () => {
     await dispatchNotifierPublisherNats.notify({ orderId, destWh });
 
     expect(natsClientMock.emit).toHaveBeenCalledWith(
-      `warehouse.${destWh}.order.incoming`,
+      `warehouse.0.order.${destWh}.incoming`,
       { orderId }
     );
   });

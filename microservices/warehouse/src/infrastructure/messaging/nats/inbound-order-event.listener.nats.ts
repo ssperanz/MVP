@@ -4,8 +4,8 @@ import { CancelOrderDto } from "../../../core/application/order/dto/cancel-order
 import { OrderDispatchedDto } from "../../../core/application/order/dto/order-dispatched.dto";
 import { UpdateOrderStateDto } from "../../../core/application/order/dto/update-order-state.dto";
 import { InboundOrderEventListenerPort } from "../../../core/application/order/ports/inbound-order-event-listener.port";
-import type { OrderCommandUseCase } from "src/core/application/order/use-cases/order.usecase.command";
-import { CreateOrderDto } from "src/core/application/order/dto/create-order.dto";
+import type { OrderCommandUseCase } from "../../../core/application/order/use-cases/order.usecase.command";
+import { CreateOrderDto } from "../../../core/application/order/dto/create-order.dto";
 
 @Controller()
 export class InboundOrderEventListenerNats implements InboundOrderEventListenerPort{

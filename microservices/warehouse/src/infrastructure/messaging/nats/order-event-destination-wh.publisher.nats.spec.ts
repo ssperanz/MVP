@@ -29,20 +29,21 @@ describe('OrderEventDestinationWhPublisherNats', () => {
   });
 
   it('should publish order created event with correct subject and payload', async () => {
-    const event = new OrderCreatedEvent(new OrderId('12345'), [
-      new OrderItem(new ProductId('prod1'), new Quantity(2), new Money(10)),
-      new OrderItem(new ProductId('prod2'), new Quantity(3), new Money(15)),
-    ],
-    new WarehouseId(1),
-    OrderType.TRANSFER,
-    OrderState.DISPATCHING,
-    new Money(100),
-    new WarehouseId(2),
-  );
+    const event = new OrderCreatedEvent(
+      new OrderId('12345'), [
+        new OrderItem(new ProductId('prod1'), new Quantity(2), new Money(10)),
+        new OrderItem(new ProductId('prod2'), new Quantity(3), new Money(15)),
+      ],
+      new WarehouseId(1),
+      OrderType.TRANSFER,
+      OrderState.DISPATCHING,
+      new Money(100),
+      new WarehouseId(2),
+    );
     await orderEventDestinationWhPublisherNats.publishOrderCreated(event);
 
     expect(natsClientMock.emit).toHaveBeenCalledWith(
-      `warehouse.${process.env.WH_ID || '0'}.order.created`,
+      `warehouse.${process.env.WH_ID || '0'}.mirror.2.order.created`,
       {
         orderId: event.orderId,
         items: [
@@ -54,11 +55,11 @@ describe('OrderEventDestinationWhPublisherNats', () => {
   });
 
   it('should publish order state updated event with correct subject and payload', async () => {
-    const event = new OrderStateUpdatedEvent(new OrderId('12345'), OrderState.DELIVERED, OrderType.SELL);
+    const event = new OrderStateUpdatedEvent(new OrderId('12345'), OrderState.DELIVERED, OrderType.SELL, new WarehouseId(2));
     await orderEventDestinationWhPublisherNats.publishOrderStateUpdated(event);
 
     expect(natsClientMock.emit).toHaveBeenCalledWith(
-      `warehouse.${process.env.WH_ID || '0'}.order.state.updated`,
+      `warehouse.${process.env.WH_ID || '0'}.mirror.2.order.state.updated`,
       {
         orderId: event.orderId,
         newState: event.orderState,

@@ -17,39 +17,47 @@ describe('ProductEventListenerNats - Integration', () => {
   let nc: NatsConnection;
 
   beforeAll(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      imports: [WarehouseAggregatorModule],
-    }).compile();
 
-    app = module.createNestApplication();
+  const module: TestingModule = await Test.createTestingModule({
+    imports: [WarehouseAggregatorModule],
+  }).compile();
 
-    app.connectMicroservice({
-      transport: Transport.NATS,
-      options: {
-        servers: ['nats://localhost:4222'],
-      },
-    });
+  app = module.createNestApplication();
 
-    await app.init();
-    await app.startAllMicroservices();
-
-    model = module.get<Model<ProductReadModel>>(
-      getModelToken('ProductReadModel'),
-    );
-
-    nc = await connect({
-      servers: 'nats://localhost:4222',
-    });
+  app.connectMicroservice({
+    transport: Transport.NATS,
+    options: {
+      servers: ['nats://localhost:4222'],
+    },
   });
+
+  await app.init();
+
+  await app.startAllMicroservices();
+
+  model = module.get<Model<ProductReadModel>>(
+    getModelToken('ProductReadModel'),
+  );
+
+  nc = await connect({
+    servers: 'nats://localhost:4222',
+  });
+
+}, 5000);
 
   beforeEach(async () => {
     await model.deleteMany({});
   });
 
   afterAll(async () => {
+  if (nc) {
     await nc.drain();
+  }
+
+  if (app) {
     await app.close();
-  });
+  }
+});
 
   it('should persist a product when a product.created event is received', async () => {
     const product = {

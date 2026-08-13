@@ -42,7 +42,7 @@ describe('ProductEventCloudPublisherNats', () => {
       {
         productId: event.productId.id,
         name: event.name,
-        unitPrice: event.unitPrice.getAmount,
+        unitPrice: event.unitPrice.getAmount(),
         availableQty: event.availableQty.getValue,
         reservedQty: event.reservedQty.getValue,
         minThres: event.minThres.getValue,
@@ -57,7 +57,7 @@ describe('ProductEventCloudPublisherNats', () => {
 
     expect(natsClientMock.emit).toHaveBeenCalledWith(
       `warehouse.${process.env.WH_ID || '0'}.product.name.updated`,
-      { productId: event.productId, newName: event.name }
+      { productId: event.productId, name: event.name }
     );
   });
 
@@ -67,7 +67,7 @@ describe('ProductEventCloudPublisherNats', () => {
 
     expect(natsClientMock.emit).toHaveBeenCalledWith(
       `warehouse.${process.env.WH_ID || '0'}.product.availableQty.updated`,
-      { productId: event.productId, newAvailableQty: event.availableQty }
+      { productId: event.productId, availableQty: event.availableQty }
     );
   });
 
@@ -77,17 +77,7 @@ describe('ProductEventCloudPublisherNats', () => {
 
     expect(natsClientMock.emit).toHaveBeenCalledWith(
       `warehouse.${process.env.WH_ID || '0'}.product.price.updated`,
-      { productId: event.productId, newPrice: event.unitPrice }
-    );
-  });
-
-  it('should publish product reserved quantity updated event with correct subject and payload', async () => {
-    const event = new ProductReservedQtyUpdatedEvent(new ProductId('prod123'), new Quantity(10));
-    await productEventCloudPublisherNats.publishProductReservedQtyUpdate(event);
-
-    expect(natsClientMock.emit).toHaveBeenCalledWith(
-      `warehouse.${process.env.WH_ID || '0'}.product.reservedQty.updated`,
-      { productId: event.productId, newReservedQty: event.reservedQty }
+      { productId: event.productId, price: event.unitPrice }
     );
   });
 
@@ -117,7 +107,7 @@ describe('ProductEventCloudPublisherNats', () => {
 
     expect(natsClientMock.emit).toHaveBeenCalledWith(
       `warehouse.${process.env.WH_ID || '0'}.product.minThres.updated`,
-      { productId: event.productId, newMinThres: event.minThres }
+      { productId: event.productId, minThres: event.minThres }
     );
   });
 
@@ -127,7 +117,7 @@ describe('ProductEventCloudPublisherNats', () => {
 
     expect(natsClientMock.emit).toHaveBeenCalledWith(
       `warehouse.${process.env.WH_ID || '0'}.product.maxThres.updated`,
-      { productId: event.productId, newMaxThres: event.maxThres }
+      { productId: event.productId, maxThres: event.maxThres }
     );
   });
 

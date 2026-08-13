@@ -102,8 +102,8 @@ describe('OrderReadModelRepositoryMongo - Integration', () => {
     });
 
     it('should upsert an order', async () => {
+      const sourceWh = 1;
       const order = {
-        sourceWh: 1,
         orderId: 'order-1',
         orderItems: [
           {
@@ -115,11 +115,11 @@ describe('OrderReadModelRepositoryMongo - Integration', () => {
         orderType: 'TRANSFER',
         orderState: 'CREATED',
         orderCreationDate: new Date(),
-        departureWh: 2,
+        departure: 2,
         totalOrderValue: 20,
       };
 
-      await repository.upsert(order);
+      await repository.upsert(order, sourceWh);
 
       const result = await repository.findByOrderId('order-1');
 
@@ -127,8 +127,9 @@ describe('OrderReadModelRepositoryMongo - Integration', () => {
     });
 
     it('should update the order state', async () => {
+      let sourceWh = 1;
       await model.create({
-        sourceWh: 1,
+        sourceWh: sourceWh,
         orderId: 'order-1',
         orderItems: [
           {
@@ -144,11 +145,13 @@ describe('OrderReadModelRepositoryMongo - Integration', () => {
         totalOrderValue: 20,
       });
 
-      await repository.update({
-        sourceWh: 1,
-        orderId: 'order-1',
-        orderState: 'VALIDATED',
-      });
+      await repository.update(
+        {
+          orderId: 'order-1',
+          orderState: 'VALIDATED',
+        },
+          sourceWh,
+      );
 
       const result = await repository.findByOrderId('order-1');
 
