@@ -1,6 +1,10 @@
 import { Controller, Inject, Injectable } from '@nestjs/common';
 import { Ctx, EventPattern, NatsContext, Payload } from '@nestjs/microservices';
-import type { ProductCreatedDto, ProductDeletedDto, ProductEventListener, ProductUpdatedDto } from 'src/core/application/product/ports/product-event-listener.port';
+import type { 
+  ProductCreatedDto, 
+  ProductDeletedDto, 
+  ProductUpdatedDto
+} from 'src/core/application/product/ports/product-event-listener.port';
 import type { ProductReadModelRepository } from 'src/core/application/product/ports/product-read-model.repository.interface';
 
 @Controller()
@@ -20,7 +24,7 @@ export class ProductEventListenerNats {
     await this.productReadModelRepository.upsert(dto, sourceWh);
   }
 
-  @EventPattern('warehouse.*.product.*.updated')
+  @EventPattern('warehouse.*.product.updated')
   async onProductUpdated(
     @Payload() dto: ProductUpdatedDto,
     @Ctx() context: NatsContext,
@@ -44,4 +48,5 @@ export class ProductEventListenerNats {
     const subject = context.getSubject();
     return Number(subject.split('.')[1]);
   }
+
 }

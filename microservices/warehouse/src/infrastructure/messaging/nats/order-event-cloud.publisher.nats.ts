@@ -51,7 +51,7 @@ export class OrderEventCloudPublisherNats implements OrderEventCloudPublisher {
 
   async publishOrderStateUpdated(event: OrderStateUpdatedEvent): Promise<void> {
     const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.order.state.updated`;
-    this.logger.log(`Publishing order.state.updated to NATS cloud`);
+    this.logger.log(`Publishing order.state.updated to NATS cloud: new state ${event.orderState} for order ID: ${event.orderId.getId()}`);
     const payload = {
       orderId: event.orderId.getId(),
       orderState: event.orderState.toString(),

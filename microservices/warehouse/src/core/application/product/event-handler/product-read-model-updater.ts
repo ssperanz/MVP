@@ -98,8 +98,8 @@ export class ProductReadModelUpdater extends AbstractProductEventHandler impleme
   override async onProductReserved(event: ProductReservedEvent): Promise<void> {
     const existing = await this.productReadModel.findById(event.productId.id);
     if (existing) {
-      existing.availableQty -= event.qtyReserved.getValue;
-      existing.reservedQty += event.qtyReserved.getValue;
+      existing.availableQty = event.updatedAvailableQty.getValue;
+      existing.reservedQty = event.updatedReservedQty.getValue;
       await this.productReadModel.upsert(existing);
     }
   }
@@ -107,8 +107,8 @@ export class ProductReadModelUpdater extends AbstractProductEventHandler impleme
   override async onProductReleased(event: ProductReleasedEvent): Promise<void> {
     const existing = await this.productReadModel.findById(event.productId.id);
     if (existing) {
-      existing.reservedQty -= event.qtyReleased.getValue;
-      existing.availableQty += event.qtyReleased.getValue;
+      existing.availableQty = event.updatedAvailableQty.getValue;
+      existing.reservedQty = event.updatedReservedQty.getValue;
       await this.productReadModel.upsert(existing);
     }
   }
@@ -116,7 +116,7 @@ export class ProductReadModelUpdater extends AbstractProductEventHandler impleme
   override async onProductDispatched(event: ProductDispatchedEvent): Promise<void> {
     const existing = await this.productReadModel.findById(event.productId.id);
     if (existing) {
-      existing.reservedQty -= event.qtyDispatched.getValue;
+      existing.reservedQty = event.updatedReservedQty.getValue;
       await this.productReadModel.upsert(existing);
     }
   }
@@ -124,7 +124,7 @@ export class ProductReadModelUpdater extends AbstractProductEventHandler impleme
   override async onProductReceived(event: ProductReceivedEvent): Promise<void> {
     const existing = await this.productReadModel.findById(event.productId.id);
     if (existing) {
-      existing.availableQty += event.qtyReceived.getValue;
+      existing.availableQty = event.updatedAvailableQty.getValue;
       await this.productReadModel.upsert(existing);
     }
   }

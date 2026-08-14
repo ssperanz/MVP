@@ -7,7 +7,7 @@ export class ProductReceivedEvent extends ProductEvent {
   constructor(
     public readonly orderId: OrderId,
     public readonly productId: ProductId,
-    public readonly qtyReceived: Quantity,
+    public readonly updatedAvailableQty: Quantity,
   ) {
     super(productId);
   }

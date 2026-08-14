@@ -122,14 +122,14 @@ export class Product extends AggregateRoot {
       this.availableQty = this.availableQty.decreaseBy(availableToReserve);
       this.reservedQty = this.reservedQty.increaseBy(availableToReserve);
       this.checkCriticalThresholds();
-      this.apply(new ProductReservedEvent(orderId, this.productId, availableToReserve));
+      this.apply(new ProductReservedEvent(orderId, this.productId, this.availableQty, this.reservedQty));
       return availableToReserve;
     }
     else {
       this.availableQty = this.availableQty.decreaseBy(qtyToReserve);
       this.reservedQty = this.reservedQty.increaseBy(qtyToReserve);
       this.checkCriticalThresholds();
-      this.apply(new ProductReservedEvent(orderId, this.productId, qtyToReserve));
+      this.apply(new ProductReservedEvent(orderId, this.productId, this.availableQty, this.reservedQty));
       return qtyToReserve;
     }
   }
@@ -141,7 +141,7 @@ export class Product extends AggregateRoot {
     this.reservedQty = this.reservedQty.decreaseBy(qtyToRelease);
     this.availableQty = this.availableQty.increaseBy(qtyToRelease);
     this.checkCriticalThresholds();
-    this.apply(new ProductReleasedEvent(orderId, this.productId, qtyToRelease));
+    this.apply(new ProductReleasedEvent(orderId, this.productId, this.availableQty, this.reservedQty));
     return this.availableQty;
   }
 
@@ -151,14 +151,14 @@ export class Product extends AggregateRoot {
     }
     this.reservedQty = this.reservedQty.decreaseBy(qtyToDispatch);
     this.checkCriticalThresholds();
-    this.apply(new ProductDispatchedEvent(orderId, this.productId, qtyToDispatch));
+    this.apply(new ProductDispatchedEvent(orderId, this.productId, this.reservedQty));
     return this.reservedQty;
   }
 
   receive(orderId: OrderId, qtyToReceive: Quantity): Quantity {
     this.availableQty = this.availableQty.increaseBy(qtyToReceive);
     this.checkCriticalThresholds();
-    this.apply(new ProductReceivedEvent(orderId, this.productId, qtyToReceive));
+    this.apply(new ProductReceivedEvent(orderId, this.productId, this.availableQty));
     return this.availableQty;
   }
 }

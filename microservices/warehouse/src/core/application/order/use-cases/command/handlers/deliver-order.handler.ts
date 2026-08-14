@@ -1,4 +1,4 @@
-import { CommandHandler, ICommandHandler, EventBus } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler, EventBus, EventPublisher } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import type { OrderRepository } from '../../../ports/order.repository.interface.js';
 import type { ProductRepository } from '../../../../product/ports/product.repository.interface.js';
@@ -18,6 +18,7 @@ export class DeliverOrderCommandHandler implements ICommandHandler<DeliverOrderC
     @Inject('IOrderRepository') private readonly orderRepository: OrderRepository,
     @Inject('IProductRepository') private readonly productRepository: ProductRepository,
     private eventBus: EventBus,
+    private publisher: EventPublisher,
   ) {}
 
   async execute(command: DeliverOrderCommand): Promise<void> {
@@ -25,7 +26,6 @@ export class DeliverOrderCommandHandler implements ICommandHandler<DeliverOrderC
     if (!order) throw new Error(`Order ${command.orderId} not found`);
 
     if (order instanceof SellOrder) {
-      await this.deliverItems(order);
       this.eventBus.publish(new OrderDeliveredEvent(order.getOrderId()));
       return;
     }
@@ -45,10 +45,24 @@ export class DeliverOrderCommandHandler implements ICommandHandler<DeliverOrderC
 
   private async deliverItems(order: Order): Promise<void> {
     for (const item of order.getOrderItems()) {
-      const product = await this.productRepository.loadById(new ProductId(item.getId().id));
-      if (!product) throw new Error(`Product ${item.getId().id} not found`);
-      product.receive(order.getOrderId(), new Quantity(item.getQty().getValue));
-      await this.productRepository.save(product);
+      const product = await this.productRepository.loadById(
+        new ProductId(item.getId().id),
+      );
+
+      if (!product) {
+        throw new Error(`Product ${item.getId().id} not found`);
+      }
+
+      const trackedProduct = this.publisher.mergeObjectContext(product);
+
+      trackedProduct.receive(
+        order.getOrderId(),
+        new Quantity(item.getQty().getValue),
+      );
+
+      await this.productRepository.save(trackedProduct);
+
+      trackedProduct.commit();
     }
   }
 }

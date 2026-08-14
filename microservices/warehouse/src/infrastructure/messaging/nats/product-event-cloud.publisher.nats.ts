@@ -36,100 +36,102 @@ export class ProductEventCloudPublisherNats implements ProductEventCloudPublishe
   }
 
   async publishProducNameUpdate(event: ProductNameUpdatedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.name.updated`;
-    this.logger.log(`Publishing product.name.updated to NATS cloud for product ID: ${event.productId}`);
+    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.updated`;
+    this.logger.log(`Publishing product.updated to NATS cloud for product ID: ${event.productId.id}`);
     this.natsClient.emit(subject, {
-      productId: event.productId,
+      productId: event.productId.id,
       name: event.name,
     });
   }
 
   async publishProductAvailableQtyUpdate(event: ProductAvailableQtyUpdatedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.availableQty.updated`;
-    this.logger.log(`Publishing product.availableQty.updated to NATS cloud for product ID: ${event.productId}`);
+    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.updated`;
+    this.logger.log(`Publishing product.updated to NATS cloud for product ID: ${event.productId.id}`);
     this.natsClient.emit(subject, {
-      productId: event.productId,
-      availableQty: event.availableQty,
+      productId: event.productId.id,
+      availableQty: event.availableQty.getValue,
     });
   }
 
   async publishProductPriceUpdate(event: ProductPriceUpdatedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.price.updated`;
-    this.logger.log(`Publishing product.price.updated to NATS cloud for product ID: ${event.productId}`);
+    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.updated`;
+    this.logger.log(`Publishing product.updated to NATS cloud for product ID: ${event.productId.id}`);
     this.natsClient.emit(subject, {
-      productId: event.productId,
-      price: event.unitPrice,
+      productId: event.productId.id,
+      price: event.unitPrice.getAmount(),
     });
   }
 
   async publishProductReservedQtyUpdate(event: ProductReservedQtyUpdatedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.reservedQty.updated`;
-    this.logger.log(`Publishing product.reservedQty.updated to NATS cloud for product ID: ${event.productId}`);
+    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.updated`;
+    this.logger.log(`Publishing product.updated to NATS cloud for product ID: ${event.productId.id}`);
     this.natsClient.emit(subject, {
-      productId: event.productId,
-      reservedQty: event.reservedQty,
+      productId: event.productId.id,
+      reservedQty: event.reservedQty.getValue,
     });
   }
 
   async publishProductDispatched(event: ProductDispatchedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.dispatched`;
-    this.logger.log(`Publishing product.dispatched to NATS cloud for product ID: ${event.productId}`);
+    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.updated`;
+    this.logger.log(`Publishing product.updated to NATS cloud for product ID: ${event.productId.id}`);
     this.natsClient.emit(subject, {
-      productId: event.productId,
-      dispatchedQty: event.qtyDispatched,
+      productId: event.productId.id,
+      reservedQty: event.updatedReservedQty.getValue,
     });
   }
 
   async publishProductReceived(event: ProductReceivedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.received`;
-    this.logger.log(`Publishing product.received to NATS cloud for product ID: ${event.productId}`);
+    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.updated`;
+    this.logger.log(`Publishing product.updated to NATS cloud for product ID: ${event.productId.id}`);
     this.natsClient.emit(subject, {
-      productId: event.productId,
-      receivedQty: event.qtyReceived,
+      productId: event.productId.id,
+      availableQty: event.updatedAvailableQty.getValue,
     });
   }
 
   async publishProductMinThresUpdate(event: ProductMinThresUpdatedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.minThres.updated`;
-    this.logger.log(`Publishing product.minThres.updated to NATS cloud for product ID: ${event.productId}`);
+    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.updated`;
+    this.logger.log(`Publishing product.updated to NATS cloud for product ID: ${event.productId.id}`);
     this.natsClient.emit(subject, {
-      productId: event.productId,
-      minThres: event.minThres,
+      productId: event.productId.id,
+      minThres: event.minThres.getValue,
     });
   }
 
   async publishProductMaxThresUpdate(event: ProductMaxThresUpdatedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.maxThres.updated`;
-    this.logger.log(`Publishing product.maxThres.updated to NATS cloud for product ID: ${event.productId}`);
+    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.updated`;
+    this.logger.log(`Publishing product.updated to NATS cloud for product ID: ${event.productId.id}`);
     this.natsClient.emit(subject, {
-      productId: event.productId,
-      maxThres: event.maxThres,
+      productId: event.productId.id,
+      maxThres: event.maxThres.getValue,
     });
   }
 
   async publishProductReserved(event: ProductReservedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.reserved`;
-    this.logger.log(`Publishing product.reserved to NATS cloud for product ID: ${event.productId}`);
+    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.updated`;
+    this.logger.log(`Publishing product.updated to NATS cloud for product ID: ${event.productId.id}`);
     this.natsClient.emit(subject, {
-      productId: event.productId,
-      reservedQty: event.qtyReserved,
+      productId: event.productId.id,
+      availableQty: event.updatedAvailableQty.getValue,
+      reservedQty: event.updatedReservedQty.getValue,
     });
   }
 
   async publishProductReleased(event: ProductReleasedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.released`;
-    this.logger.log(`Publishing product.released to NATS cloud for product ID: ${event.productId}`);
+    const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.updated`;
+    this.logger.log(`Publishing product.updated to NATS cloud for product ID: ${event.productId.id}`);
     this.natsClient.emit(subject, {
-      productId: event.productId,
-      releasedQty: event.qtyReleased,
+      productId: event.productId.id,
+      availableQty: event.updatedAvailableQty.getValue,
+      reservedQty: event.updatedReservedQty.getValue,
     });
   }
 
   async publishProductRemoved(event: ProductRemovedEvent): Promise<void> {
     const subject = `warehouse.${process.env.WAREHOUSE_ID || '0'}.product.removed`;
-    this.logger.log(`Publishing product.removed to NATS cloud`);
+    this.logger.log(`Publishing product.removed to NATS cloud for product ID: ${event.productId.id}`);
     this.natsClient.emit(subject, {
-      productId: event.productId,
+      productId: event.productId.id,
     });
   }
 }

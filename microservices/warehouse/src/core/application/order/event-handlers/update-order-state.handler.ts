@@ -1,4 +1,4 @@
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { EventPublisher, EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import type { OrderRepository } from '../ports/order.repository.interface.js';
 import { ReservationCreatedEvent } from '../../../domain/reservation/events/reservation-created.event.js';
@@ -25,6 +25,7 @@ import { ProductsReservedEvent } from '../../product/events/products-reserved.ev
 export class UpdateOrderStateHandler implements IEventHandler<OrderEvent | OrderApplicationEvent | ReservationEvent> {
   constructor(
     @Inject('IOrderRepository') private readonly orderRepository: OrderRepository,
+    private publisher: EventPublisher,
   ) {}
 
   async handle(event: OrderEvent | OrderApplicationEvent | ReservationEvent): Promise<void> {
@@ -43,79 +44,99 @@ export class UpdateOrderStateHandler implements IEventHandler<OrderEvent | Order
   private async onReservationCreated(e: ReservationCreatedEvent): Promise<void> {
     const order = await this.orderRepository.load(e.reservationId);
     if (order) {
-      order.markAsReserving();
-      await this.orderRepository.save(order);
+      const tracked = this.publisher.mergeObjectContext(order);
+      tracked.markAsReserving();
+      await this.orderRepository.save(tracked);
+      tracked.commit();
     }
   }
 
   private async onProductsReserved(e: ProductsReservedEvent): Promise<void> {
     const order = await this.orderRepository.load(e.orderId);
     if (order) {
-      order.markAsReserved();
-      await this.orderRepository.save(order);
+      const tracked = this.publisher.mergeObjectContext(order);
+      tracked.markAsReserved();
+      await this.orderRepository.save(tracked);
+      tracked.commit();
     }
   }
 
   private async onReservationUpdated(e: ReservationUpdatedEvent): Promise<void> {
-        const order = await this.orderRepository.load(e.reservationId);
+    const order = await this.orderRepository.load(e.reservationId);
     if (order) {
-      order.markAsValidating();
-      await this.orderRepository.save(order);
+      const tracked = this.publisher.mergeObjectContext(order);
+      tracked.markAsValidating();
+      await this.orderRepository.save(tracked);
+      tracked.commit();
     }
   }
 
   private async onOrderValidated(e: OrderValidatedEvent): Promise<void> {
     const order = await this.orderRepository.load(e.orderId);
     if (order) {
-      order.markAsDispatching();
-      await this.orderRepository.save(order);
+      const tracked = this.publisher.mergeObjectContext(order);
+      tracked.markAsDispatching();
+      await this.orderRepository.save(tracked);
+      tracked.commit();
     }
   }
 
   private async onOrderValidationFailed(e: OrderValidationFailedEvent): Promise<void> {
     const order = await this.orderRepository.load(e.orderId);
     if (order) {
-      order.markAsRestocking();
-      await this.orderRepository.save(order);
+      const tracked = this.publisher.mergeObjectContext(order);
+      tracked.markAsRestocking();
+      await this.orderRepository.save(tracked);
+      tracked.commit();
     }  }
 
   private async onOrderDispatched(e: OrderDispatchedEvent): Promise<void> {
     const order = await this.orderRepository.load(e.orderId);
     if (order) {
-      order.markAsDispatched();
-      await this.orderRepository.save(order);
+      const tracked = this.publisher.mergeObjectContext(order);
+      tracked.markAsDispatched();
+      await this.orderRepository.save(tracked);
+      tracked.commit();
     }
   }
 
   private async onOrderDispatchFailed(e: OrderDispatchFailedEvent): Promise<void> {
     const order = await this.orderRepository.load(e.orderId);
     if (order) {
-      order.markAsCanceling();
-      await this.orderRepository.save(order);
+      const tracked = this.publisher.mergeObjectContext(order);
+      tracked.markAsCanceling();
+      await this.orderRepository.save(tracked);
+      tracked.commit();
     }
   }
 
   private async onOrderDelivered(e: OrderDeliveredEvent): Promise<void> {
     const order = await this.orderRepository.load(e.orderId);
     if (order) {
-      order.markAsDelivered();
-      await this.orderRepository.save(order);
+      const tracked = this.publisher.mergeObjectContext(order);
+      tracked.markAsDelivered();
+      await this.orderRepository.save(tracked);
+      tracked.commit();
     }
   }
 
   private async onOrderCancelingRequested(e: ReservationCancelingRequestedEvent): Promise<void> {
     const order = await this.orderRepository.load(e.reservationId);
     if (order) {
-      order.markAsCanceling();
-      await this.orderRepository.save(order);
+      const tracked = this.publisher.mergeObjectContext(order);
+      tracked.markAsCanceling();
+      await this.orderRepository.save(tracked);
+      tracked.commit();
     }
   }
 
   private async onOrderCanceled(e: OrderCanceledEvent): Promise<void> {
     const order = await this.orderRepository.load(e.orderId);
     if (order) {
-      order.markAsCanceled();
-      await this.orderRepository.save(order);
+      const tracked = this.publisher.mergeObjectContext(order);
+      tracked.markAsCanceled();
+      await this.orderRepository.save(tracked);
+      tracked.commit();
     }
   }
 }

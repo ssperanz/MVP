@@ -94,7 +94,7 @@ export class OrderSaga {
       ofType(OrderDispatchedEvent),
       filter((event) => event.orderType === OrderType.SELL),
       map((event) => {
-        this.logger.log(`Received Sell Order DispatchedEvent for order ID ${event.orderId.getId()}`);
+        this.logger.log(`Received OrderDispatchedEvent for SellOrder with order ID ${event.orderId.getId()}`);
         return new DeliverOrderCommand(event.orderId.getId());
       }),
     );

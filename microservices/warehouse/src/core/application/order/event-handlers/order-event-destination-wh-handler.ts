@@ -16,10 +16,14 @@ export class OrderEventDestinationWhHandler extends AbstractOrderEventHandler im
   }
 
   override async onOrderCreated(event: OrderCreatedEvent): Promise<void> {
-    await this.publisher.publishOrderCreated(event);
+    if (event.orderType === 'TRANSFER' || event.orderType === 'REPLENISHMENT') {
+      await this.publisher.publishOrderCreated(event);
+    }
   }
 
   override async onOrderStateUpdated(event: OrderStateUpdatedEvent): Promise<void> {
-    await this.publisher.publishOrderStateUpdated(event);
+    if (event.orderType === 'TRANSFER' || event.orderType === 'REPLENISHMENT') {
+      await this.publisher.publishOrderStateUpdated(event);
+    }
   }
 }

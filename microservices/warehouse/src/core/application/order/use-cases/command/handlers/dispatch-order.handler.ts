@@ -1,4 +1,4 @@
-import { CommandHandler, ICommandHandler, EventBus } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler, EventBus, EventPublisher } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import { DispatchOrderCommand } from '../dispatch-order.command.js';
 import type { OrderRepository } from '../../../ports/order.repository.interface.js';
@@ -20,6 +20,7 @@ export class DispatchOrderCommandHandler implements ICommandHandler<DispatchOrde
     @Inject('IOrderRepository') private readonly orderRepository: OrderRepository,
     @Inject('IProductRepository') private readonly productRepository: ProductRepository,
     private eventBus: EventBus,
+    private publisher: EventPublisher,
   ) {}
 
   async execute(command: DispatchOrderCommand): Promise<void> {
@@ -52,10 +53,24 @@ export class DispatchOrderCommandHandler implements ICommandHandler<DispatchOrde
 
   private async dispatchItems(order: Order): Promise<void> {
     for (const item of order.getOrderItems()) {
-      const product = await this.productRepository.loadById(new ProductId(item.getId().id));
-      if (!product) throw new Error(`Product ${item.getId().id} not found`);
-      product.dispatch(order.getOrderId(), new Quantity(item.getQty().getValue));
-      await this.productRepository.save(product);
+      const product = await this.productRepository.loadById(
+        new ProductId(item.getId().id),
+      );
+
+      if (!product) {
+        throw new Error(`Product ${item.getId().id} not found`);
+      }
+
+      const trackedProduct = this.publisher.mergeObjectContext(product);
+
+      trackedProduct.dispatch(
+        order.getOrderId(),
+        new Quantity(item.getQty().getValue),
+      );
+
+      await this.productRepository.save(trackedProduct);
+
+      trackedProduct.commit();
     }
   }
 }

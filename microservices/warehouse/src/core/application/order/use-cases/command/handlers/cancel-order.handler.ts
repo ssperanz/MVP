@@ -1,4 +1,4 @@
-import { CommandHandler, ICommandHandler, EventBus } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler, EventBus, EventPublisher } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import { CancelOrderCommand } from '../cancel-order.command.js';
 import type { ReservationRepository } from '../../../../../../core/application/reservation/ports/reservation.repository.interface.js';
@@ -10,6 +10,7 @@ export class CancelOrderCommandHandler implements ICommandHandler<CancelOrderCom
   constructor(
     @Inject('IReservationRepository') private readonly reservationRepository: ReservationRepository,
     private eventBus: EventBus,
+    private publisher: EventPublisher,
   ) {}
 
   async execute(command: CancelOrderCommand): Promise<void> {
@@ -17,8 +18,10 @@ export class CancelOrderCommandHandler implements ICommandHandler<CancelOrderCom
     if (!reservation) {
       throw new Error(`Reservation with order ID ${command.orderId} not found.`);
     }
-    const toUnreserveItems = reservation.requestCanceling();
-    await this.reservationRepository.save(reservation);
+    const trackedReservation = this.publisher.mergeObjectContext(reservation);
+    const toUnreserveItems = trackedReservation.requestCanceling();
+    await this.reservationRepository.save(trackedReservation);
+    trackedReservation.commit();
     this.eventBus.publish(new ReservationCancelingRequestedEvent(new OrderId(command.orderId), toUnreserveItems));
   }
 }
