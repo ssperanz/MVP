@@ -19,4 +19,7 @@ const config: Config = {
   moduleFileExtensions: ['ts', 'js', 'json'],
 };
 
-export default config;
+export default {
+  ...config,
+  maxWorkers: 1,
+};

@@ -18,16 +18,14 @@ export class OrderDispatchedEventHandler implements IEventHandler<OrderDispatche
 
     if (order instanceof TransferOrder) {
       await this.handleInternalOrder(
-        {
-          orderId: event.orderId.getId(),
-          sourceWh: event.sourceWh,
-          destinationWh: event.destinationWh,
-        }
+          event.orderId.getId(),
+          event.sourceWh,
+          event.destinationWh!
       );
     }
   }
 
-  private async handleInternalOrder(payload: any): Promise<void> {
-    await this.notifier.notify(payload);
+  private async handleInternalOrder(orderId: string, sourceWh: number, destinationWh: number): Promise<void> {
+    await this.notifier.notify({ orderId, sourceWh, destinationWh });
   }
 }

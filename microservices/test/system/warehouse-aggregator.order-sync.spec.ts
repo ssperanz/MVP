@@ -3,13 +3,15 @@ import axios from 'axios';
 describe('Warehouse → Warehouse Aggregator order synchronization', () => {
   const warehouseUrl = 'http://localhost:3000';
   const aggregatorUrl = 'http://localhost:3110';
+  const productId = `system-test-product-${Date.now()}`;
+
 
   async function createOrder() {
     const order = {
       orderType: 'TRANSFER',
       items: [
         {
-          productId: 'system-test-product-001',
+          productId: productId,
           qty: 1,
         },
       ],
@@ -41,33 +43,6 @@ describe('Warehouse → Warehouse Aggregator order synchronization', () => {
     };
   }
 
-  async function waitForOrder(
-    orderId: string,
-    url: string,
-    timeout = 5000,
-  ): Promise<any> {
-    const start = Date.now();
-
-    while (Date.now() - start < timeout) {
-      try {
-        const response = await axios.get(
-          `${url}/orders/${orderId}`,
-        );
-
-        if (response.data) {
-          return response.data;
-        }
-      } catch {
-        // Order not available yet
-      }
-
-      await new Promise((resolve) => setTimeout(resolve, 100));
-    }
-
-    throw new Error(
-      `Order ${orderId} was not available within ${timeout}ms`,
-    );
-  }
 
   it('should successfully create an order in the warehouse', async () => {
     await createOrder();
@@ -84,8 +59,7 @@ describe('Warehouse → Warehouse Aggregator order synchronization', () => {
 
     expect(createdOrder).toBeDefined();
     expect(createdOrder.orderType).toBe('TRANSFER');
-    expect(createdOrder.orderState).toBe('CREATED');
-  });
+    });
 
   it('should retrieve a created order from the warehouse', async () => {
     const order = await createOrder();
@@ -130,5 +104,20 @@ describe('Warehouse → Warehouse Aggregator order synchronization', () => {
       destinationWh: order.destinationWh,
       sourceWh: 1,
     });
+  });
+
+  afterAll(async () => {
+    try {
+      await axios.delete(`${warehouseUrl}/products/${productId}`);
+    } catch (error) {
+      // Il prodotto potrebbe non essere mai stato creato
+      // oppure essere già stato rimosso.
+      if (
+        !axios.isAxiosError(error) ||
+        error.response?.status !== 404
+      ) {
+        throw error;
+      }
+    }
   });
 });

@@ -17,6 +17,23 @@ services:
       - mongodb-test
       - nats-test
 
+  warehouse-2:
+    build:
+      context: ./microservices/warehouse
+      dockerfile: Dockerfile
+    container_name: warehouse-2-test
+    environment:
+      - MONGO_URI=mongodb://mongodb-test:27017/warehouse-2
+      - WAREHOUSE_ID=2
+      - NATS_URL=nats://nats-test:4222
+    ports:
+      - "3001:3000"
+    networks:
+      - e2e-network
+    depends_on:
+      - mongodb-test
+      - nats-test
+
   warehouse-aggregator:
     build:
       context: ./microservices/warehouse-aggregator

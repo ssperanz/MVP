@@ -136,4 +136,5 @@ describe('Warehouse → Warehouse Aggregator product synchronization', () => {
       sourceWh: 1,
     });
   });
+
 });
