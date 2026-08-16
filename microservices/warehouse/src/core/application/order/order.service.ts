@@ -11,6 +11,9 @@ import { UpdateOrderStateDto } from './dto/update-order-state.dto';
 import { UpdateOrderStateCommand } from './use-cases/command/update-order-state.command';
 import { OrderState } from '../../../shared/domain/enums/order-state.enum';
 import { OrderCommandUseCase } from './use-cases/order.usecase.command';
+import { OrderType } from 'src/shared/domain/enums/order-type.enum';
+import { OrderReceivedDto } from './dto/order-received.dto';
+import { NotifyDeliveryCommand } from './use-cases/command/notify-delivery.command';
 
 @Injectable()
 export class OrderService implements OrderCommandUseCase {
@@ -42,10 +45,23 @@ export class OrderService implements OrderCommandUseCase {
     }
 
     async deliverOrder(dto: OrderDispatchedDto): Promise<void> {
-      return this.commandBus.execute(new DeliverOrderCommand(dto.orderId));
+      return this.commandBus.execute(new DeliverOrderCommand(
+        dto.orderId,
+        dto.orderType,
+        dto.items,
+        dto.sourceWh,
+        dto.destinationWh,
+        dto.orderReference ?? undefined,
+      ));
     }
 
     async updateOrderStatus(dto: UpdateOrderStateDto): Promise<void> {
       return this.commandBus.execute(new UpdateOrderStateCommand(dto.orderId, dto.newState as OrderState));
+    }
+
+    async notifySuccessfulDeliver(dto: OrderReceivedDto): Promise<void> {
+      return this.commandBus.execute(new NotifyDeliveryCommand(
+        dto.orderId,
+      ))
     }
   }

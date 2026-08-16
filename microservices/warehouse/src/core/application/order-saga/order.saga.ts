@@ -18,9 +18,8 @@ import { ProductsReleasedEvent } from '../product/events/products-released.event
 import { ReleaseProductsCommand } from '../product/use-cases/command/release-products.command';
 import { ReservationCancelingRequestedEvent } from '../../../core/domain/reservation/events/reservation-canceling-requested.event';
 import { OrderValidatedEvent } from '../order/events/order-validated.event';
-import { EventType } from 'src/shared/domain/enums/event-type.enum';
 import { OrderDispatchedEvent } from '../order/events/order-dispatched.event';
-import { OrderType } from 'src/shared/domain/enums/order-type.enum';
+import { OrderType } from '../../../shared/domain/enums/order-type.enum';
 import { DeliverOrderCommand } from '../order/use-cases/command/deliver-order.command';
 import { OrderDeliveredEvent } from '../order/events/order-delivered.event';
 
@@ -75,7 +74,7 @@ export class OrderSaga {
     );
   }
 
-  /* Step 5: If order order is validated, we want to dispatch */
+  /* Step 5: If order is validated, we want to dispatch */
   @Saga()
   onOrderValidated = (events$: Observable<any>): Observable<ICommand> => {
     return events$.pipe(
@@ -87,15 +86,21 @@ export class OrderSaga {
     );
   }
 
-  /* Sell Order Dispatched case: If a Sell Order is dispatched, we want to simulate a successful delivery. */
+  /* Step 6: If order is dispatched, we want to deliver it. */
   @Saga()
-  onSellOrderDispatched = (events$: Observable<any>): Observable<ICommand> => {
+  onOrderDispatched = (events$: Observable<any>): Observable<ICommand> => {
     return events$.pipe(
       ofType(OrderDispatchedEvent),
       filter((event) => event.orderType === OrderType.SELL),
       map((event) => {
-        this.logger.log(`Received OrderDispatchedEvent for SellOrder with order ID ${event.orderId.getId()}`);
-        return new DeliverOrderCommand(event.orderId.getId());
+        this.logger.log(`Received OrderDispatchedEvent for ${event.orderType} Order with order ID ${event.orderId.getId()}`);
+        return new DeliverOrderCommand(
+          event.orderId.getId(),
+          event.orderType,
+          event.items.map((item) => ({ productId: item.productId, qty: item.qty })),
+          event.sourceWh,
+          event.destinationWh,
+        );
       }),
     );
   }

@@ -11,6 +11,7 @@ export class OrderEventDestinationWhPublisherNats implements OrderEventDestinati
   constructor(@Inject('NATS_CLIENT') private readonly natsClient: ClientProxy) {}
 
   async publishOrderCreated(event: OrderCreatedEvent): Promise<void> {
+    /*
     const subject = `warehouse.${process.env.WH_ID || '0'}.mirror.${event.destinationWh?.getId() || '0'}.order.created`;
     this.logger.log(`Publishing order created event for order ${event.orderId.getId()} to warehouse via NATS`);
     this.natsClient.emit(subject, {
@@ -32,18 +33,18 @@ export class OrderEventDestinationWhPublisherNats implements OrderEventDestinati
             cap: string;
             country: string;
           },
-          public readonly orderReference?: OrderId,*/
+          public readonly orderReference?: OrderId,
       destinationWh: event.destinationWh?.getId() || '0'
       
-    });
+    })*/
   }
 
   async publishOrderStateUpdated(event: OrderStateUpdatedEvent): Promise<void> {
-    const subject = `warehouse.${process.env.WH_ID || '0'}.mirror.${event.destinationWh?.getId() || '0'}.order.state.updated`;
+    /*const subject = `warehouse.${process.env.WH_ID || '0'}.mirror.${event.destinationWh?.getId() || '0'}.order.state.updated`;
     this.logger.log(`Publishing order state updated event for order ${event.orderId.getId()} to warehouse via NATS`);
     this.natsClient.emit(subject, {
       orderId: event.orderId,
       newState: event.orderState,
-    });
+    });*/
   }
 }

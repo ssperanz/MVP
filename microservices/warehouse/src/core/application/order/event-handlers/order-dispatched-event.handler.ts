@@ -17,15 +17,7 @@ export class OrderDispatchedEventHandler implements IEventHandler<OrderDispatche
     if (!order) return;
 
     if (order instanceof TransferOrder) {
-      await this.handleInternalOrder(
-          event.orderId.getId(),
-          event.sourceWh,
-          event.destinationWh!
-      );
+      await this.notifier.notify(event);
     }
-  }
-
-  private async handleInternalOrder(orderId: string, sourceWh: number, destinationWh: number): Promise<void> {
-    await this.notifier.notify({ orderId, sourceWh, destinationWh });
   }
 }

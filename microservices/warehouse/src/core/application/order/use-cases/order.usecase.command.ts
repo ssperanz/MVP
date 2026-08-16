@@ -6,4 +6,5 @@ export interface OrderCommandUseCase {
   cancelOrder(orderId: OrderIdDto): Promise<void>;
   deliverOrder(orderId: OrderIdDto): Promise<void>;
   updateOrderStatus(orderId: OrderIdDto): Promise<void>;
+  notifySuccessfulDeliver(orderId: OrderIdDto): Promise<void>;
 }

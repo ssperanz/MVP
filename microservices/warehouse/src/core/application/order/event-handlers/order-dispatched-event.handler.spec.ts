@@ -42,13 +42,18 @@ describe('OrderDispatchedEventHandler', () => {
     orderDispatchedEventHandler = new OrderDispatchedEventHandler(
       notifierMock,
       orderRepositoryMock,
-      orderServiceMock,
     );
   });
 
   it('should handle OrderDispatchedEvent for TransferOrder', async () => {
     const orderId = new OrderId('order-123');
-    const event = new OrderDispatchedEvent(orderId, 1, 2);
+    const event = new OrderDispatchedEvent(
+      orderId,
+      OrderType.TRANSFER,
+      [],
+      1,
+      2
+    );
     const transferOrderMock = new TransferOrder(
       orderId,
       [],
@@ -71,7 +76,14 @@ describe('OrderDispatchedEventHandler', () => {
 
   it('should handle OrderDispatchedEvent for SellOrder', async () => {
     const orderId = new OrderId('order-456');
-    const event = new OrderDispatchedEvent(orderId, 1 );
+    const event = new OrderDispatchedEvent(
+      orderId, 
+      OrderType.SELL,
+      [],
+      1,
+      undefined,
+      new Address('Via Roma', 123, 'Roma', '12345', 'Italy')
+    );
     const sellOrderMock = new SellOrder(
       orderId,
       [],
@@ -94,8 +106,14 @@ describe('OrderDispatchedEventHandler', () => {
 
   it('should do nothing if order is not found', async () => {
     const orderId = new OrderId('order-789');
-    const event = new OrderDispatchedEvent(orderId, 1);
-
+    const event = new OrderDispatchedEvent(
+      orderId, 
+      OrderType.SELL,
+      [],
+      1,
+      undefined,
+      new Address('Via Roma', 123, 'Roma', '12345', 'Italy')
+    );
     orderRepositoryMock.load.mockResolvedValue(null);
 
     await orderDispatchedEventHandler.handle(event);

@@ -29,7 +29,13 @@ export class DispatchOrderCommandHandler implements ICommandHandler<DispatchOrde
 
     if (order instanceof SellOrder) {
       await this.dispatchItems(order);
-      this.eventBus.publish(new OrderDispatchedEvent(order.getOrderId(), OrderType.SELL, order.getWarehouseDeparture()));
+      this.eventBus.publish(
+        new OrderDispatchedEvent(
+          order.getOrderId(),
+          OrderType.SELL,
+          order.getOrderItems().map((item) => ({ productId: item.getId().id, qty: item.getQty().getValue })),
+          order.getWarehouseDeparture(),
+        ));
       return;
     }
     if (!(order instanceof TransferOrder)) throw new Error(`Order ${command.orderId} is not a transfer order`);
@@ -41,6 +47,7 @@ export class DispatchOrderCommandHandler implements ICommandHandler<DispatchOrde
         new OrderDispatchedEvent(
           order.getOrderId(),
           order instanceof ReplenishmentOrder ? OrderType.REPLENISHMENT : OrderType.TRANSFER,
+          order.getOrderItems().map((item) => ({ productId: item.getId().id, qty: item.getQty().getValue })),
           order.getWarehouseDeparture(),
           order.getDestinationWh().getId(),
           order instanceof ReplenishmentOrder ? order.getOrderReference() : undefined

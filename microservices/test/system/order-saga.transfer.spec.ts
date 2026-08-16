@@ -27,12 +27,35 @@ describe('Transfer Order Saga - System Test', () => {
         name: 'System Test Product',
         unitPrice: 100,
         availableQuantity: 10,
-        minThres: 1,
+        minThres: 0,
         maxThres: 100,
       });
     } else {
       await axios.put(`${warehouse1Url}/products/${productId}`, {
         availableQuantity: 10,
+      });
+    }
+
+    const productsResponse2 = await axios.get(`${warehouse2Url}/products`);
+
+    const products2 = productsResponse2.data.products ?? productsResponse2.data;
+
+    const existingProduct2 = products2.find(
+      (product: any) => product.id === productId,
+    );
+
+    if (!existingProduct2) {
+      await axios.post(`${warehouse2Url}/products`, {
+        id: productId,
+        name: 'System Test Product',
+        unitPrice: 100,
+        availableQuantity: 0,
+        minThres: 0,
+        maxThres: 100,
+      });
+    } else {
+      await axios.put(`${warehouse2Url}/products/${productId}`, {
+        availableQuantity: 0,
       });
     }
 

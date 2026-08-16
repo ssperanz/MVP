@@ -1,6 +1,8 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy, EventPattern } from "@nestjs/microservices";
-import { DispatchNotifierPort } from "src/core/application/order/ports/dispatch-notifier.port";
+import { OrderDispatchedDto } from "../../../core/application/order/dto/order-dispatched.dto";
+import { OrderDispatchedEvent } from "../../../core/application/order/events/order-dispatched.event";
+import { DispatchNotifierPort } from "../../../core/application/order/ports/dispatch-notifier.port";
 
 @Injectable()
 export class DispatchNotifierPublisherNats implements DispatchNotifierPort{
@@ -8,10 +10,20 @@ export class DispatchNotifierPublisherNats implements DispatchNotifierPort{
     @Inject('NATS_CLIENT') private readonly natsClient: ClientProxy,
   ) {}
 
-  async notify({orderId, sourceWh, destinationWh}: { orderId: string; sourceWh: number; destinationWh: number }): Promise<void> {
-    console.log(`Dispatch notification sent for order ID: ${orderId} from warehouse: ${process.env.WAREHOUSE_ID} to warehouse: ${destinationWh}`);
-    const subject = `warehouse.${sourceWh}.mirror.${destinationWh}.order.dispatched`;
-    this.natsClient.emit(subject, { orderId, sourceWh, destinationWh });
+  async notify(event: OrderDispatchedEvent): Promise<void> {
+    console.log(`Dispatch notification sent for order ID: ${event.orderId.getId()} from warehouse ${process.env.WAREHOUSE_ID} to warehouse ${event.destinationWh}`);
+    const subject = `warehouse.${event.sourceWh}.transfer.${event.destinationWh}.order.dispatched`;
+    const dto: OrderDispatchedDto = {
+      orderId: event.orderId.getId(),
+      orderType: event.orderType,
+      items: event.items.map(item => ({
+        productId: item.productId,
+        qty: item.qty,
+      })),
+      sourceWh: event.sourceWh,
+      destinationWh: event.destinationWh!,
+    };
+    this.natsClient.emit(subject, dto);
   }
 
 }

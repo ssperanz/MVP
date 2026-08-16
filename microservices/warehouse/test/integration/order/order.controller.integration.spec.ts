@@ -11,7 +11,7 @@ import {
 } from '../../../src/infrastructure/persistence/mongodb/schemas/order-read-model.schema.js';
 
 import { OrderReadModelMongo } from '../../../src/infrastructure/persistence/mongodb/read-models/order-read-model.mongo.js';
-import { OrderModule } from 'src/core/application/order/order.module.js';
+import { OrderModule } from '../../../src/core/application/order/order.module.js';
 
 describe('OrderController - Integration', () => {
   let app: INestApplication;
