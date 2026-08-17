@@ -87,13 +87,13 @@ jobs:
         run: npm run test:cov
 
       - name: Check CentralSystem coverage
-        run: ls -lah microservices/centralized/CentralSystem/coverage
+        run: ls -lah coverage/centralized/centralSystem/lcov.info
 
       - name: Upload CentralSystem coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: microservices/centralized/CentralSystem/coverage/lcov.info
+          files: coverage/centralized/centralSystem/lcov.info
           flags: centralSystem
           name: centralSystem
 
@@ -110,7 +110,7 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: microservices/centralized/authentication/coverage/lcov.info
+          files: coverage/centralized/authentication/coverage/lcov.info
           flags: auth
           name: auth
   
@@ -128,7 +128,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: routing
-          files: microservices/centralized/routing/coverage/lcov.info
+          files: coverage/centralized/routing/coverage/lcov.info
           name: Routing
 
       # State Cloud
@@ -145,7 +145,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: CloudState
-          files: microservices/centralized/state_aggregate/coverage/lcov.info
+          files: coverage/centralized/state_aggregate/coverage/lcov.info
           name: Cloud State
 
       # Commit updated README
