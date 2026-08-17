@@ -109,7 +109,7 @@ describe('ProductEventListenerNats - Integration', () => {
     const updatedName = 'Updated Product 3';
 
     nc.publish(
-      'warehouse.1.product.name.updated',
+      'warehouse.1.product.updated',
       JSON.stringify({ sourceWh: 1, productId: 'product-3', name: updatedName }),
     );
 

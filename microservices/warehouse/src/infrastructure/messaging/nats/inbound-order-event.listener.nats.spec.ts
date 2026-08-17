@@ -38,6 +38,10 @@ describe('InboundOrderEventListenerNats', () => {
   it('should handle internal order arrival event', async () => {
     const dto: OrderDispatchedDto = {
       orderId: 'order123',
+      orderType: 'TRANSFER',
+      items: [{ productId: 'prod1', qty: 2 }],
+      sourceWh: 1,
+      destinationWh: 2
     };
     await inboundOrderEventListenerNats.handleInternalOrderArrival(dto);
     expect(orderServiceMock.deliverOrder).toHaveBeenCalledWith(dto);

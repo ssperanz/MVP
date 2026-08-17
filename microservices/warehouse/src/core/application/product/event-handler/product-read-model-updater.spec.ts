@@ -1,6 +1,3 @@
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { Inject } from '@nestjs/common';
-import { AbstractProductEventHandler } from './abstract-product-event-handler.js';
 import type { ProductReadModelRepository } from '../ports/product-read-model.repository.interface.js';
 import { ProductCreatedEvent } from '../../../domain/product/events/product-created.event.js';
 import { ProductRemovedEvent } from '../../../domain/product/events/product-removed.event.js';
@@ -21,30 +18,44 @@ import { OrderId } from 'src/shared/domain/value-objects/order-id.vo.js';
 import { ProductReadModelUpdater } from './product-read-model-updater.js';
 
 describe('ProductReadModelUpdater', () => {
-  let productReadModelMock: ProductReadModelRepository;
+  let productReadModelMock: jest.Mocked<ProductReadModelRepository>;
   let productReadModelUpdater: ProductReadModelUpdater;
+
+  const existingProduct = () => ({
+    productId: 'product-1',
+    name: 'Product Name',
+    unitPrice: 100,
+    availableQty: 10,
+    reservedQty: 5,
+    minThres: 0,
+    maxThres: 20,
+  });
 
   beforeEach(() => {
     productReadModelMock = {
       upsert: jest.fn(),
       delete: jest.fn(),
       findById: jest.fn(),
-    } as unknown as ProductReadModelRepository;
+    } as unknown as jest.Mocked<ProductReadModelRepository>;
 
-    productReadModelUpdater = new ProductReadModelUpdater(productReadModelMock);
+    productReadModelUpdater = new ProductReadModelUpdater(
+      productReadModelMock,
+    );
   });
 
-  it('should update the read model on ProductRemovedEvent', async () => {
-    const productId = 'product-1';
-    const event = new ProductRemovedEvent(new ProductId(productId));
+  it('should delete the read model on ProductRemovedEvent', async () => {
+    const event = new ProductRemovedEvent(
+      new ProductId('product-1'),
+    );
+
     await productReadModelUpdater.onProductRemoved(event);
-    expect(productReadModelMock.delete).toHaveBeenCalledWith(productId);
+
+    expect(productReadModelMock.delete).toHaveBeenCalledWith('product-1');
   });
 
-  it('should update the read model on ProductCreatedEvent', async () => {
-    const productId = 'product-1';
+  it('should create the read model on ProductCreatedEvent', async () => {
     const event = new ProductCreatedEvent(
-      new ProductId(productId),
+      new ProductId('product-1'),
       'Product Name',
       new Money(100),
       new Quantity(10),
@@ -52,9 +63,11 @@ describe('ProductReadModelUpdater', () => {
       new Quantity(0),
       new Quantity(20),
     );
+
     await productReadModelUpdater.onProductCreated(event);
+
     expect(productReadModelMock.upsert).toHaveBeenCalledWith({
-      productId: productId,
+      productId: 'product-1',
       name: 'Product Name',
       unitPrice: 100,
       availableQty: 10,
@@ -62,247 +75,173 @@ describe('ProductReadModelUpdater', () => {
       minThres: 0,
       maxThres: 20,
     });
-
   });
-  
+
   it('should update the read model on ProductNameUpdatedEvent', async () => {
-    const productId = 'product-1';
-    const event = new ProductNameUpdatedEvent(new ProductId(productId), 'Updated Name');
-    (productReadModelMock.findById as jest.Mock).mockResolvedValue({
-      productId: productId,
-      name: 'Old Name',
-      unitPrice: 100,
-      availableQty: 10,
-      reservedQty: 5,
-      minThres: 0,
-      maxThres: 20,
-    });
+    const event = new ProductNameUpdatedEvent(
+      new ProductId('product-1'),
+      'Updated Name',
+    );
+
+    productReadModelMock.findById.mockResolvedValue(existingProduct());
+
     await productReadModelUpdater.onNameUpdated(event);
+
     expect(productReadModelMock.upsert).toHaveBeenCalledWith({
-      productId: productId,
+      ...existingProduct(),
       name: 'Updated Name',
-      unitPrice: 100,
-      availableQty: 10,
-      reservedQty: 5,
-      minThres: 0,
-      maxThres: 20,
     });
   });
 
   it('should update the read model on ProductPriceUpdatedEvent', async () => {
-    const productId = 'product-1';
-    const event = new ProductPriceUpdatedEvent(new ProductId(productId), new Money(150));
-    (productReadModelMock.findById as jest.Mock).mockResolvedValue({
-      productId: productId,
-      name: 'Product Name',
-      unitPrice: 100,
-      availableQty: 10,
-      reservedQty: 5,
-      minThres: 0,
-      maxThres: 20,
-    });
+    const event = new ProductPriceUpdatedEvent(
+      new ProductId('product-1'),
+      new Money(150),
+    );
+
+    productReadModelMock.findById.mockResolvedValue(existingProduct());
+
     await productReadModelUpdater.onPriceUpdated(event);
+
     expect(productReadModelMock.upsert).toHaveBeenCalledWith({
-      productId: productId,
-      name: 'Product Name',
+      ...existingProduct(),
       unitPrice: 150,
-      availableQty: 10,
-      reservedQty: 5,
-      minThres: 0,
-      maxThres: 20,
     });
   });
 
   it('should update the read model on ProductAvailableQtyUpdatedEvent', async () => {
-    const productId = 'product-1';
-    const event = new ProductAvailableQtyUpdatedEvent(new ProductId(productId), new Quantity(20));
-    (productReadModelMock.findById as jest.Mock).mockResolvedValue({
-      productId: productId,
-      name: 'Product Name',
-      unitPrice: 100,
-      availableQty: 10,
-      reservedQty: 5,
-      minThres: 0,
-      maxThres: 20,
-    });
+    const event = new ProductAvailableQtyUpdatedEvent(
+      new ProductId('product-1'),
+      new Quantity(20),
+    );
+
+    productReadModelMock.findById.mockResolvedValue(existingProduct());
+
     await productReadModelUpdater.onAvailableQtyUpdated(event);
+
     expect(productReadModelMock.upsert).toHaveBeenCalledWith({
-      productId: productId,
-      name: 'Product Name',
-      unitPrice: 100,
+      ...existingProduct(),
       availableQty: 20,
-      reservedQty: 5,
-      minThres: 0,
-      maxThres: 20,
     });
   });
 
   it('should update the read model on ProductReservedQtyUpdatedEvent', async () => {
-    const productId = 'product-1';
-    const event = new ProductReservedQtyUpdatedEvent(new ProductId(productId), new Quantity(15));
-    (productReadModelMock.findById as jest.Mock).mockResolvedValue({
-      productId: productId,
-      name: 'Product Name',
-      unitPrice: 100,
-      availableQty: 10,
-      reservedQty: 5,
-      minThres: 0,
-      maxThres: 20,
-    });
+    const event = new ProductReservedQtyUpdatedEvent(
+      new ProductId('product-1'),
+      new Quantity(15),
+    );
+
+    productReadModelMock.findById.mockResolvedValue(existingProduct());
+
     await productReadModelUpdater.onReservedQtyUpdated(event);
+
     expect(productReadModelMock.upsert).toHaveBeenCalledWith({
-      productId: productId,
-      name: 'Product Name',
-      unitPrice: 100,
-      availableQty: 10,
+      ...existingProduct(),
       reservedQty: 15,
-      minThres: 0,
-      maxThres: 20,
     });
   });
 
   it('should update the read model on ProductMinThresUpdatedEvent', async () => {
-    const productId = 'product-1';
-    const event = new ProductMinThresUpdatedEvent(new ProductId(productId), new Quantity(5));
-    (productReadModelMock.findById as jest.Mock).mockResolvedValue({
-      productId: productId,
-      name: 'Product Name',
-      unitPrice: 100,
-      availableQty: 10,
-      reservedQty: 5,
-      minThres: 0,
-      maxThres: 20,
-    });
+    const event = new ProductMinThresUpdatedEvent(
+      new ProductId('product-1'),
+      new Quantity(5),
+    );
+
+    productReadModelMock.findById.mockResolvedValue(existingProduct());
+
     await productReadModelUpdater.onMinThresUpdated(event);
+
     expect(productReadModelMock.upsert).toHaveBeenCalledWith({
-      productId: productId,
-      name: 'Product Name',
-      unitPrice: 100,
-      availableQty: 10,
-      reservedQty: 5,
+      ...existingProduct(),
       minThres: 5,
-      maxThres: 20,
     });
   });
 
   it('should update the read model on ProductMaxThresUpdatedEvent', async () => {
-    const productId = 'product-1';
-    const event = new ProductMaxThresUpdatedEvent(new ProductId(productId), new Quantity(25));
-    (productReadModelMock.findById as jest.Mock).mockResolvedValue({
-      productId: productId,
-      name: 'Product Name',
-      unitPrice: 100,
-      availableQty: 10,
-      reservedQty: 5,
-      minThres: 0,
-      maxThres: 20,
-    });
+    const event = new ProductMaxThresUpdatedEvent(
+      new ProductId('product-1'),
+      new Quantity(25),
+    );
+
+    productReadModelMock.findById.mockResolvedValue(existingProduct());
+
     await productReadModelUpdater.onMaxThresUpdated(event);
+
     expect(productReadModelMock.upsert).toHaveBeenCalledWith({
-      productId: productId,
-      name: 'Product Name',
-      unitPrice: 100,
-      availableQty: 10,
-      reservedQty: 5,
-      minThres: 0,
+      ...existingProduct(),
       maxThres: 25,
     });
   });
 
   it('should update the read model on ProductReservedEvent', async () => {
-    const productId = 'product-1';
-    const event = new ProductReservedEvent(new OrderId('order-1'), new ProductId(productId), new Quantity(3));
-    (productReadModelMock.findById as jest.Mock).mockResolvedValue({
-      productId: productId,
-      name: 'Product Name',
-      unitPrice: 100,
-      availableQty: 10,
-      reservedQty: 5,
-      minThres: 0,
-      maxThres: 20,
-    });
+    const event = new ProductReservedEvent(
+      new OrderId('order-1'),
+      new ProductId('product-1'),
+      new Quantity(3),
+      new Quantity(7),
+    );
+
+    productReadModelMock.findById.mockResolvedValue(existingProduct());
+
     await productReadModelUpdater.onProductReserved(event);
+
     expect(productReadModelMock.upsert).toHaveBeenCalledWith({
-      productId: productId,
-      name: 'Product Name',
-      unitPrice: 100,
-      availableQty: 7, 
-      reservedQty: 8,
-      minThres: 0,
-      maxThres: 20,
+      ...existingProduct(),
+      availableQty: event.updatedAvailableQty.getValue,
+      reservedQty: event.updatedReservedQty.getValue,
     });
   });
 
   it('should update the read model on ProductReleasedEvent', async () => {
-    const productId = 'product-1';
-    const event = new ProductReleasedEvent(new OrderId('order-1'), new ProductId(productId), new Quantity(2));
-    (productReadModelMock.findById as jest.Mock).mockResolvedValue({
-      productId: productId,
-      name: 'Product Name',
-      unitPrice: 100,
-      availableQty: 10,
-      reservedQty: 5,
-      minThres: 0,
-      maxThres: 20,
-    });
+    const event = new ProductReleasedEvent(
+      new OrderId('order-1'),
+      new ProductId('product-1'),
+      new Quantity(2),
+      new Quantity(5),
+    );
+
+    productReadModelMock.findById.mockResolvedValue(existingProduct());
+
     await productReadModelUpdater.onProductReleased(event);
+
     expect(productReadModelMock.upsert).toHaveBeenCalledWith({
-      productId: productId,
-      name: 'Product Name',
-      unitPrice: 100,
-      availableQty: 12, 
-      reservedQty: 3, 
-      minThres: 0,
-      maxThres: 20,
+      ...existingProduct(),
+      availableQty: event.updatedAvailableQty.getValue,
+      reservedQty: event.updatedReservedQty.getValue,
     });
   });
 
   it('should update the read model on ProductDispatchedEvent', async () => {
-    const productId = 'product-1';
-    const event = new ProductDispatchedEvent(new OrderId('order-1'), new ProductId(productId), new Quantity(4));
-    (productReadModelMock.findById as jest.Mock).mockResolvedValue({
-      productId: productId,
-      name: 'Product Name',
-      unitPrice: 100,
-      availableQty: 10,
-      reservedQty: 5,
-      minThres: 0,
-      maxThres: 20,
-    });
+    const event = new ProductDispatchedEvent(
+      new OrderId('order-1'),
+      new ProductId('product-1'),
+      new Quantity(4),
+    );
+
+    productReadModelMock.findById.mockResolvedValue(existingProduct());
+
     await productReadModelUpdater.onProductDispatched(event);
+
     expect(productReadModelMock.upsert).toHaveBeenCalledWith({
-      productId: productId,
-      name: 'Product Name',
-      unitPrice: 100,
-      availableQty: 10, 
-      reservedQty: 1, 
-      minThres: 0,
-      maxThres: 20,
+      ...existingProduct(),
+      reservedQty: event.updatedReservedQty.getValue,
     });
   });
 
   it('should update the read model on ProductReceivedEvent', async () => {
-    const productId = 'product-1';
-    const event = new ProductReceivedEvent(new OrderId('order-1'), new ProductId(productId), new Quantity(6));
-    (productReadModelMock.findById as jest.Mock).mockResolvedValue({
-      productId: productId,
-      name: 'Product Name',
-      unitPrice: 100,
-      availableQty: 10,
-      reservedQty: 5,
-      minThres: 0,
-      maxThres: 20,
-    });
+    const event = new ProductReceivedEvent(
+      new OrderId('order-1'),
+      new ProductId('product-1'),
+      new Quantity(6),
+    );
+
+    productReadModelMock.findById.mockResolvedValue(existingProduct());
+
     await productReadModelUpdater.onProductReceived(event);
+
     expect(productReadModelMock.upsert).toHaveBeenCalledWith({
-      productId: productId,
-      name: 'Product Name',
-      unitPrice: 100,
-      availableQty: 16, 
-      reservedQty: 5, 
-      minThres: 0,
-      maxThres: 20,
+      ...existingProduct(),
+      availableQty: event.updatedAvailableQty.getValue,
     });
   });
-
 });

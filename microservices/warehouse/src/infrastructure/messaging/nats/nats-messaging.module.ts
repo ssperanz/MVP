@@ -3,10 +3,9 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ProductEventCloudPublisherNats } from './product-event-cloud.publisher.nats.js';
 import { OrderEventCloudPublisherNats } from './order-event-cloud.publisher.nats.js';
-import { OrderEventDestinationWhPublisherNats } from './order-event-destination-wh.publisher.nats.js';
 import { ReplenishmentRequestPublisherNats } from './replenishment-request.publisher.nats.js';
 import { DispatchNotifierPublisherNats } from './dispatch-notifier.publisher.nats.js';
-import { InboundOrderEventListenerNats } from './inbound-order-event.listener.nats.js';
+import { DeliverNotifierPublisherNats } from './deliver-notifier.publisher.nats.js';
 
 @Module({
   imports: [
@@ -32,10 +31,6 @@ import { InboundOrderEventListenerNats } from './inbound-order-event.listener.na
       useClass: OrderEventCloudPublisherNats,
     },
     {
-      provide: 'IOrderEventDestinationWhPublisher',
-      useClass: OrderEventDestinationWhPublisherNats,
-    },
-    {
       provide: 'IReplenishmentRequestPort',
       useClass: ReplenishmentRequestPublisherNats,
     },
@@ -43,14 +38,18 @@ import { InboundOrderEventListenerNats } from './inbound-order-event.listener.na
       provide: 'IDispatchNotifierPort',
       useClass: DispatchNotifierPublisherNats,
     },
+    {
+      provide: 'IDeliverNotifierPort',
+      useClass: DeliverNotifierPublisherNats,
+    },
   ],
   exports: [
     ClientsModule,
     'IProductEventCloudPublisher',
     'IOrderEventCloudPublisher',
-    'IOrderEventDestinationWhPublisher',
     'IReplenishmentRequestPort',
     'IDispatchNotifierPort',
+    'IDeliverNotifierPort',
   ],
 })
 export class NatsMessagingModule {}

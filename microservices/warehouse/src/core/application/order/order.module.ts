@@ -22,14 +22,12 @@ import { ProductModule } from '../product/product.module.js';
 import { GetAllOrdersQueryHandler } from './use-cases/query/handlers/get-all-orders.handler.js';
 import { GetOrderQueryHandler } from './use-cases/query/handlers/get-order.handler.js';
 import { OrderEventCloudHandler } from './event-handlers/order-event-cloud-handler.js';
-import { OrderEventDestinationWhHandler } from './event-handlers/order-event-destination-wh-handler.js';
 import { OrderReceivedEventHandler } from './event-handlers/order-received-event.handler.js';
 import { OrderService } from './order.service.js';
 import { OrderController } from './order.controller.js';
 import { OrderQueryService } from './order.query.service.js';
 import { InboundOrderEventListenerNats } from '../../../infrastructure/messaging/nats/inbound-order-event.listener.nats.js';
 import { UpdateOrderStateCommandHandler } from './use-cases/command/handlers/update-order-state.handler.js';
-import { DeliverNotifierPublisherNats } from '../../../infrastructure/messaging/nats/deliver-notifier.publisher.nats.js';
 import { NotifyDeliveryCommandHandler } from './use-cases/command/handlers/notify-delivery.handler.js';
  
 const CommandHandlers = [
@@ -51,7 +49,6 @@ const EventHandlers = [
   OrderReadModelUpdater,
   OrderEventCloudHandler,
   UpdateOrderStateHandler,
-  OrderEventDestinationWhHandler,
   OrderValidationFailedHandler,
   OrderDispatchedEventHandler,
   OrderReceivedEventHandler
@@ -75,10 +72,6 @@ const EventHandlers = [
   providers: [
     OrderService,
     OrderQueryService,
-    {
-      provide: 'IDeliverNotifierPort',
-      useClass: DeliverNotifierPublisherNats,
-    },
     {
       provide: 'IOrderRepository',
       useClass: OrderRepositoryMongo,

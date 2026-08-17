@@ -17,13 +17,13 @@ export class InboundOrderEventListenerNats implements InboundOrderEventListenerP
 
   @EventPattern(`warehouse.*.transfer.${process.env.WAREHOUSE_ID}.order.dispatched`)
   async handleInternalOrderArrival(dto: OrderDispatchedDto): Promise<void> {
-    console.log(`Received order dispatched event for order ID: ${dto.orderId} from warehouse ${dto.sourceWh} to warehouse ${process.env.WAREHOUSE_ID}`);
+    console.log(`Received order dispatched event for order ID: ${dto.orderId} from warehouse ${dto.sourceWh} to warehouse ${dto.destinationWh}`);
     await this.orderService.deliverOrder(dto);
   }
 
   @EventPattern(`warehouse.${process.env.WAREHOUSE_ID}.transfer.*.order.delivered`)
   async handleOrderDelivered(dto: OrderReceivedDto): Promise<void> {
-    console.log(`Received order delivered event for order ID: ${dto.orderId} at warehouse ${process.env.WAREHOUSE_ID}`);
+    console.log(`Received order delivered event for order ID: ${dto.orderId} at warehouse ${dto.destinationWh}`);
     await this.orderService.notifySuccessfulDeliver(dto);
   }
 

@@ -1,4 +1,4 @@
-import { CommandHandler, ICommandHandler, EventBus } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler, EventBus, EventPublisher, IEvent } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import type { OrderRepository } from '../../../ports/order.repository.interface.js';
 import type { ProductRepository } from '../../../../product/ports/product.repository.interface.js';
@@ -22,7 +22,11 @@ describe('UpdateOrderStateCommandHandler', () => {
       save: jest.fn(),
     } as unknown as jest.Mocked<OrderRepository>;
 
-    commandHandler = new UpdateOrderStateCommandHandler(orderRepositoryMock);
+    const publisherMock = {
+      mergeObjectContext: jest.fn((order) => order),
+    } as unknown as EventPublisher<IEvent>;
+
+    commandHandler = new UpdateOrderStateCommandHandler(orderRepositoryMock, publisherMock);
   });
 
   it('should update the order state and save the order', async () => {
@@ -31,6 +35,7 @@ describe('UpdateOrderStateCommandHandler', () => {
     const orderMock = {
       setState: jest.fn(),
       getOrderId: jest.fn().mockReturnValue(new OrderId('order-1')),
+      commit: jest.fn(),
     } as unknown as jest.Mocked<Order>;
 
     orderRepositoryMock.load.mockResolvedValue(orderMock);

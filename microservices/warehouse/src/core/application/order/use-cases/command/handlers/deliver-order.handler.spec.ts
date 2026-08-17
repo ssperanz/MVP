@@ -1,26 +1,29 @@
-import { CommandHandler, ICommandHandler, EventBus } from '@nestjs/cqrs';
-import { Inject } from '@nestjs/common';
-import type { OrderRepository } from '../../../ports/order.repository.interface.js';
+import {
+  EventBus,
+  EventPublisher,
+  IEvent,
+} from '@nestjs/cqrs';
+
 import type { ProductRepository } from '../../../../product/ports/product.repository.interface.js';
+
 import { DeliverOrderCommand } from '../deliver-order.command.js';
-import { OrderDeliveredEvent } from '../../../events/order-delivered.event.js';
-import { ReplenishmentOrder } from 'src/core/domain/order/entities/replenishment-order.entity.js';
-import { ReplenishmentDeliveredEvent } from '../../../events/replenishment-delivered.event.js';
-import { OrderId } from 'src/shared/domain/value-objects/order-id.vo.js';
 import { DeliverOrderCommandHandler } from './deliver-order.handler.js';
+
+import { OrderDeliveredEvent } from '../../../events/order-delivered.event.js';
+import { OrderReceivedEvent } from '../../../events/order-received.event.js';
+import { ReplenishmentDeliveredEvent } from '../../../events/replenishment-delivered.event.js';
+
+import { ProductId } from '../../../../../../shared/domain/value-objects/product-id.vo.js';
+import { OrderId } from '../../../../../../shared/domain/value-objects/order-id.vo.js';
+import { OrderType } from '../../../../../../shared/domain/enums/order-type.enum.js';
 
 describe('DeliverOrderCommandHandler', () => {
   let commandHandler: DeliverOrderCommandHandler;
-  let orderRepositoryMock: jest.Mocked<OrderRepository>;
+
   let productRepositoryMock: jest.Mocked<ProductRepository>;
   let eventBusMock: jest.Mocked<EventBus>;
 
   beforeEach(() => {
-    orderRepositoryMock = {
-      load: jest.fn(),
-      save: jest.fn(),
-    } as unknown as jest.Mocked<OrderRepository>;
-
     productRepositoryMock = {
       loadById: jest.fn(),
       save: jest.fn(),
@@ -30,46 +33,174 @@ describe('DeliverOrderCommandHandler', () => {
       publish: jest.fn(),
     } as unknown as jest.Mocked<EventBus>;
 
-    commandHandler = new DeliverOrderCommandHandler(orderRepositoryMock, productRepositoryMock, eventBusMock);
+    const publisherMock = {
+      mergeObjectContext: jest.fn((product) => ({
+        ...product,
+        receive: jest.fn(),
+        commit: jest.fn(),
+      })),
+    } as unknown as EventPublisher<IEvent>;
+
+    commandHandler = new DeliverOrderCommandHandler(
+      productRepositoryMock,
+      eventBusMock,
+      publisherMock,
+    );
   });
 
-  it('should deliver an order and publish the appropriate event', async () => {
-    const command = new DeliverOrderCommand('order-1');
-
-    const orderMock = {
-      getOrderId: jest.fn().mockReturnValue(new OrderId('order-1')),
-      getOrderItems: jest.fn().mockReturnValue([]),
-    } as unknown as jest.Mocked<ReplenishmentOrder>;
-
-    orderRepositoryMock.load.mockResolvedValue(orderMock);
+  it('should publish OrderDeliveredEvent for a SELL order', async () => {
+    const command = new DeliverOrderCommand(
+      'order-1',
+      OrderType.SELL,
+      [],
+      1,
+      2,
+    );
 
     await commandHandler.execute(command);
 
-    expect(orderRepositoryMock.load).toHaveBeenCalledWith(new OrderId('order-1'));
-    expect(eventBusMock.publish).toHaveBeenCalled();
+    expect(eventBusMock.publish).toHaveBeenCalledWith(
+      expect.any(OrderDeliveredEvent),
+    );
+
+    expect(productRepositoryMock.loadById).not.toHaveBeenCalled();
+    expect(productRepositoryMock.save).not.toHaveBeenCalled();
   });
 
-  it('should throw an error if the order is not found', async () => {
-    const command = new DeliverOrderCommand('order-1');
-    orderRepositoryMock.load.mockResolvedValue(null);
+  it('should receive all products and publish OrderReceivedEvent for a TRANSFER order', async () => {
+    const product = {
+      id: new ProductId('product-1'),
+    };
 
-    await expect(commandHandler.execute(command)).rejects.toThrow('Order order-1 not found');
+    const trackedProduct = {
+      receive: jest.fn(),
+      commit: jest.fn(),
+    };
+
+    const publisherMock = {
+      mergeObjectContext: jest.fn().mockReturnValue(trackedProduct),
+    } as unknown as EventPublisher<IEvent>;
+
+    commandHandler = new DeliverOrderCommandHandler(
+      productRepositoryMock,
+      eventBusMock,
+      publisherMock,
+    );
+
+    productRepositoryMock.loadById.mockResolvedValue(product as any);
+
+    const command = new DeliverOrderCommand(
+      'order-1',
+      OrderType.TRANSFER,
+      [
+        {
+          productId: 'product-1',
+          qty: 5,
+        },
+      ],
+      1,
+      2,
+    );
+
+    await commandHandler.execute(command);
+
+    expect(productRepositoryMock.loadById).toHaveBeenCalledWith(
+      new ProductId('product-1'),
+    );
+
+    expect(trackedProduct.receive).toHaveBeenCalledWith(
+      new OrderId('order-1'),
+      expect.anything(),
+    );
+
+    expect(productRepositoryMock.save).toHaveBeenCalledWith(
+      trackedProduct,
+    );
+
+    expect(trackedProduct.commit).toHaveBeenCalled();
+
+    expect(eventBusMock.publish).toHaveBeenCalledWith(
+      expect.any(OrderReceivedEvent),
+    );
+
+    expect(eventBusMock.publish).not.toHaveBeenCalledWith(
+      expect.any(ReplenishmentDeliveredEvent),
+    );
   });
 
   it('should throw an error if a product is not found', async () => {
-    const command = new DeliverOrderCommand('order-1');
-
-    const orderMock = {
-      getOrderId: jest.fn().mockReturnValue(new OrderId('order-1')),
-      getOrderItems: jest.fn().mockReturnValue([{ getId: jest.fn().mockReturnValue({ id: 'product-1' }), getQty: jest.fn() }]),
-    } as unknown as jest.Mocked<ReplenishmentOrder>;
-
-    orderRepositoryMock.load.mockResolvedValue(orderMock);
     productRepositoryMock.loadById.mockResolvedValue(null);
 
-    await expect(commandHandler.execute(command)).rejects.toThrow('Product product-1 not found');
+    const command = new DeliverOrderCommand(
+      'order-1',
+      OrderType.TRANSFER,
+      [
+        {
+          productId: 'product-1',
+          qty: 5,
+        },
+      ],
+      1,
+      2,
+    );
+
+    await expect(
+      commandHandler.execute(command),
+    ).rejects.toThrow(
+      'Error occurred while delivering order order-1: Product product-1 not found',
+    );
+
+    expect(productRepositoryMock.loadById).toHaveBeenCalledWith(
+      new ProductId('product-1'),
+    );
+
+    expect(productRepositoryMock.save).not.toHaveBeenCalled();
   });
 
+  it('should publish ReplenishmentDeliveredEvent for a REPLENISHMENT order', async () => {
+    const product = {
+      id: new ProductId('product-1'),
+    };
 
+    const trackedProduct = {
+      receive: jest.fn(),
+      commit: jest.fn(),
+    };
 
+    const publisherMock = {
+      mergeObjectContext: jest.fn().mockReturnValue(trackedProduct),
+    } as unknown as EventPublisher<IEvent>;
+
+    commandHandler = new DeliverOrderCommandHandler(
+      productRepositoryMock,
+      eventBusMock,
+      publisherMock,
+    );
+
+    productRepositoryMock.loadById.mockResolvedValue(product as any);
+
+    const command = new DeliverOrderCommand(
+      'order-1',
+      OrderType.REPLENISHMENT,
+      [
+        {
+          productId: 'product-1',
+          qty: 5,
+        },
+      ],
+      1,
+      2,
+      'order-reference-1',
+    );
+
+    await commandHandler.execute(command);
+
+    expect(eventBusMock.publish).toHaveBeenCalledWith(
+      expect.any(OrderReceivedEvent),
+    );
+
+    expect(eventBusMock.publish).toHaveBeenCalledWith(
+      expect.any(ReplenishmentDeliveredEvent),
+    );
+  });
 });

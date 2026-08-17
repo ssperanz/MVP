@@ -50,6 +50,9 @@ export class Order extends AggregateRoot {
   getTotalOrderValue(): Money { return this.totalOrderValue; }
 
   protected updateOrderState(newOrderState: OrderState): OrderState {
+    if (this.orderState === OrderState.DELIVERED) {
+      return this.orderState;
+    }
     this.orderState = newOrderState;
     this.apply(
       new OrderStateUpdatedEvent(

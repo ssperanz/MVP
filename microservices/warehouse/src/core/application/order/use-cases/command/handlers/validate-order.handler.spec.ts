@@ -1,4 +1,4 @@
-import { CommandHandler, ICommandHandler, EventBus } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler, EventBus, EventPublisher, IEvent } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import { ValidateOrderCommand } from '../validate-order.command.js';
 import { OrderValidationFailedEvent } from '../../../events/order-validation-failed.event.js';
@@ -7,6 +7,7 @@ import type { ReservationRepository } from '../../../../../../core/application/r
 import { OrderId } from '../../../../../../shared/domain/value-objects/order-id.vo.js';
 import { ValidateOrderCommandHandler } from './validate-order.handler.js';
 import { Reservation } from 'src/core/domain/reservation/entities/reservation.entity.js';
+import { Publisher } from 'nats';
 
 describe('ValidateOrderCommandHandler', () => {
   let commandHandler: ValidateOrderCommandHandler;
@@ -23,7 +24,11 @@ describe('ValidateOrderCommandHandler', () => {
       publish: jest.fn(),
     } as unknown as jest.Mocked<EventBus>;
 
-    commandHandler = new ValidateOrderCommandHandler(reservationRepositoryMock, eventBusMock);
+    const publisherMock = {
+        mergeObjectContext: jest.fn((reservation) => reservation),
+    } as unknown as EventPublisher<IEvent>;
+
+    commandHandler = new ValidateOrderCommandHandler(reservationRepositoryMock, eventBusMock, publisherMock);
   });
 
   it('should validate the order and publish OrderValidatedEvent when all items are available', async () => {
@@ -32,6 +37,7 @@ describe('ValidateOrderCommandHandler', () => {
       getMissingItems: jest.fn().mockReturnValue([]),
       pause: jest.fn(),
       validate: jest.fn(),
+      commit: jest.fn(),
     } as unknown as jest.Mocked<Reservation>;
 
     reservationRepositoryMock.load.mockResolvedValue(reservationMock);
@@ -52,6 +58,7 @@ describe('ValidateOrderCommandHandler', () => {
       getMissingItems: jest.fn().mockReturnValue(missingItems),
       pause: jest.fn(),
       validate: jest.fn(),
+      commit: jest.fn(),
     } as unknown as jest.Mocked<Reservation>;
 
     reservationRepositoryMock.load.mockResolvedValue(reservationMock);

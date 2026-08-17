@@ -11,7 +11,7 @@ export class DispatchNotifierPublisherNats implements DispatchNotifierPort{
   ) {}
 
   async notify(event: OrderDispatchedEvent): Promise<void> {
-    console.log(`Dispatch notification sent for order ID: ${event.orderId.getId()} from warehouse ${process.env.WAREHOUSE_ID} to warehouse ${event.destinationWh}`);
+    console.log(`Dispatch notification sent for order ID: ${event.orderId.getId()} from warehouse ${event.sourceWh} to warehouse ${event.destinationWh}`);
     const subject = `warehouse.${event.sourceWh}.transfer.${event.destinationWh}.order.dispatched`;
     const dto: OrderDispatchedDto = {
       orderId: event.orderId.getId(),

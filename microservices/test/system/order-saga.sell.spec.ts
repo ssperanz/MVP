@@ -12,28 +12,16 @@ describe('Sell Order Saga - System Test', () => {
     // 0. Initialize product
     // --------------------------------------------------
 
-    const productsResponse = await axios.get(`${warehouseUrl}/products`);
 
-    const products = productsResponse.data.products ?? productsResponse.data;
-
-    const existingProduct = products.find(
-      (product: any) => product.id === productId,
-    );
-
-    if (!existingProduct) {
-      await axios.post(`${warehouseUrl}/products`, {
-        id: productId,
-        name: 'System Test Product',
-        unitPrice: 100,
-        availableQuantity: 10,
-        minThres: 1,
-        maxThres: 100,
-      });
-    } else {
-      await axios.put(`${warehouseUrl}/products/${productId}`, {
-        availableQuantity: 10,
-      });
-    }
+    await axios.post(`${warehouseUrl}/products`, {
+      id: productId,
+      name: 'System Test Product',
+      unitPrice: 100,
+      availableQuantity: 10,
+      minThres: 1,
+      maxThres: 100,
+    });
+    
 
     // --------------------------------------------------
     // 1. Get existing orders BEFORE creating the order
