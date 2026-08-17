@@ -21,7 +21,7 @@ microservices/
 │
 ├── centralized/           # Servizi centrali (autenticazione, sistema centrale, routing, aggregazione stato)
 │
-├── cloud/                 # Aggregatori cloud (ordini, inventario)
+├── warehouse-aggregated/  # Microservizio aggregazione warehouse (ordini, inventario)
 │
 ├── warehouse/             # Microservizio warehouse (ordini, inventario, stato)
 │
@@ -39,8 +39,7 @@ microservices/
   - `state_aggregate`: Aggregazione e monitoraggio dello stato globale
 
 - **Cloud**
-  - `orders-aggregated`: Aggregazione e sincronizzazione ordini tra magazzini
-  - `inventory-aggregated`: Aggregazione e sincronizzazione inventario
+  - `warehouse-aggregated`: Aggregazione e sincronizzazione ordini e inventario
 
 - **Warehouse**
   - `warehouse`: Gestione prodotti, ordini e stato del singolo magazzino
@@ -95,6 +94,7 @@ La copertura del codice è monitorata tramite Codecov.
 
 ## Autori
 
-Team Code Alchemists  
+Team Code Alchemists (progetto originale)
 [https://github.com/teamcodealchemists](https://github.com/teamcodealchemists)
-
+Stefano Speranza (fork)
+[https://github.com/ssperanz](https://github.com/ssperanz)
