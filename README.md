@@ -94,7 +94,7 @@ La copertura del codice è monitorata tramite Codecov.
 
 ## Autori
 
-Team Code Alchemists (progetto originale)
+- Team Code Alchemists (progetto originale)
 [https://github.com/teamcodealchemists](https://github.com/teamcodealchemists)
-Stefano Speranza (fork)
+- Stefano Speranza (fork)
 [https://github.com/ssperanz](https://github.com/ssperanz)
