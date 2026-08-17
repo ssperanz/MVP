@@ -4,7 +4,7 @@
 
 ## Informativa
 
-Questa è una fork indipendente del progetto iniziale, della quale sono stati riprogettati e riscritti alcuni microservizi, tra cui il servizio di magazzino e quello di aggregazione dei dati dei magazzini.
+Questa è una fork indipendente del progetto iniziale, della quale sono stati riprogettati, riscritti e ritestati alcuni microservizi, tra cui il servizio di magazzino e quello di aggregazione dei dati dei magazzini.
 
 ## Descrizione
 
