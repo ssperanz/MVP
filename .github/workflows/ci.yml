@@ -84,15 +84,19 @@ jobs:
 
       - name: Run CentralSystem tests
         working-directory: microservices/centralized/CentralSystem
-        run: npm run test:cov || echo "No tests for centralSystem"
-        
+        run: npm run test:cov
+
+      - name: Check CentralSystem coverage
+        run: ls -lah microservices/centralized/CentralSystem/coverage
+
       - name: Upload CentralSystem coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: microservices/centralized/CentralSystem/coverage/lcov.info
           flags: centralSystem
-          files: MVP/coverage/centralized/centralSystem/coverage-summary.json
           name: centralSystem
+
       # Auth
       - name: Install Auth dependencies
         working-directory: microservices/centralized/authentication
@@ -100,14 +104,14 @@ jobs:
 
       - name: Run Auth tests
         working-directory: microservices/centralized/authentication
-        run: npm run test:cov || echo "No tests for authentication"
+        run: npm run test:cov
 
       - name: Upload Auth coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: microservices/centralized/authentication/coverage/lcov.info
           flags: auth
-          files: MVP/coverage/centralized/authentication/coverage-summary.json
           name: auth
   
       # Routing
@@ -124,7 +128,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: routing
-          files: MVP/coverage/centralized/Routing/coverage-summary.json
+          files: microservices/centralized/routing/coverage/lcov.info
           name: Routing
 
       # State Cloud
@@ -141,7 +145,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: CloudState
-          files: MVP/coverage/centralized/state-aggregate/coverage-summary.json
+          files: microservices/centralized/state_aggregate/coverage/lcov.info
           name: Cloud State
 
       # Commit updated README
