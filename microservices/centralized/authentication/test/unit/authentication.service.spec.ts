@@ -10,6 +10,7 @@ import { Role } from '../../src/domain/role.entity';
 import { GlobalSupervisor } from '../../src/domain/globalSupervisor.entity';
 import { LocalSupervisor } from '../../src/domain/localSupervisior.entity';
 import { Logger } from '@nestjs/common';
+import { TelemetryService } from 'src/telemetry/telemetry.service';
 
 // Mock logger per silenziare i log durante i test
 jest.spyOn(Logger.prototype, 'log').mockImplementation(() => {});
@@ -20,6 +21,7 @@ describe('AuthService', () => {
     let jwtService: jest.Mocked<JwtService>;
     let outboundPortsAdapter: jest.Mocked<OutboundPortsAdapter>;
     let authRepository: jest.Mocked<AuthRepository>;
+    let telemetryService: jest.Mocked<TelemetryService>;
 
     beforeEach(() => {
         jwtService = {
@@ -39,7 +41,10 @@ describe('AuthService', () => {
             newProfile: jest.fn(),
             getGlobalSupervisor: jest.fn(),
         } as any;
-        service = new AuthService(jwtService, outboundPortsAdapter, authRepository);
+        telemetryService = {
+            failedLoginAttempt: jest.fn(),
+        } as any;
+        service = new AuthService(jwtService, outboundPortsAdapter, authRepository, telemetryService);
     });
 
     describe('login', () => {
