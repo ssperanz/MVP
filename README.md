@@ -1,12 +1,14 @@
 # MVP – Sistema di Gestione di un Magazzino Distribuito
 
-### Overall
+## Test Coverage
+
+### Complessiva
 
 [![Coverage](https://codecov.io/gh/ssperanz/mvp/branch/main/graph/badge.svg)](https://codecov.io/gh/ssperanz/mvp)
 
-### Microservices
+### Microservizi
 
-| Service | Coverage |
+| Servizio | Coverage |
 |---|---|
 | Warehouse | [![Warehouse](https://codecov.io/gh/ssperanz/mvp/branch/main/graph/badge.svg?flag=warehouse)](https://codecov.io/gh/ssperanz/mvp/flags/warehouse) |
 | Warehouse Aggregator | [![Warehouse Aggregator](https://codecov.io/gh/ssperanz/mvp/branch/main/graph/badge.svg?flag=warehouse-aggregator)](https://codecov.io/gh/ssperanz/mvp/flags/warehouse-aggregator) |
