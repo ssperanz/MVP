@@ -17,7 +17,7 @@ describe('ProductReadModelRepositoryMongo - Integration', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         MongooseModule.forRoot(
-          'mongodb://localhost:27018/warehouse_test',
+          'mongodb://localhost:27018/warehouse_product_test',
         ),
         MongooseModule.forFeature([
           {

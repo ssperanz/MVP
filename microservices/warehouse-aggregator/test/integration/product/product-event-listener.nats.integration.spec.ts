@@ -92,7 +92,7 @@ describe('ProductEventListenerNats - Integration', () => {
     });
   });
 
-  it('should update the product when a product.*.updated event is received', async () => {
+  it('should update the product when a product.updated event is received', async () => {
     const initialProduct = {
       sourceWh: 1,
       productId: 'product-3',
