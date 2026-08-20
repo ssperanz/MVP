@@ -23,7 +23,7 @@ describe("Test per main", () => {
       expect.objectContaining({
         transport: Transport.NATS,
         options: expect.objectContaining({
-            servers: ['nats://nats:4222']
+            servers: ['nats://localhost:4222']
         }),
       })
     );
