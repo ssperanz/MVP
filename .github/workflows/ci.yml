@@ -1,4 +1,4 @@
-name: CI Monorepo
+name: CI
 
 on:
   push:
