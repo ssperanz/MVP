@@ -1,5 +1,6 @@
 # MVP – Sistema di Gestione di un Magazzino Distribuito
 
+[![CI](https://github.com/ssperanz/mvp/actions/workflows/ci.yml/badge.svg)](https://github.com/ssperanz/mvp/actions/workflows/ci.yml)
 [![Coverage](https://codecov.io/gh/ssperanz/mvp/branch/main/graph/badge.svg)](https://codecov.io/gh/ssperanz/mvp)
 
 ## Informativa
@@ -34,17 +35,17 @@ microservices/
 
 ### Microservizi Principali
 
+- **Warehouse**
+  - `warehouse`: Gestione prodotti, ordini e stato del singolo magazzino
+
+- **Cloud**
+  - `warehouse-aggregated`: Aggregazione e sincronizzazione ordini e inventario
+
 - **Centralized**
   - `authentication`: Gestione autenticazione e autorizzazione utenti
   - `CentralSystem`: Coordinamento centrale e orchestrazione
   - `routing`: Gestione del routing degli ordini e delle spedizioni
   - `state_aggregate`: Aggregazione e monitoraggio dello stato globale
-
-- **Cloud**
-  - `warehouse-aggregated`: Aggregazione e sincronizzazione ordini e inventario
-
-- **Warehouse**
-  - `warehouse`: Gestione prodotti, ordini e stato del singolo magazzino
 
 - **Monitoring**
   - `grafana`: Dashboard per visualizzazione metriche
@@ -90,7 +91,7 @@ La copertura del codice è monitorata tramite Codecov.
 |---|---|
 | Warehouse | [![Warehouse](https://codecov.io/gh/ssperanz/mvp/branch/main/graph/badge.svg?flag=warehouse)](https://codecov.io/gh/ssperanz/mvp/flags/warehouse) |
 | Warehouse Aggregator | [![Warehouse Aggregator](https://codecov.io/gh/ssperanz/mvp/branch/main/graph/badge.svg?flag=warehouse-aggregator)](https://codecov.io/gh/ssperanz/mvp/flags/warehouse-aggregator) |
-| CentralSystem | [![CentralSystem](https://codecov.io/gh/ssperanz/mvp/branch/main/graph/badge.svg?flag=centralSystem)](https://codecov.io/gh/ssperanz/mvp/flags/centralSystem) |
+| Central System | [![CentralSystem](https://codecov.io/gh/ssperanz/mvp/branch/main/graph/badge.svg?flag=centralSystem)](https://codecov.io/gh/ssperanz/mvp/flags/centralSystem) |
 | Authentication | [![Auth](https://codecov.io/gh/ssperanz/mvp/branch/main/graph/badge.svg?flag=auth)](https://codecov.io/gh/ssperanz/mvp/flags/auth) |
 | Routing | [![Routing](https://codecov.io/gh/ssperanz/mvp/branch/main/graph/badge.svg?flag=routing)](https://codecov.io/gh/ssperanz/mvp/flags/routing) |
 | State Aggregate | [![CloudState](https://codecov.io/gh/ssperanz/mvp/branch/main/graph/badge.svg?flag=CloudState)](https://codecov.io/gh/ssperanz/mvp/flags/CloudState) |

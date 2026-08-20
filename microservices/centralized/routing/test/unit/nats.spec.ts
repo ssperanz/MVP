@@ -58,7 +58,7 @@ describe('NatsService', () => {
   it('onModuleInit inizializza la connessione NATS', async () => {
     await service.onModuleInit();
     expect(connect).toHaveBeenCalledWith({
-      servers: process.env.NATS_URL || 'nats://nats:4222',
+      servers: [process.env.NATS_URL || 'nats://nats:4222'],
     });
     expect(service['nc']).toBeDefined();
   });

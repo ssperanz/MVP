@@ -2,15 +2,13 @@ name: CI Monorepo
 
 on:
   push:
-    branches: [ main, develop , feature/Central-System-Microservice ]
+    branches: [ main, develop ]
   pull_request:
-    branches: [ main, develop , feature/Central-System-Microservice ]
+    branches: [ main, develop ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5
@@ -96,6 +94,8 @@ jobs:
           flags: centralSystem
           name: centralSystem
           disable_search: true
+          fail_ci_if_error: true
+
 
       # Auth
       - name: Install Auth dependencies
@@ -114,6 +114,8 @@ jobs:
           flags: auth
           name: auth
           disable_search: true
+          fail_ci_if_error: true
+
   
       # Routing
       - name: Install Routing
@@ -132,6 +134,8 @@ jobs:
           files: microservices/centralized/routing/coverage/lcov.info
           name: Routing
           disable_search: true
+          fail_ci_if_error: true
+
 
       # State Cloud
       - name: Install State Cloud
@@ -150,16 +154,4 @@ jobs:
           files: microservices/centralized/state_aggregate/coverage/lcov.info
           name: Cloud State
           disable_search: true
-
-      # Commit updated README
-      - name: Commit updated README
-        run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'actions@github.com'
-          git add README.md
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Update README with latest test results"
-            git push
-          fi
+          fail_ci_if_error: true
