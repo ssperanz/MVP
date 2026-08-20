@@ -1,5 +1,5 @@
-import { ProductQuantity } from 'src/domain/productQuantity.entity';
-import { ProductId } from 'src/domain/productId.entity';
+import { ProductQuantity } from '../../../src/domain/productQuantity.entity';
+import { ProductId } from '../../../src/domain/productId.entity';
 
 describe('ProductQuantity Entity', () => {
   let productId: ProductId;

@@ -2,11 +2,11 @@
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
 import 'reflect-metadata';
-import { OrderId } from "src/domain/orderId.entity";
-import { InternalOrderDTO } from "src/interfaces/http/dto/internalOrder.dto";
-import { OrderIdDTO } from "src/interfaces/http/dto/orderId.dto";
-import { OrderItemDTO } from "src/interfaces/http/dto/orderItem.dto";
-import { OrderStateDTO } from "src/interfaces/http/dto/orderState.dto";
+import { OrderId } from "../../../src/domain/orderId.entity";
+import { InternalOrderDTO } from "../../../src/interfaces/http/dto/internalOrder.dto";
+import { OrderIdDTO } from "../../../src/interfaces/http/dto/orderId.dto";
+import { OrderItemDTO } from "../../../src/interfaces/http/dto/orderItem.dto";
+import { OrderStateDTO } from "../../../src/interfaces/http/dto/orderState.dto";
 
 describe("InternalOrderDTO Validation", () => {
   it("should validate a correct DTO", async () => {

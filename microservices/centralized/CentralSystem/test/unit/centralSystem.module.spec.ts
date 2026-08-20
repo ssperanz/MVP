@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CentralSystemModule } from 'src/application/centralsystem.module';
-import { CentralSystemService } from 'src/application/centralsystem.service';
-import { centralSystemController } from 'src/interfaces/centralSystemController';
-import { InboundPortsAdapter } from 'src/infrastructure/adapters/InboundPortsAdapter';
-import { OutboundPortsAdapter } from 'src/infrastructure/adapters/centralSystemEventAdapter';
-import { centralSystemHandler } from 'src/interfaces/centralSystem.handler';
-import { NatsClientModule } from 'src/interfaces/nats/natsClientModule/natsClient.module';
+import { CentralSystemModule } from '../../src/application/centralsystem.module';
+import { CentralSystemService } from '../../src/application/centralsystem.service';
+import { centralSystemController } from '../../src/interfaces/centralSystemController';
+import { InboundPortsAdapter } from '../../src/infrastructure/adapters/InboundPortsAdapter';
+import { OutboundPortsAdapter } from '../../src/infrastructure/adapters/centralSystemEventAdapter';
+import { centralSystemHandler } from '../../src/interfaces/centralSystem.handler';
+import { NatsClientModule } from '../../src/interfaces/nats/natsClientModule/natsClient.module';
 
 describe('CentralSystemModule', () => {
   let module: TestingModule;

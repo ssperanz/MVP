@@ -1,20 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CentralSystemService } from '../../src/application/centralsystem.service';
-import { OutboundPortsAdapter } from 'src/infrastructure/adapters/centralSystemEventAdapter';
-import { Product } from 'src/domain/product.entity';
-import { ProductId } from 'src/domain/productId.entity';
-import { WarehouseId } from 'src/domain/warehouseId.entity';
-import { OrderQuantity } from 'src/domain/orderQuantity.entity';
-import { OrderItem } from 'src/domain/orderItem.entity';
-import { InternalOrder } from 'src/domain/internalOrder.entity';
-import { OrderItemDetail } from 'src/domain/orderItemDetail.entity';
-import { ItemId } from 'src/domain/itemId.entity';
-import { OrderId } from 'src/domain/orderId.entity';
-import { WarehouseState } from 'src/domain/warehouseState.entity';
-import { OrderState } from 'src/domain/orderState.enum';
-import { SellOrder } from 'src/domain/sellOrder.entity';
-import { Inventory } from 'src/domain/inventory.entity';
-import { Orders } from 'src/domain/orders.entity';
+import { OutboundPortsAdapter } from '../../src/infrastructure/adapters/centralSystemEventAdapter';
+import { Product } from '../../src/domain/product.entity';
+import { ProductId } from '../../src/domain/productId.entity';
+import { WarehouseId } from '../../src/domain/warehouseId.entity';
+import { OrderQuantity } from '../../src/domain/orderQuantity.entity';
+import { OrderItem } from '../../src/domain/orderItem.entity';
+import { InternalOrder } from '../../src/domain/internalOrder.entity';
+import { OrderItemDetail } from '../../src/domain/orderItemDetail.entity';
+import { ItemId } from '../../src/domain/itemId.entity';
+import { OrderId } from '../../src/domain/orderId.entity';
+import { WarehouseState } from '../../src/domain/warehouseState.entity';
+import { OrderState } from '../../src/domain/orderState.enum';
+import { SellOrder } from '../../src/domain/sellOrder.entity';
+import { Inventory } from '../../src/domain/inventory.entity';
+import { Orders } from '../../src/domain/orders.entity';
 
 describe('CentralSystemService', () => {
   let service: CentralSystemService;

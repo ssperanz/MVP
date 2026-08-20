@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { centralSystemHandler } from 'src/interfaces/centralSystem.handler';
+import { centralSystemHandler } from '../../src/interfaces/centralSystem.handler';
 import { ClientProxy } from '@nestjs/microservices';
 import { of } from 'rxjs';
-import { InternalOrderDTO } from 'src/interfaces/http/dto/internalOrder.dto';
-import { warehouseIdDto } from 'src/interfaces/http/dto/warehouseId.dto';
-import { Inventory } from 'src/domain/inventory.entity';
-import { Orders } from 'src/domain/orders.entity';
-import { WarehouseId } from 'src/domain/warehouseId.entity';
-import { OrderIdDTO } from 'src/interfaces/http/dto/orderId.dto';
-import { OrderStateDTO } from 'src/interfaces/http/dto/orderState.dto';
-import { OrderState } from 'src/domain/orderState.enum';
-import { ProductId } from 'src/domain/productId.entity';
-import { OrderId } from 'src/domain/orderId.entity';
+import { InternalOrderDTO } from '../../src/interfaces/http/dto/internalOrder.dto';
+import { warehouseIdDto } from '../../src/interfaces/http/dto/warehouseId.dto';
+import { Inventory } from '../../src/domain/inventory.entity';
+import { Orders } from '../../src/domain/orders.entity';
+import { WarehouseId } from '../../src/domain/warehouseId.entity';
+import { OrderIdDTO } from '../../src/interfaces/http/dto/orderId.dto';
+import { OrderStateDTO } from '../../src/interfaces/http/dto/orderState.dto';
+import { OrderState } from '../../src/domain/orderState.enum';
+import { ProductId } from '../../src/domain/productId.entity';
+import { OrderId } from '../../src/domain/orderId.entity';
 
 describe('centralSystemHandler', () => {
   let handler: centralSystemHandler;

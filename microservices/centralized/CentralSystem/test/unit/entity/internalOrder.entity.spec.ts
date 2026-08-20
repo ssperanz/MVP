@@ -1,8 +1,8 @@
-import { InternalOrder } from 'src/domain/internalOrder.entity';
-import { OrderId } from 'src/domain/orderId.entity';
-import { OrderItemDetail } from 'src/domain/orderItemDetail.entity';
-import { OrderItem } from 'src/domain/orderItem.entity';
-import { OrderState } from 'src/domain/orderState.enum';
+import { InternalOrder } from '../../../src/domain/internalOrder.entity';
+import { OrderId } from '../../../src/domain/orderId.entity';
+import { OrderItemDetail } from '../../../src/domain/orderItemDetail.entity';
+import { OrderItem } from '../../../src/domain/orderItem.entity';
+import { OrderState } from '../../../src/domain/orderState.enum';
 
 describe('InternalOrder Entity', () => {
   let internalOrder: InternalOrder;

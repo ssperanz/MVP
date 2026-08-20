@@ -1,5 +1,5 @@
 import { validate } from "class-validator";
-import { aboveMaxThresDto } from "src/interfaces/http/dto/aboveMaxThres.dto";
+import { aboveMaxThresDto } from "../../../src/interfaces/http/dto/aboveMaxThres.dto";
 
 describe("aboveMaxThresDto Validation", () => {
   it("should validate a correct DTO", async () => {

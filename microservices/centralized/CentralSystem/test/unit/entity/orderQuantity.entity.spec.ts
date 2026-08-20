@@ -1,7 +1,7 @@
-import { OrderQuantity } from 'src/domain/orderQuantity.entity';
-import { OrderId } from 'src/domain/orderId.entity';
-import { OrderItem } from 'src/domain/orderItem.entity';
-import { ItemId } from 'src/domain/itemId.entity';
+import { OrderQuantity } from '../../../src/domain/orderQuantity.entity';
+import { OrderId } from '../../../src/domain/orderId.entity';
+import { OrderItem } from '../../../src/domain/orderItem.entity';
+import { ItemId } from '../../../src/domain/itemId.entity';
 
 describe('OrderQuantity Entity', () => {
   let orderId: OrderId;

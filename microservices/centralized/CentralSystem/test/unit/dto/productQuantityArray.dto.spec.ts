@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import { validate } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
-import { productQuantityArrayDto } from 'src/interfaces/http/dto/productQuantityArray.dto';
-import { productQuantityDto } from 'src/interfaces/http/dto/productQuantity.dto';
+import { productQuantityArrayDto } from '../../../src/interfaces/http/dto/productQuantityArray.dto';
+import { productQuantityDto } from '../../../src/interfaces/http/dto/productQuantity.dto';
 
 describe('productQuantityArrayDto Validation', () => {
   it('should validate a correct productQuantityArrayDto', async () => {

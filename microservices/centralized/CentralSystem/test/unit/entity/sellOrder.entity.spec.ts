@@ -1,9 +1,9 @@
-import { SellOrder } from 'src/domain/sellOrder.entity';
-import { OrderId } from 'src/domain/orderId.entity';
-import { OrderItemDetail } from 'src/domain/orderItemDetail.entity';
-import { OrderItem } from 'src/domain/orderItem.entity';
-import { ItemId } from 'src/domain/itemId.entity';
-import { OrderState } from 'src/domain/orderState.enum';
+import { SellOrder } from '../../../src/domain/sellOrder.entity';
+import { OrderId } from '../../../src/domain/orderId.entity';
+import { OrderItemDetail } from '../../../src/domain/orderItemDetail.entity';
+import { OrderItem } from '../../../src/domain/orderItem.entity';
+import { ItemId } from '../../../src/domain/itemId.entity';
+import { OrderState } from '../../../src/domain/orderState.enum';
 
 describe('SellOrder Entity', () => {
   let orderItem: OrderItem;

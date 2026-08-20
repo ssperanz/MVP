@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OutboundPortsAdapter } from 'src/infrastructure/adapters/centralSystemEventAdapter';
-import { centralSystemHandler } from 'src/interfaces/centralSystem.handler';
-import { InternalOrder } from 'src/domain/internalOrder.entity';
-import { Inventory } from 'src/domain/inventory.entity';
-import { Orders } from 'src/domain/orders.entity';
-import { WarehouseId } from 'src/domain/warehouseId.entity';
-import { DataMapper } from 'src/infrastructure/mappers/dataMapper';
-import { OrderId } from 'src/domain/orderId.entity';
-import { OrderItemDetail } from 'src/domain/orderItemDetail.entity';
-import { OrderItem } from 'src/domain/orderItem.entity';
-import { ItemId } from 'src/domain/itemId.entity';
-import { OrderState } from 'src/domain/orderState.enum';
-import { ProductId } from 'src/domain/productId.entity';
+import { OutboundPortsAdapter } from '../../src/infrastructure/adapters/centralSystemEventAdapter';
+import { centralSystemHandler } from '../../src/interfaces/centralSystem.handler';
+import { InternalOrder } from '../../src/domain/internalOrder.entity';
+import { Inventory } from '../../src/domain/inventory.entity';
+import { Orders } from '../../src/domain/orders.entity';
+import { WarehouseId } from '../../src/domain/warehouseId.entity';
+import { DataMapper } from '../../src/infrastructure/mappers/dataMapper';
+import { OrderId } from '../../src/domain/orderId.entity';
+import { OrderItemDetail } from '../../src/domain/orderItemDetail.entity';
+import { OrderItem } from '../../src/domain/orderItem.entity';
+import { ItemId } from '../../src/domain/itemId.entity';
+import { OrderState } from '../../src/domain/orderState.enum';
+import { ProductId } from '../../src/domain/productId.entity';
 
 describe('OutboundPortsAdapter', () => {
   let adapter: OutboundPortsAdapter;

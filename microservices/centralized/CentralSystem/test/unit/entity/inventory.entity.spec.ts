@@ -1,7 +1,7 @@
-import { Inventory } from 'src/domain/inventory.entity';
-import { Product } from 'src/domain/product.entity';
-import { ProductId } from 'src/domain/productId.entity';
-import { WarehouseId } from 'src/domain/warehouseId.entity';
+import { Inventory } from '../../../src/domain/inventory.entity';
+import { Product } from '../../../src/domain/product.entity';
+import { ProductId } from '../../../src/domain/productId.entity';
+import { WarehouseId } from '../../../src/domain/warehouseId.entity';
 
 describe('Inventory Entity', () => {
   let inventory: Inventory;

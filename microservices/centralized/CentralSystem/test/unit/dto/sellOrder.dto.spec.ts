@@ -1,10 +1,10 @@
 import 'reflect-metadata';
 import { validate } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
-import { SellOrderDTO } from 'src/interfaces/http/dto/sellOrder.dto';
-import { OrderIdDTO } from 'src/interfaces/http/dto/orderId.dto';
-import { OrderItemDTO } from 'src/interfaces/http/dto/orderItem.dto';
-import { OrderStateDTO } from 'src/interfaces/http/dto/orderState.dto';
+import { SellOrderDTO } from '../../../src/interfaces/http/dto/sellOrder.dto';
+import { OrderIdDTO } from '../../../src/interfaces/http/dto/orderId.dto';
+import { OrderItemDTO } from '../../../src/interfaces/http/dto/orderItem.dto';
+import { OrderStateDTO } from '../../../src/interfaces/http/dto/orderState.dto';
 
 describe('SellOrderDTO Validation', () => {
   it('should validate a correct SellOrderDTO', async () => {

@@ -1,8 +1,8 @@
 import 'reflect-metadata'; 
 import { validate } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
-import { inventoryDto } from 'src/interfaces/http/dto/inventory.dto';
-import { productDto } from 'src/interfaces/http/dto/product.dto';
+import { inventoryDto } from '../../../src/interfaces/http/dto/inventory.dto';
+import { productDto } from '../../../src/interfaces/http/dto/product.dto';
 
 describe('inventoryDto Validation', () => {
   it('should validate a correct inventoryDto', async () => {

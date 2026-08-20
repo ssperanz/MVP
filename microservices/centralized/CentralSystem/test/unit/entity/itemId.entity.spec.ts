@@ -1,4 +1,4 @@
-import { ItemId } from 'src/domain/itemId.entity';
+import { ItemId } from '../../../src/domain/itemId.entity';
 
 describe('ItemId Entity', () => {
   it('should return the correct id via getId', () => {

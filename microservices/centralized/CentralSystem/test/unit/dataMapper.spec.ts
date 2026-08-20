@@ -9,7 +9,7 @@ import { OrderIdDTO } from '../../src/interfaces/http/dto/orderId.dto';
 import { OrderItemDTO } from '../../src/interfaces/http/dto/orderItem.dto';
 import { OrderItemDetailDTO } from '../../src/interfaces/http/dto/orderItemDetail.dto';
 import { OrderState } from '../../src/domain/orderState.enum';
-import { productIdDto } from 'src/interfaces/http/dto/productId.dto';
+import { productIdDto } from '../../src/interfaces/http/dto/productId.dto';
 import { InternalOrder } from "../../src/domain/internalOrder.entity";
 import { SellOrder } from "../../src/domain/sellOrder.entity";
 import { OrderItem } from "../../src/domain/orderItem.entity";

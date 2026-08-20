@@ -1,7 +1,7 @@
-import { Order } from 'src/domain/order.entity';
-import { OrderId } from 'src/domain/orderId.entity';
-import { OrderItemDetail } from 'src/domain/orderItemDetail.entity';
-import { OrderState } from 'src/domain/orderState.enum';
+import { Order } from '../../../src/domain/order.entity';
+import { OrderId } from '../../../src/domain/orderId.entity';
+import { OrderItemDetail } from '../../../src/domain/orderItemDetail.entity';
+import { OrderState } from '../../../src/domain/orderState.enum';
 
 class TestOrder extends Order {} // Classe concreta per test
 

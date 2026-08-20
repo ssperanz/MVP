@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { OutboundRequestSerializer } from 'src/interfaces/nats/natsMessagesFormatters/outbound-request.serializer';
+import { OutboundRequestSerializer } from '../../../../src/interfaces/nats/natsMessagesFormatters/outbound-request.serializer';
 
 
 @Module({

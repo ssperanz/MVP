@@ -1,14 +1,14 @@
 import { Injectable } from "@nestjs/common";
-import { InsufficientQuantityEvent } from "src/domain/inbound-ports/insufficientQuantityEvent";
-import { CriticalQuantityEvent } from "src/domain/inbound-ports/criticalQuantityEvent";
-import { ReceiveWarehouseState } from "src/domain/inbound-ports/receiveWarehouseState";
-import { OrderQuantityDTO } from "src/interfaces/http/dto/orderQuantity.dto";
-import { productDto } from "src/interfaces/http/dto/product.dto";
-import { warehouseIdDto } from "src/interfaces/http/dto/warehouseId.dto";
-import { WarehouseStateDTO } from "src/interfaces/http/dto/warehouseState.dto";
-import { CentralSystemService } from "src/application/centralsystem.service";
-import { DataMapper } from "src/infrastructure/mappers/dataMapper";
-import { WarehouseState } from "src/domain/warehouseState.entity";
+import { InsufficientQuantityEvent } from "../../../src/domain/inbound-ports/insufficientQuantityEvent";
+import { CriticalQuantityEvent } from "../../../src/domain/inbound-ports/criticalQuantityEvent";
+import { ReceiveWarehouseState } from "../../../src/domain/inbound-ports/receiveWarehouseState";
+import { OrderQuantityDTO } from "../../../src/interfaces/http/dto/orderQuantity.dto";
+import { productDto } from "../../../src/interfaces/http/dto/product.dto";
+import { warehouseIdDto } from "../../../src/interfaces/http/dto/warehouseId.dto";
+import { WarehouseStateDTO } from "../../../src/interfaces/http/dto/warehouseState.dto";
+import { CentralSystemService } from "../../../src/application/centralsystem.service";
+import { DataMapper } from "../../../src/infrastructure/mappers/dataMapper";
+import { WarehouseState } from "../../../src/domain/warehouseState.entity";
 @Injectable()
 export class InboundPortsAdapter
   implements InsufficientQuantityEvent, CriticalQuantityEvent, ReceiveWarehouseState

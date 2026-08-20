@@ -1,19 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { InboundPortsAdapter } from '../../src/infrastructure/adapters/InboundPortsAdapter';
-import { CentralSystemService } from 'src/application/centralsystem.service';
-import { DataMapper } from 'src/infrastructure/mappers/dataMapper';
-import { OrderQuantityDTO } from 'src/interfaces/http/dto/orderQuantity.dto';
-import { productDto } from 'src/interfaces/http/dto/product.dto';
-import { warehouseIdDto } from 'src/interfaces/http/dto/warehouseId.dto';
-import { WarehouseStateDTO } from 'src/interfaces/http/dto/warehouseState.dto';
-import { OrderQuantity } from 'src/domain/orderQuantity.entity';
-import { WarehouseState } from 'src/domain/warehouseState.entity';
-import { Product } from 'src/domain/product.entity';
-import { OrderId } from 'src/domain/orderId.entity';
-import { OrderIdDTO } from 'src/interfaces/http/dto/orderId.dto';
-import { productIdDto } from 'src/interfaces/http/dto/productId.dto';
-import { ProductId } from 'src/domain/productId.entity';
-import { WarehouseId } from 'src/domain/warehouseId.entity';
+import { CentralSystemService } from '../../src/application/centralsystem.service';
+import { DataMapper } from '../../src/infrastructure/mappers/dataMapper';
+import { OrderQuantityDTO } from '../../src/interfaces/http/dto/orderQuantity.dto';
+import { productDto } from '../../src/interfaces/http/dto/product.dto';
+import { warehouseIdDto } from '../../src/interfaces/http/dto/warehouseId.dto';
+import { WarehouseStateDTO } from '../../src/interfaces/http/dto/warehouseState.dto';
+import { OrderQuantity } from '../../src/domain/orderQuantity.entity';
+import { WarehouseState } from '../../src/domain/warehouseState.entity';
+import { Product } from '../../src/domain/product.entity';
+import { OrderId } from '../../src/domain/orderId.entity';
+import { OrderIdDTO } from '../../src/interfaces/http/dto/orderId.dto';
+import { productIdDto } from '../../src/interfaces/http/dto/productId.dto';
+import { ProductId } from '../../src/domain/productId.entity';
+import { WarehouseId } from '../../src/domain/warehouseId.entity';
 
 describe('InboundPortsAdapter', () => {
   let adapter: InboundPortsAdapter;

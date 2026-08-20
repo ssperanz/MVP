@@ -1,6 +1,6 @@
-import { OrderItemDetail } from 'src/domain/orderItemDetail.entity';
-import { OrderItem } from 'src/domain/orderItem.entity';
-import { ItemId } from 'src/domain/itemId.entity';
+import { OrderItemDetail } from '../../../src/domain/orderItemDetail.entity';
+import { OrderItem } from '../../../src/domain/orderItem.entity';
+import { ItemId } from '../../../src/domain/itemId.entity';
 
 describe('OrderItemDetail Entity', () => {
   let orderItem: OrderItem;

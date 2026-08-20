@@ -1,6 +1,6 @@
 // test/unit/belowMinThresDto.spec.ts
 import { validate } from "class-validator";
-import { belowMinThresDto } from "src/interfaces/http/dto/belowMinThres.dto";
+import { belowMinThresDto } from "../../../src/interfaces/http/dto/belowMinThres.dto";
 
 describe("belowMinThresDto Validation", () => {
   it("should validate a correct DTO", async () => {

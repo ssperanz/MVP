@@ -6,10 +6,10 @@ import { WarehouseState } from "../../src/domain/warehouseState.entity";
 import { firstValueFrom } from "rxjs";
 import { InternalOrderDTO } from "./http/dto/internalOrder.dto";
 import { warehouseIdDto } from "./http/dto/warehouseId.dto";
-import { OrderId } from "src/domain/orderId.entity";
-import { WarehouseId } from "src/domain/warehouseId.entity";
-import { ProductId } from "src/domain/productId.entity";
-import { DataMapper } from "src/infrastructure/mappers/dataMapper";
+import { OrderId } from "../../src/domain/orderId.entity";
+import { WarehouseId } from "../../src/domain/warehouseId.entity";
+import { ProductId } from "../../src/domain/productId.entity";
+import { DataMapper } from "../../src/infrastructure/mappers/dataMapper";
 import { parse } from "path";
 @Injectable()
 export class centralSystemHandler implements OnModuleInit {
