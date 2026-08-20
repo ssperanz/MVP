@@ -74,7 +74,7 @@
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
-    "coverageDirectory": "../../../coverage/centralized/state_aggregate",
+    "coverageDirectory": "./coverage",
     "testEnvironment": "node"
   }
 }
