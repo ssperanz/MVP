@@ -4,19 +4,19 @@ import { Injectable, Logger } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 
 // Domain Entities & Interfaces
-import { AuthRepository } from "src/domain/mongodb/auth.repository";
-import { User } from "src/domain/user.entity";
-import { Authentication } from "src/domain/authentication.entity";
-import { GlobalSupervisor } from "src/domain/globalSupervisor.entity";
-import { LocalSupervisor } from "src/domain/localSupervisior.entity";
-import { Role } from "src/domain/role.entity";
-import { WarehouseId } from "src/domain/warehouseId.entity";
+import { AuthRepository } from "../../../src/domain/mongodb/auth.repository";
+import { User } from "../../../src/domain/user.entity";
+import { Authentication } from "../../../src/domain/authentication.entity";
+import { GlobalSupervisor } from "../../../src/domain/globalSupervisor.entity";
+import { LocalSupervisor } from "../../../src/domain/localSupervisior.entity";
+import { Role } from "../../../src/domain/role.entity";
+import { WarehouseId } from "../../../src/domain/warehouseId.entity";
 
 // Infrastructure / Mongoose Models
-import { AuthenticationModel } from "src/infrastructure/adapters/mongodb/models/auth.model";
-import { TokenListModel } from "src/infrastructure/adapters/mongodb/models/tokenList.schema";
-import { Token } from "src/domain/token.entity";
-import { TokenStatus } from 'src/domain/tokenStatus.entity';
+import { AuthenticationModel } from "../../infrastructure/adapters/mongodb/models/auth.model";
+import { TokenListModel } from "../../infrastructure/adapters/mongodb/models/tokenList.schema";
+import { Token } from "../../domain/token.entity";
+import { TokenStatus } from '../../domain/tokenStatus.entity';
 
 const logger = new Logger('AuthRepositoryMongo');
 

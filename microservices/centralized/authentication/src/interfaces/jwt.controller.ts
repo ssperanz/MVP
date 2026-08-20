@@ -1,9 +1,9 @@
-import { InboundPortsAdapter } from 'src/infrastructure/adapters/portAdapters/indboundPortsAdapter';
+import { InboundPortsAdapter } from '../../src/infrastructure/adapters/portAdapters/indboundPortsAdapter';
 import { Controller, Header } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { Logger } from '@nestjs/common';
-import { JwtDTO } from 'src/interfaces/dto/jwt.dto';
-import { CidDTO } from 'src/interfaces/dto/cid.dto';
+import { JwtDTO } from '../../src/interfaces/dto/jwt.dto';
+import { CidDTO } from '../../src/interfaces/dto/cid.dto';
 import { validate, validateOrReject } from 'class-validator';
 
 const logger = new Logger('JwtController');

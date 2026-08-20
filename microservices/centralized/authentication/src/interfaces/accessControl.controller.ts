@@ -1,7 +1,7 @@
 import { Controller, Logger } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import e from 'express';
-import { AuthService } from 'src/application/authentication.service';
+import { AuthService } from '../../src/application/authentication.service';
 
 const logger = new Logger('AccessControlController');
 

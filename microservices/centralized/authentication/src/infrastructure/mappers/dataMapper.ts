@@ -1,17 +1,17 @@
 // DTO Imports
-import { GlobalSupervisorDTO } from 'src/interfaces/dto/globalSupervisor.dto';
-import { LocalSupervisorDTO } from 'src/interfaces/dto/localSupervisor.dto';
-import { WarehouseIdDTO } from 'src/interfaces/dto/warehouseId.dto';
-import { AuthenticationDTO } from 'src/interfaces/dto/authentication.dto';
-import { UserIdDTO } from 'src/interfaces/dto/userId.dto';
+import { GlobalSupervisorDTO } from '../../../src/interfaces/dto/globalSupervisor.dto';
+import { LocalSupervisorDTO } from '../../../src/interfaces/dto/localSupervisor.dto';
+import { WarehouseIdDTO } from '../../../src/interfaces/dto/warehouseId.dto';
+import { AuthenticationDTO } from '../../../src/interfaces/dto/authentication.dto';
+import { UserIdDTO } from '../../../src/interfaces/dto/userId.dto';
 
 //Domain Imports
-import { GlobalSupervisor } from 'src/domain/globalSupervisor.entity';
-import { Authentication } from 'src/domain/authentication.entity';
-import { LocalSupervisor } from 'src/domain/localSupervisior.entity';
-import { WarehouseId } from 'src/domain/warehouseId.entity';
-import { UserId } from 'src/domain/userId.entity';
-import { Role } from 'src/domain/role.entity';
+import { GlobalSupervisor } from '../../../src/domain/globalSupervisor.entity';
+import { Authentication } from '../../../src/domain/authentication.entity';
+import { LocalSupervisor } from '../../../src/domain/localSupervisior.entity';
+import { WarehouseId } from '../../../src/domain/warehouseId.entity';
+import { UserId } from '../../../src/domain/userId.entity';
+import { Role } from '../../../src/domain/role.entity';
 
 export const DataMapper = {
     globalSupervisorToDomain(GlobalSupervisorDTO: GlobalSupervisorDTO) : GlobalSupervisor {

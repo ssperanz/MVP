@@ -1,19 +1,19 @@
 import { Authentication } from 'src/domain/authentication.entity';
 import { Injectable, Logger, Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { OutboundPortsAdapter } from 'src/infrastructure/adapters/portAdapters/outboundPortsAdapter';
-import { AuthRepository } from 'src/domain/mongodb/auth.repository';
-import { User } from 'src/domain/user.entity';
-import { Role } from 'src/domain/role.entity';
-import { LocalSupervisor } from 'src/domain/localSupervisior.entity';
-import { GlobalSupervisor } from 'src/domain/globalSupervisor.entity';
-import { UserId } from 'src/domain/userId.entity';
-import { TokenStatus } from 'src/domain/tokenStatus.entity';
-import { Token } from 'src/domain/token.entity';
+import { OutboundPortsAdapter } from '../../src/infrastructure/adapters/portAdapters/outboundPortsAdapter';
+import { AuthRepository } from '../../src/domain/mongodb/auth.repository';
+import { User } from '../../src/domain/user.entity';
+import { Role } from '../../src/domain/role.entity';
+import { LocalSupervisor } from '../../src/domain/localSupervisior.entity';
+import { GlobalSupervisor } from '../../src/domain/globalSupervisor.entity';
+import { UserId } from '../../src/domain/userId.entity';
+import { TokenStatus } from '../../src/domain/tokenStatus.entity';
+import { Token } from '../../src/domain/token.entity';
 
 // Telemetry Test
 
-import { TelemetryService } from 'src/telemetry/telemetry.service';
+import { TelemetryService } from '../../src/telemetry/telemetry.service';
 
 @Injectable()
 export class AuthService {

@@ -3,7 +3,7 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { validateOrReject } from 'class-validator';
 
 // Inbound Ports
-import { InboundPortsAdapter } from 'src/infrastructure/adapters/portAdapters/indboundPortsAdapter';
+import { InboundPortsAdapter } from '../../src/infrastructure/adapters/portAdapters/indboundPortsAdapter';
 
 // DTOs
 import { AuthenticationDTO } from './dto/authentication.dto';
