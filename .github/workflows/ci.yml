@@ -65,6 +65,19 @@ jobs:
         working-directory: microservices/warehouse-aggregator
         run: npm run test:cov
 
+      - name: Debug Warehouse Aggregator coverage
+        working-directory: microservices/warehouse-aggregator
+        run: |
+          awk '
+            /^LF:/ { lf += substr($0,4) }
+            /^LH:/ { lh += substr($0,4) }
+            END {
+              print "LF =", lf
+              print "LH =", lh
+              print "Coverage =", (lh/lf)*100 "%"
+            }
+          ' coverage/lcov.info
+
       - name: Upload Warehouse Aggregator coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
