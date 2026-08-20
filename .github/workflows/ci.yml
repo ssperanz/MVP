@@ -93,8 +93,8 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: microservices/centralized/CentralSystem/coverage/lcov.info
-          flags: CentralSystem
-          name: CentralSystem
+          flags: centralSystem
+          name: centralSystem
           disable_search: true
 
       # Auth
