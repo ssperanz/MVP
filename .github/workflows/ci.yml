@@ -92,7 +92,7 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: microservices/centralized/CentralSystem/lcov.info
+          files: microservices/centralized/CentralSystem/coverage/lcov.info
           flags: CentralSystem
           name: CentralSystem
           disable_search: true
