@@ -52,6 +52,7 @@ jobs:
           files: microservices/warehouse/coverage/lcov.info
           flags: warehouse
           name: warehouse
+          disable_search: true
           fail_ci_if_error: true
 
       # Warehouse Aggregator
@@ -71,6 +72,7 @@ jobs:
           files: microservices/warehouse-aggregator/coverage/lcov.info
           flags: warehouse-aggregator
           name: warehouse-aggregator
+          disable_search: true
           fail_ci_if_error: true
 
       # CentralSystem
@@ -96,6 +98,7 @@ jobs:
           files: coverage/centralized/centralSystem/lcov.info
           flags: centralSystem
           name: centralSystem
+          disable_search: true
 
       # Auth
       - name: Install Auth dependencies
@@ -113,6 +116,7 @@ jobs:
           files: coverage/centralized/authentication/coverage/lcov.info
           flags: auth
           name: auth
+          disable_search: true
   
       # Routing
       - name: Install Routing
@@ -130,6 +134,7 @@ jobs:
           flags: routing
           files: coverage/centralized/routing/coverage/lcov.info
           name: Routing
+          disable_search: true
 
       # State Cloud
       - name: Install State Cloud
@@ -147,6 +152,7 @@ jobs:
           flags: CloudState
           files: coverage/centralized/state_aggregate/coverage/lcov.info
           name: Cloud State
+          disable_search: true
 
       # Commit updated README
       - name: Commit updated README
