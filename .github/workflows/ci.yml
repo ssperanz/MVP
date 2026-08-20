@@ -88,14 +88,11 @@ jobs:
         working-directory: microservices/centralized/CentralSystem
         run: npm run test:cov
 
-      - name: Check CentralSystem coverage
-        run: ls -lah coverage/centralized/centralSystem/lcov.info
-
       - name: Upload CentralSystem coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: microservices/centralized/centralSystem/lcov.info
+          files: microservices/centralized/CentralSystem/lcov.info
           flags: centralSystem
           name: centralSystem
           disable_search: true
