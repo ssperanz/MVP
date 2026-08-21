@@ -160,4 +160,3 @@ jobs:
       - name: Run System tests
         working-directory: microservices/test/system
         run: npm run test
-        fail-on-error: true
