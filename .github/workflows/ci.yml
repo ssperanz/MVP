@@ -2,13 +2,16 @@ name: CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, develop]
 
 jobs:
-  test:
+
+  warehouse:
+    name: Warehouse tests
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5
@@ -18,32 +21,17 @@ jobs:
         with:
           node-version: 22.16.0
           cache: npm
-          cache-dependency-path: |
-            microservices/warehouse/package-lock.json
-            microservices/warehouse-aggregator/package-lock.json
+          cache-dependency-path: microservices/warehouse/package-lock.json
 
-      - name: Start services with Docker Compose
-        run: |
-          docker compose up -d
-          echo "Waiting for MongoDB and NATS to be ready..."
-          sleep 10
-
-      # Install root dependencies
-      - name: Install root dependencies
-        working-directory: microservices
-        run: npm install
-
-      # Warehouse
-
-      - name: Install Warehouse dependencies
+      - name: Install dependencies
         working-directory: microservices/warehouse
         run: npm ci
 
-      - name: Run Warehouse tests
+      - name: Run tests
         working-directory: microservices/warehouse
         run: npm run test:cov
 
-      - name: Upload Warehouse coverage to Codecov
+      - name: Upload coverage
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -53,17 +41,30 @@ jobs:
           disable_search: true
           fail_ci_if_error: true
 
-      # Warehouse Aggregator
+  warehouse-aggregator:
+    name: Warehouse Aggregator tests
+    runs-on: ubuntu-latest
 
-      - name: Install Warehouse Aggregator dependencies
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22.16.0
+          cache: npm
+          cache-dependency-path: microservices/warehouse-aggregator/package-lock.json
+
+      - name: Install dependencies
         working-directory: microservices/warehouse-aggregator
         run: npm ci
 
-      - name: Run Warehouse Aggregator tests
+      - name: Run tests
         working-directory: microservices/warehouse-aggregator
         run: npm run test:cov
 
-      - name: Upload Warehouse Aggregator coverage to Codecov
+      - name: Upload coverage
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -73,20 +74,30 @@ jobs:
           disable_search: true
           fail_ci_if_error: true
 
-      # CentralSystem
-      - name: Install CentralSystem dependencies
+  central-system:
+    name: CentralSystem tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22.16.0
+          cache: npm
+          cache-dependency-path: microservices/centralized/CentralSystem/package-lock.json
+
+      - name: Install dependencies
         working-directory: microservices/centralized/CentralSystem
-        run: npm install || echo "No tests for centralSystem"
+        run: npm ci
 
-      - name: Debug file names
-        run: ls -R microservices/centralized/CentralSystem/src/interfaces/http/dto
-
-
-      - name: Run CentralSystem tests
+      - name: Run tests
         working-directory: microservices/centralized/CentralSystem
         run: npm run test:cov
 
-      - name: Upload CentralSystem coverage to Codecov
+      - name: Upload coverage
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -96,17 +107,30 @@ jobs:
           disable_search: true
           fail_ci_if_error: true
 
+  authentication:
+    name: Authentication tests
+    runs-on: ubuntu-latest
 
-      # Auth
-      - name: Install Auth dependencies
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22.16.0
+          cache: npm
+          cache-dependency-path: microservices/centralized/authentication/package-lock.json
+
+      - name: Install dependencies
         working-directory: microservices/centralized/authentication
-        run: npm install || echo "No tests for authentication"
+        run: npm ci
 
-      - name: Run Auth tests
+      - name: Run tests
         working-directory: microservices/centralized/authentication
         run: npm run test:cov
 
-      - name: Upload Auth coverage to Codecov
+      - name: Upload coverage
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -116,51 +140,111 @@ jobs:
           disable_search: true
           fail_ci_if_error: true
 
-  
-      # Routing
-      - name: Install Routing
-        working-directory: microservices/centralized/routing
-        run: npm install || echo "No tests for routing"
+  routing:
+    name: Routing tests
+    runs-on: ubuntu-latest
 
-      - name: Run Routing tests
-        working-directory: microservices/centralized/routing
-        run: npm run test:cov || echo "No tests for routing"
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
 
-      - name: Upload Routing coverage to Codecov
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22.16.0
+          cache: npm
+          cache-dependency-path: microservices/centralized/routing/package-lock.json
+
+      - name: Install dependencies
+        working-directory: microservices/centralized/routing
+        run: npm ci
+
+      - name: Run tests
+        working-directory: microservices/centralized/routing
+        run: npm run test:cov
+
+      - name: Upload coverage
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          flags: routing
           files: microservices/centralized/routing/coverage/lcov.info
-          name: Routing
+          flags: routing
+          name: routing
           disable_search: true
           fail_ci_if_error: true
 
+  state-aggregate:
+    name: State Aggregate tests
+    runs-on: ubuntu-latest
 
-      # State Cloud
-      - name: Install State Cloud
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22.16.0
+          cache: npm
+          cache-dependency-path: microservices/centralized/state_aggregate/package-lock.json
+
+      - name: Install dependencies
         working-directory: microservices/centralized/state_aggregate
-        run: npm install || echo "No tests for Cloud State"
+        run: npm ci
 
-      - name: Run State Cloud tests
+      - name: Run tests
         working-directory: microservices/centralized/state_aggregate
-        run: npm run test:cov || echo "No tests for Cloud State"
+        run: npm run test:cov
 
-      - name: Upload State Cloud coverage to Codecov
+      - name: Upload coverage
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          flags: CloudState
           files: microservices/centralized/state_aggregate/coverage/lcov.info
+          flags: CloudState
           name: Cloud State
           disable_search: true
           fail_ci_if_error: true
 
-      # System tests
-      - name: Install System test dependencies
-        working-directory: microservices/test/system
-        run: npm install
+  system-tests:
+    name: System tests
+    runs-on: ubuntu-latest
 
-      - name: Run System tests
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22.16.0
+          cache: npm
+          cache-dependency-path: microservices/test/system/package-lock.json
+
+      - name: Start services with Docker Compose
+        run: |
+          docker compose up -d
+
+      - name: Show running containers
+        run: docker compose ps
+
+      - name: Wait for services
+        run: |
+          echo "Waiting for services..."
+          sleep 10
+
+      - name: Install system test dependencies
+        working-directory: microservices/test/system
+        run: npm ci
+
+      - name: Run system tests
         working-directory: microservices/test/system
         run: npm run test
+
+      - name: Show Docker logs
+        if: failure()
+        run: docker compose logs --no-color
+
+      - name: Stop services
+        if: always()
+        run: docker compose down -v
