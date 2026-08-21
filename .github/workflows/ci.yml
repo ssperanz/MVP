@@ -164,3 +164,7 @@ jobs:
       - name: Run System tests
         working-directory: microservices/test/system
         run: npm run test
+        with:
+          env:
+            MONGO_URI: mongodb://localhost:27017
+            NATS_URI: nats://localhost:4222
