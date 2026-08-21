@@ -24,7 +24,7 @@ jobs:
           cache-dependency-path: microservices/warehouse/package-lock.json
 
       - name: Start test infrastructure
-        run: docker compose up -d mongodb
+        run: docker compose up -d warehouse-1 mongodb
 
       - name: Install dependencies
         working-directory: microservices/warehouse
@@ -60,7 +60,7 @@ jobs:
           cache-dependency-path: microservices/warehouse-aggregator/package-lock.json
 
       - name: Start test infrastructure
-        run: docker compose up -d mongodb
+        run: docker compose up -d warehouse-1 warehouse-aggregator mongodb nats
 
       - name: Install dependencies
         working-directory: microservices/warehouse-aggregator
