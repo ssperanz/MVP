@@ -157,6 +157,10 @@ jobs:
           fail_ci_if_error: true
 
       # System tests
+      - name: Install System test dependencies
+        working-directory: microservices/test/system
+        run: npm install
+
       - name: Run System tests
         working-directory: microservices/test/system
         run: npm run test
