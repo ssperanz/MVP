@@ -23,6 +23,9 @@ jobs:
           cache: npm
           cache-dependency-path: microservices/warehouse/package-lock.json
 
+      - name: Start test infrastructure
+        run: docker compose up -d mongodb
+
       - name: Install dependencies
         working-directory: microservices/warehouse
         run: npm ci
@@ -55,6 +58,9 @@ jobs:
           node-version: 22.16.0
           cache: npm
           cache-dependency-path: microservices/warehouse-aggregator/package-lock.json
+
+      - name: Start test infrastructure
+        run: docker compose up -d mongodb
 
       - name: Install dependencies
         working-directory: microservices/warehouse-aggregator
@@ -219,7 +225,7 @@ jobs:
         with:
           node-version: 22.16.0
           cache: npm
-          cache-dependency-path: microservices/test/system/package-lock.json
+          cache-dependency-path: microservices/test/package-lock.json
 
       - name: Start services with Docker Compose
         run: |
