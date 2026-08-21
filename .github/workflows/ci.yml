@@ -155,3 +155,9 @@ jobs:
           name: Cloud State
           disable_search: true
           fail_ci_if_error: true
+
+      # System tests
+      - name: Run System tests
+        working-directory: microservices/test/system
+        run: npm run test
+        fail_ci_if_error: true
