@@ -7,6 +7,8 @@ services:
       context: ./microservices/warehouse
       dockerfile: Dockerfile
     container_name: warehouse-1
+    ports:
+      - "3000:3000"
     environment:
       - MONGO_URI=mongodb://mongo:27017/warehouse-1
       - WAREHOUSE_ID=1
@@ -25,6 +27,8 @@ services:
       context: ./microservices/warehouse
       dockerfile: Dockerfile
     container_name: warehouse-2
+    ports:
+      - "3001:3000"
     environment:
       - MONGO_URI=mongodb://mongo:27017/warehouse-2
       - WAREHOUSE_ID=2
