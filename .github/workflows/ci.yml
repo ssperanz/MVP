@@ -24,7 +24,7 @@ jobs:
           cache-dependency-path: microservices/warehouse/package-lock.json
 
       - name: Start test infrastructure
-        run: docker compose up -d warehouse-1 mongodb
+        run: docker compose -f docker-compose.test.yaml up -d warehouse-1 mongodb-test nats-test
 
       - name: Install dependencies
         working-directory: microservices/warehouse
@@ -63,7 +63,7 @@ jobs:
           cache-dependency-path: microservices/warehouse-aggregator/package-lock.json
 
       - name: Start test infrastructure
-        run: docker compose up -d warehouse-1 warehouse-aggregator mongodb nats
+        run: docker compose -f docker-compose.test.yaml up -d warehouse-1 warehouse-aggregator mongodb-test nats-test
 
       - name: Install dependencies
         working-directory: microservices/warehouse-aggregator
@@ -235,10 +235,10 @@ jobs:
 
       - name: Start services with Docker Compose
         run: |
-          docker compose up -d
+          docker compose -f docker-compose.test.yaml up -d
 
       - name: Show running containers
-        run: docker compose ps
+        run: docker compose -f docker-compose.test.yaml ps
 
       - name: Wait for services
         run: |
