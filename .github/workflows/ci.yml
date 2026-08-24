@@ -31,7 +31,7 @@ jobs:
         run: npm ci
       
       - name: Wait for services to be ready
-        run: sleep 15
+        run: sleep 20
 
       - name: Run tests
         working-directory: microservices/warehouse
@@ -70,7 +70,7 @@ jobs:
         run: npm ci
 
       - name: Wait for services to be ready
-        run: sleep 15
+        run: sleep 20
 
       - name: Run tests
         working-directory: microservices/warehouse-aggregator
