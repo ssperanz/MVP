@@ -7,6 +7,9 @@
 
 Questa è una fork indipendente del progetto iniziale, della quale sono stati riprogettati, riscritti e ritestati alcuni microservizi, tra cui il servizio di magazzino e quello di aggregazione dei dati dei magazzini.
 
+I diagrammi delle classi dei nuovi microservizi warehouse e warehouse-aggregator sono visibili nella cartella docs del progetto.
+Nella stessa cartella è disponibile una relazione dettagliata delle modifiche apportate al progetto originale.
+
 ---
 
 ## Descrizione
@@ -72,6 +75,40 @@ docker-compose up --build
 ```
 
 Tutti i microservizi, database e strumenti di monitoring verranno avviati automaticamente.
+
+---
+
+## Architettura
+
+In seguito sono illustrati i principali diagrammi UML dei nuovi microservizi warehouse e warehouse-aggregator.
+
+### Warehouse
+<details>
+<summary>Product</summary>
+<img src="docs/diagrams/warehouse_Product.svg" alt="Diagramma delle classi del modulo Product di Warehouse">
+</details>
+<details>
+<summary>Order</summary>
+<img src="docs/diagrams/warehouse_Order.svg" alt="Diagramma delle classi del modulo Order di Warehouse">
+</details>
+<details>
+<summary>Reservation</summary>
+<img src="docs/diagrams/warehouse_Reservation.svg" alt="Diagramma delle classi del modulo Reservation di Warehouse">
+</details>
+<details>
+<summary>Order Saga</summary>
+<img src="docs/diagrams/OrderSaga.svg" alt="Diagramma di flusso della Order Saga di Warehouse">
+</details>
+
+### Warehouse Aggregator
+<details>
+<summary>Product</summary>
+<img src="docs/diagrams/warehouse-aggregator_Product.svg" alt="Diagramma delle classi del modulo Product di Warehouse Aggregator">
+</details>
+<details>
+<summary>Order</summary>
+<img src="docs/diagrams/warehouse-aggregator_Order.svg" alt="Diagramma delle classi del modulo Order di Warehouse Aggregator">
+</details>
 
 ---
 
