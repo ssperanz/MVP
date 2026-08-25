@@ -5,7 +5,8 @@ import { ReservationState } from '../../../../shared/domain/enums/reservation-st
 export class ReservationUpdatedEvent extends ReservationEvent {
   constructor(
     public readonly reservationId: OrderId,
+    public readonly reservationState: ReservationState,
   ) {
-    super(reservationId, ReservationState.RESERVED);
+    super(reservationId, reservationState);
   }
 }

@@ -67,6 +67,7 @@ export class OrderSaga {
   onReservationUpdated = (events$: Observable<any>): Observable<ICommand> => {
     return events$.pipe(
       ofType(ReservationUpdatedEvent),
+      filter((event) => event.reservationState === 'RESERVED'),
       map((event) => {
         this.logger.log(`Received ReservationUpdatedEvent for reservation ID ${event.reservationId.getId()}`);
         return new ValidateOrderCommand(event.reservationId);

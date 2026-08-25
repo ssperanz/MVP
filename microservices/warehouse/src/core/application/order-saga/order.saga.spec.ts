@@ -25,6 +25,7 @@ import { OrderState } from '../../../shared/domain/enums/order-state.enum';
 import { Money } from '../../../shared/domain/value-objects/money.vo';
 import { firstValueFrom } from 'rxjs';
 import { OrderSaga } from './order.saga';
+import { ReservationState } from '../../../shared/domain/enums/reservation-state.enum';
 
 describe('OrderSaga', () => {
   let saga: OrderSaga;
@@ -87,6 +88,7 @@ describe('OrderSaga', () => {
     it('should create a ValidateOrderCommand', async () => {
       const event = new ReservationUpdatedEvent(
         new OrderId('order-123'),
+        ReservationState.RESERVED,
       );
 
       const result = await firstValueFrom(

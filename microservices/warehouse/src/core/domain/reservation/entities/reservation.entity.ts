@@ -87,7 +87,7 @@ export class Reservation extends AggregateRoot {
       }
     }
     this.updateState(ReservationState.RESERVED);
-    this.apply(new ReservationUpdatedEvent(this.orderId));
+    this.apply(new ReservationUpdatedEvent(this.orderId, ReservationState.RESERVED));
     return this.reservationItems;
   }
 
@@ -98,7 +98,7 @@ export class Reservation extends AggregateRoot {
 
   pause(): void {
     this.updateState(ReservationState.PENDING);
-    this.apply(new ReservationUpdatedEvent(this.orderId));
+    this.apply(new ReservationUpdatedEvent(this.orderId, ReservationState.PENDING));
   }
 
   requestCanceling(): ProductItem[] {

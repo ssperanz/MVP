@@ -7,11 +7,9 @@ describe('Sell Order Saga - System Test', () => {
   jest.setTimeout(30_000);
 
   it('should complete the SellOrder saga until DELIVERED', async () => {
-    
     // --------------------------------------------------
     // 0. Initialize product
     // --------------------------------------------------
-
 
     await axios.post(`${warehouseUrl}/products`, {
       id: productId,
@@ -21,21 +19,9 @@ describe('Sell Order Saga - System Test', () => {
       minThres: 1,
       maxThres: 100,
     });
-    
 
     // --------------------------------------------------
-    // 1. Get existing orders BEFORE creating the order
-    // --------------------------------------------------
-
-    const beforeResponse = await axios.get(`${warehouseUrl}/orders`);
-    const ordersBefore = beforeResponse.data;
-
-    const orderIdsBefore = new Set(
-      ordersBefore.map((order: any) => order.orderId ?? order.id),
-    );
-
-    // --------------------------------------------------
-    // 2. Create SellOrder
+    // 1. Create SellOrder
     // --------------------------------------------------
 
     await axios.post(`${warehouseUrl}/orders`, {
@@ -57,37 +43,39 @@ describe('Sell Order Saga - System Test', () => {
     });
 
     // --------------------------------------------------
-    // 3. Find the newly created order
+    // 2. Find the order created by this test
     // --------------------------------------------------
 
-    let order: any | undefined;
+    const orderDeadline = Date.now() + 10_000;
 
-    const deadline = Date.now() + 10_000;
+    let createdOrder: any | undefined;
 
-    while (Date.now() < deadline) {
+    while (Date.now() < orderDeadline) {
       const response = await axios.get(`${warehouseUrl}/orders`);
-      const ordersAfter = response.data;
 
-      order = ordersAfter.find(
+      createdOrder = response.data.find(
         (candidate: any) =>
-          !orderIdsBefore.has(candidate.orderId ?? candidate.id),
+          candidate.orderType === 'SELL' &&
+          candidate.orderItems?.some(
+            (item: any) => item.productId === productId,
+          ),
       );
 
-      if (order) {
+      if (createdOrder) {
         break;
       }
 
       await new Promise((resolve) => setTimeout(resolve, 250));
     }
 
-    expect(order).toBeDefined();
+    expect(createdOrder).toBeDefined();
 
-    const orderId = order.orderId ?? order.id;
+    const orderId = createdOrder.orderId;
 
     expect(orderId).toBeDefined();
 
     // --------------------------------------------------
-    // 4. Wait for the Saga to complete
+    // 3. Wait for the Saga to complete
     // --------------------------------------------------
 
     const sagaDeadline = Date.now() + 15_000;
@@ -95,28 +83,41 @@ describe('Sell Order Saga - System Test', () => {
     let finalOrder: any | undefined;
 
     while (Date.now() < sagaDeadline) {
-      const response = await axios.get(`${warehouseUrl}/orders/${orderId}`);
+      try {
+        const response = await axios.get(
+          `${warehouseUrl}/orders/${orderId}`,
+        );
 
-      finalOrder = response.data;
+        finalOrder = response.data;
 
-      if (finalOrder?.orderState === 'DELIVERED') {
-        break;
+        if (finalOrder?.orderState === 'DELIVERED') {
+          break;
+        }
+      } catch (error) {
+        // The order may not be immediately available while
+        // the asynchronous Saga is being initialized.
+        if (
+          !axios.isAxiosError(error) ||
+          error.response?.status !== 404
+        ) {
+          throw error;
+        }
       }
 
       await new Promise((resolve) => setTimeout(resolve, 500));
     }
 
     // --------------------------------------------------
-    // 5. Verify final state
+    // 4. Verify final state
     // --------------------------------------------------
 
     expect(finalOrder).toBeDefined();
-    expect(finalOrder.orderId).toBe(orderId);
+    expect(finalOrder.orderId ?? finalOrder.id).toBe(orderId);
     expect(finalOrder.orderType).toBe('SELL');
     expect(finalOrder.orderState).toBe('DELIVERED');
 
     // --------------------------------------------------
-    // 6. Verify product was dispatched
+    // 5. Verify product was dispatched
     // --------------------------------------------------
 
     const productResponse = await axios.get(
@@ -131,8 +132,8 @@ describe('Sell Order Saga - System Test', () => {
     try {
       await axios.delete(`${warehouseUrl}/products/${productId}`);
     } catch (error) {
-      // Il prodotto potrebbe non essere mai stato creato
-      // oppure essere già stato rimosso.
+      // The product may not have been created or may
+      // already have been removed.
       if (
         !axios.isAxiosError(error) ||
         error.response?.status !== 404

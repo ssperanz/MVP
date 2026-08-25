@@ -8,9 +8,8 @@ describe('Transfer Order Saga - System Test', () => {
   jest.setTimeout(30_000);
 
   it('should complete the TransferOrder saga until DELIVERED', async () => {
-    
     // --------------------------------------------------
-    // 0. Initialize product
+    // 0. Initialize product in source warehouse
     // --------------------------------------------------
 
     await axios.post(`${warehouse1Url}/products`, {
@@ -22,12 +21,18 @@ describe('Transfer Order Saga - System Test', () => {
       maxThres: 100,
     });
 
+    // --------------------------------------------------
+    // 0. Initialize product in destination warehouse
+    // --------------------------------------------------
+
     const productsResponse2 = await axios.get(`${warehouse2Url}/products`);
 
-    const products2 = productsResponse2.data.products ?? productsResponse2.data;
+    const products2 =
+      productsResponse2.data.products ?? productsResponse2.data;
 
     const existingProduct2 = products2.find(
-      (product: any) => product.id === productId,
+      (product: any) =>
+        (product.productId ?? product.id) === productId,
     );
 
     if (!existingProduct2) {
@@ -46,18 +51,7 @@ describe('Transfer Order Saga - System Test', () => {
     }
 
     // --------------------------------------------------
-    // 1. Get existing orders BEFORE creating the order
-    // --------------------------------------------------
-
-    const beforeResponse = await axios.get(`${warehouse1Url}/orders`);
-    const ordersBefore = beforeResponse.data;
-
-    const orderIdsBefore = new Set(
-      ordersBefore.map((order: any) => order.orderId ?? order.id),
-    );
-
-    // --------------------------------------------------
-    // 2. Create SellOrder
+    // 1. Create TransferOrder
     // --------------------------------------------------
 
     await axios.post(`${warehouse1Url}/orders`, {
@@ -73,37 +67,44 @@ describe('Transfer Order Saga - System Test', () => {
     });
 
     // --------------------------------------------------
-    // 3. Find the newly created order
+    // 2. Find the order created by this test
     // --------------------------------------------------
+    //
+    // productId is unique for this test, so it is used as
+    // the correlation key instead of comparing order IDs
+    // before and after creation.
+    //
 
-    let order: any | undefined;
+    const orderDeadline = Date.now() + 10_000;
 
-    const deadline = Date.now() + 10_000;
+    let createdOrder: any | undefined;
 
-    while (Date.now() < deadline) {
+    while (Date.now() < orderDeadline) {
       const response = await axios.get(`${warehouse1Url}/orders`);
-      const ordersAfter = response.data;
 
-      order = ordersAfter.find(
+      createdOrder = response.data.find(
         (candidate: any) =>
-          !orderIdsBefore.has(candidate.orderId ?? candidate.id),
+          candidate.orderType === 'TRANSFER' &&
+          candidate.orderItems?.some(
+            (item: any) => item.productId === productId,
+          ),
       );
 
-      if (order) {
+      if (createdOrder) {
         break;
       }
 
       await new Promise((resolve) => setTimeout(resolve, 250));
     }
 
-    expect(order).toBeDefined();
+    expect(createdOrder).toBeDefined();
 
-    const orderId = order.orderId ?? order.id;
+    const orderId = createdOrder.orderId;
 
     expect(orderId).toBeDefined();
 
     // --------------------------------------------------
-    // 4. Wait for the Saga to complete
+    // 3. Wait for the Saga to complete
     // --------------------------------------------------
 
     const sagaDeadline = Date.now() + 15_000;
@@ -111,19 +112,32 @@ describe('Transfer Order Saga - System Test', () => {
     let finalOrder: any | undefined;
 
     while (Date.now() < sagaDeadline) {
-      const response = await axios.get(`${warehouse1Url}/orders/${orderId}`);
+      try {
+        const response = await axios.get(
+          `${warehouse1Url}/orders/${orderId}`,
+        );
 
-      finalOrder = response.data;
+        finalOrder = response.data;
 
-      if (finalOrder?.orderState === 'DELIVERED') {
-        break;
+        if (finalOrder?.orderState === 'DELIVERED') {
+          break;
+        }
+      } catch (error) {
+        // The order may not be immediately available while
+        // the asynchronous Saga is being initialized.
+        if (
+          !axios.isAxiosError(error) ||
+          error.response?.status !== 404
+        ) {
+          throw error;
+        }
       }
 
       await new Promise((resolve) => setTimeout(resolve, 500));
     }
 
     // --------------------------------------------------
-    // 5. Verify final state
+    // 4. Verify final state
     // --------------------------------------------------
 
     expect(finalOrder).toBeDefined();
@@ -132,7 +146,7 @@ describe('Transfer Order Saga - System Test', () => {
     expect(finalOrder.orderState).toBe('DELIVERED');
 
     // --------------------------------------------------
-    // 6. Verify product was dispatched
+    // 5. Verify product was dispatched from source warehouse
     // --------------------------------------------------
 
     const productResponse1 = await axios.get(
@@ -143,7 +157,7 @@ describe('Transfer Order Saga - System Test', () => {
     expect(productResponse1.data.reservedQty).toBe(0);
 
     // --------------------------------------------------
-    // 6. Verify product was delivered to the destination warehouse
+    // 6. Verify product was delivered to destination warehouse
     // --------------------------------------------------
 
     const productResponse2 = await axios.get(
@@ -154,14 +168,21 @@ describe('Transfer Order Saga - System Test', () => {
     expect(productResponse2.data.reservedQty).toBe(0);
   });
 
-
   afterAll(async () => {
     try {
       await axios.delete(`${warehouse1Url}/products/${productId}`);
+    } catch (error) {
+      if (
+        !axios.isAxiosError(error) ||
+        error.response?.status !== 404
+      ) {
+        throw error;
+      }
+    }
+
+    try {
       await axios.delete(`${warehouse2Url}/products/${productId}`);
     } catch (error) {
-      // Il prodotto potrebbe non essere mai stato creato
-      // oppure essere già stato rimosso.
       if (
         !axios.isAxiosError(error) ||
         error.response?.status !== 404
