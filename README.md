@@ -114,11 +114,21 @@ In seguito sono illustrati i principali diagrammi UML dei nuovi microservizi war
 
 ## Testing
 
-Per eseguire i test unitari di un microservizio, posizionati nella sua cartella e lancia:
+Per eseguire i test di un microservizio, posizionati nella sua cartella e lancia:
 
 ```bash
 npm run test
 ```
+
+Per i test di integrazione e di sistema è necessario prima avviare il docker-compose di test dalla root del progetto:
+
+```bash
+docker compose -f docker-compose.test.yaml up
+```
+
+Per i test di sistema, posizionarsi nella cartella /microservices/test/system prima di lanciare il comando di test.
+
+I test sono stati automatizzati nella pipeline di Continuos Integration di Github Actions.
 
 La copertura del codice è monitorata tramite Codecov.
 
