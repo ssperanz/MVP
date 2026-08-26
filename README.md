@@ -64,8 +64,8 @@ microservices/
 ### 1. Clona il repository
 
 ```bash
-git clone https://github.com/teamcodealchemists/MVP.git
-cd MVP/microservices
+git clone https://github.com/ssperanz/MVP.git
+cd MVP
 ```
 
 ### 2. Avvia tutti i servizi con Docker Compose
@@ -123,7 +123,7 @@ npm run test
 Per i test di integrazione e di sistema è necessario prima avviare il docker-compose di test dalla root del progetto:
 
 ```bash
-docker compose -f docker-compose.test.yaml up
+docker compose -f docker-compose.test.yaml up --build
 ```
 
 Per i test di sistema, posizionarsi nella cartella /microservices/test/system prima di lanciare il comando di test.
