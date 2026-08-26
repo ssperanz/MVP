@@ -47,7 +47,7 @@ export class OrderEventCloudPublisherNats implements OrderEventCloudPublisher {
       }),
     };
 
-    await firstValueFrom(this.natsClient.emit(subject, payload));
+    this.natsClient.emit(subject, payload);
   }
 
   async publishOrderStateUpdated(event: OrderStateUpdatedEvent): Promise<void> {
@@ -57,6 +57,6 @@ export class OrderEventCloudPublisherNats implements OrderEventCloudPublisher {
       orderId: event.orderId.getId(),
       orderState: event.orderState.toString(),
     };
-    await firstValueFrom(this.natsClient.emit(subject, payload));
+    this.natsClient.emit(subject, payload);
   }
 }
