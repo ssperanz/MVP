@@ -20,13 +20,14 @@ export class DeliverOrderCommandHandler implements ICommandHandler<DeliverOrderC
 
   async execute(command: DeliverOrderCommand): Promise<void> {
     if (command.orderType === 'SELL') {
-      this.eventBus.publish(new OrderDeliveredEvent(new OrderId(command.orderId)));
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      await this.eventBus.publish(new OrderDeliveredEvent(new OrderId(command.orderId)));
       return;
     }
 
     try {
       await this.deliverItems(command.orderId, command.items);
-      this.eventBus.publish(
+      await this.eventBus.publish(
         new OrderReceivedEvent(
           new OrderId(command.orderId),
           command.sourceWh,
@@ -34,7 +35,7 @@ export class DeliverOrderCommandHandler implements ICommandHandler<DeliverOrderC
         ));
 
       if (command.orderType === 'REPLENISHMENT') {
-        this.eventBus.publish(
+        await this.eventBus.publish(
           new ReplenishmentDeliveredEvent(
             new OrderId(command.orderId),
             new OrderId(command.orderReference ?? 'undefined'),

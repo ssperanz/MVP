@@ -3,6 +3,7 @@ import type { OrderEventCloudPublisher } from '../../../core/application/order/p
 import { ClientProxy } from '@nestjs/microservices';
 import { OrderCreatedEvent } from '../../../core/domain/order/events/order-created.event.js';
 import { OrderStateUpdatedEvent } from '../../../core/domain/order/events/order-state-updated.event.js';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class OrderEventCloudPublisherNats implements OrderEventCloudPublisher {
@@ -46,7 +47,7 @@ export class OrderEventCloudPublisherNats implements OrderEventCloudPublisher {
       }),
     };
 
-    await this.natsClient.emit(subject, payload);
+    await firstValueFrom(this.natsClient.emit(subject, payload));
   }
 
   async publishOrderStateUpdated(event: OrderStateUpdatedEvent): Promise<void> {
@@ -56,6 +57,6 @@ export class OrderEventCloudPublisherNats implements OrderEventCloudPublisher {
       orderId: event.orderId.getId(),
       orderState: event.orderState.toString(),
     };
-    await this.natsClient.emit(subject, payload);
+    await firstValueFrom(this.natsClient.emit(subject, payload));
   }
 }

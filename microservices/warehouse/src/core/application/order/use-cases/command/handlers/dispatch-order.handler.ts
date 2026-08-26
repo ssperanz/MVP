@@ -29,7 +29,7 @@ export class DispatchOrderCommandHandler implements ICommandHandler<DispatchOrde
 
     if (order instanceof SellOrder) {
       await this.dispatchItems(order);
-      this.eventBus.publish(
+      await this.eventBus.publish(
         new OrderDispatchedEvent(
           order.getOrderId(),
           OrderType.SELL,
@@ -43,7 +43,7 @@ export class DispatchOrderCommandHandler implements ICommandHandler<DispatchOrde
     try {
       await this.dispatchItems(order);
 
-      this.eventBus.publish(
+      await this.eventBus.publish(
         new OrderDispatchedEvent(
           order.getOrderId(),
           order instanceof ReplenishmentOrder ? OrderType.REPLENISHMENT : OrderType.TRANSFER,
@@ -54,7 +54,7 @@ export class DispatchOrderCommandHandler implements ICommandHandler<DispatchOrde
         )
       );
     } catch {
-      this.eventBus.publish(new OrderDispatchFailedEvent(order.getOrderId(), "Unexpected error during dispatch"));
+      await this.eventBus.publish(new OrderDispatchFailedEvent(order.getOrderId(), "Unexpected error during dispatch"));
     }
   }
 
