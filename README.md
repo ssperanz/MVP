@@ -153,6 +153,12 @@ La copertura del codice è monitorata tramite Codecov.
 
 ---
 
+## Documentazione
+- [Relazione](docs/Relazione.md)
+- [Diagrammi UML](docs/diagrams)
+
+---
+
 ## Autori
 
 - Team Code Alchemists (progetto originale)
